@@ -6,11 +6,10 @@ from collections import defaultdict
 from pathlib import Path
 from statistics import mean, median
 
-from radar.scoring import ModelPoint, pareto_frontier, quota_efficiency
-
 
 ROOT = Path(__file__).resolve().parents[1]
 RUNS_PATH = ROOT / "data" / "history" / "runs.csv"
+WEIGHTS_PATH = ROOT / "data" / "weights" / "task_weights.csv"
 REPORTS_DIR = ROOT / "reports"
 OUTPUT_EN = REPORTS_DIR / "latest.generated.en.md"
 OUTPUT_ZH = REPORTS_DIR / "latest.generated.zh-CN.md"
@@ -41,14 +40,25 @@ def load_rows() -> list[dict[str, object]]:
                     "reliability_weight": float(raw["reliability_weight"]),
                 }
             )
+    if not rows:
+        raise ValueError("runs.csv contains no rows")
     return rows
 
 
-def quality(row: dict[str, object]) -> float:
-    explicit = row["weighted_score"]
-    if explicit is not None:
-        return float(explicit)
-    return 100.0 * int(row["passed"]) / int(row["tasks"])
+def load_weights() -> list[dict[str, object]]:
+    weights: list[dict[str, object]] = []
+    with WEIGHTS_PATH.open(newline="", encoding="utf-8") as handle:
+        for raw in csv.DictReader(handle):
+            weights.append(
+                {
+                    **raw,
+                    "historical_pass_rate": float(raw["historical_pass_rate"]),
+                    "soft_inverse_weight": float(raw["soft_inverse_weight"]),
+                }
+            )
+    if not weights:
+        raise ValueError("task_weights.csv contains no rows")
+    return weights
 
 
 def label(row: dict[str, object]) -> str:
@@ -57,187 +67,201 @@ def label(row: dict[str, object]) -> str:
     return f"{family} {effort}"
 
 
-def prepare(
-    rows: list[dict[str, object]],
-) -> tuple[
-    dict[tuple[str, str], list[dict[str, object]]],
-    list[dict[str, object]],
-    list[dict[str, object]],
-    set[str],
-]:
+def quality(row: dict[str, object]) -> float:
+    score = row["weighted_score"]
+    if score is not None:
+        return float(score)
+    return 100.0 * int(row["passed"]) / int(row["tasks"])
+
+
+def efficiency(row: dict[str, object]) -> float | None:
+    cost = row["cost_usd"]
+    if cost is None or float(cost) <= 0:
+        return None
+    return quality(row) / float(cost)
+
+
+def batches(rows: list[dict[str, object]]) -> list[tuple[str, list[dict[str, object]]]]:
+    order: list[str] = []
+    grouped: dict[str, list[dict[str, object]]] = defaultdict(list)
+    for row in rows:
+        batch_id = str(row["batch_id"])
+        if batch_id not in grouped:
+            order.append(batch_id)
+        grouped[batch_id].append(row)
+    return [(batch_id, grouped[batch_id]) for batch_id in order]
+
+
+def latest_complete_valid_batch(
+    ordered_batches: list[tuple[str, list[dict[str, object]]]],
+) -> tuple[str, list[dict[str, object]]]:
+    largest_batch = max(len(rows) for _, rows in ordered_batches)
+    for batch_id, batch_rows in reversed(ordered_batches):
+        if len(batch_rows) == largest_batch and not any(bool(row["anomaly"]) for row in batch_rows):
+            return batch_id, batch_rows
+    raise ValueError("no complete non-anomalous batch found")
+
+
+def append_weights(lines: list[str], weights: list[dict[str, object]], *, zh: bool) -> None:
+    snapshot = str(weights[0]["weight_snapshot"])
+    if zh:
+        lines.extend(
+            [
+                "## 最新任务难度权重",
+                "",
+                f"**权重快照：** `{snapshot}`  ",
+                "**公式：** `weight_i ∝ 1 / sqrt(historical_pass_rate_i)`，归一化总分为 100。",
+                "",
+                "| 题号 | 任务摘要 | 历史通过率 | 权重 /100 |",
+                "|---:|---|---:|---:|",
+            ]
+        )
+    else:
+        lines.extend(
+            [
+                "## Latest task-difficulty weights",
+                "",
+                f"**Weight snapshot:** `{snapshot}`  ",
+                "**Formula:** `weight_i ∝ 1 / sqrt(historical_pass_rate_i)`, normalized to 100.",
+                "",
+                "| Task | Short description | Historical pass rate | Weight /100 |",
+                "|---:|---|---:|---:|",
+            ]
+        )
+
+    for row in weights:
+        lines.append(
+            f"| {row['task_id']} | {row['short_description']} | "
+            f"{100 * float(row['historical_pass_rate']):.0f}% | "
+            f"{float(row['soft_inverse_weight']):.2f} |"
+        )
+    lines.extend(["|  | **Total** |  | **100.00** |", ""])
+
+
+def append_ranking(
+    lines: list[str],
+    batch_id: str,
+    batch_rows: list[dict[str, object]],
+    *,
+    title: str,
+    warning: str,
+    zh: bool,
+) -> None:
+    lines.extend([f"## {title}", "", f"**Batch:** `{batch_id}`", ""])
+    if warning:
+        lines.extend([f"> {warning}", ""])
+
+    if zh:
+        lines.extend(
+            [
+                "| 排名 | 模型档位 | 通过 | 加权分 /100 | 估算费用 | 加权分/$ |",
+                "|---:|---|---:|---:|---:|---:|",
+            ]
+        )
+    else:
+        lines.extend(
+            [
+                "| Rank | Model tier | Passed | Weighted /100 | Estimated cost | Weighted/$ |",
+                "|---:|---|---:|---:|---:|---:|",
+            ]
+        )
+
+    ranked = sorted(batch_rows, key=lambda row: (-quality(row), label(row)))
+    for rank, row in enumerate(ranked, start=1):
+        cost = "—" if row["cost_usd"] is None else f"${float(row['cost_usd']):.2f}"
+        ratio = efficiency(row)
+        ratio_text = "—" if ratio is None else f"{ratio:.2f}"
+        lines.append(
+            f"| {rank} | {label(row)} | {row['passed']}/{row['tasks']} | "
+            f"{quality(row):.2f} | {cost} | {ratio_text} |"
+        )
+    lines.append("")
+
+
+def append_stability(
+    lines: list[str], rows: list[dict[str, object]], *, zh: bool
+) -> None:
     grouped: dict[tuple[str, str], list[dict[str, object]]] = defaultdict(list)
     for row in rows:
         grouped[(str(row["model"]), str(row["effort"]))].append(row)
 
-    latest_all = [values[-1] for values in grouped.values()]
-    latest_valid: list[dict[str, object]] = []
-    for values in grouped.values():
-        valid = [row for row in values if not bool(row["anomaly"])]
-        latest_valid.append(valid[-1] if valid else values[-1])
-
-    points = [
-        ModelPoint(label(row), quality(row), float(row["cost_usd"]))
-        for row in latest_valid
-        if row["cost_usd"] is not None
-    ]
-    frontier = {point.name for point in pareto_frontier(points)}
-    return grouped, latest_all, latest_valid, frontier
-
-
-def render_english(
-    grouped: dict[tuple[str, str], list[dict[str, object]]],
-    latest_all: list[dict[str, object]],
-    latest_valid: list[dict[str, object]],
-    frontier: set[str],
-) -> str:
-    lines = [
-        "# Generated Model Radar Report — English",
-        "",
-        "> Generated from `data/history/runs.csv`. Rows without task-level weighted scores use raw pass percentage as an interim quality proxy.",
-        "",
-        "## Latest recorded batch",
-        "",
-        "| Configuration | Batch | Passed | Quality | Cost | Anomaly |",
-        "|---|---:|---:|---:|---:|---:|",
-    ]
-
-    for row in sorted(latest_all, key=lambda item: (-quality(item), label(item))):
-        cost = "—" if row["cost_usd"] is None else f"${float(row['cost_usd']):.2f}"
-        lines.append(
-            f"| {label(row)} | {row['batch_id']} | {row['passed']}/{row['tasks']} | "
-            f"{quality(row):.2f} | {cost} | {'yes' if row['anomaly'] else 'no'} |"
+    if zh:
+        lines.extend(
+            [
+                "## 最近五轮稳定性",
+                "",
+                "| 模型档位 | 有效样本 | 通过数中位数 | 通过数均值 | 范围 |",
+                "|---|---:|---:|---:|---:|",
+            ]
         )
-
-    lines.extend(
-        [
-            "",
-            "## Latest non-anomalous cost-quality view",
-            "",
-            "| Configuration | Passed | Quality | Cost | Score / $ | Pareto |",
-            "|---|---:|---:|---:|---:|---:|",
-        ]
-    )
-
-    comparable = [row for row in latest_valid if row["cost_usd"] is not None]
-    for row in sorted(comparable, key=lambda item: (-quality(item), float(item["cost_usd"]))):
-        score = quality(row)
-        cost = float(row["cost_usd"])
-        name = label(row)
-        lines.append(
-            f"| {name} | {row['passed']}/{row['tasks']} | {score:.2f} | ${cost:.2f} | "
-            f"{quota_efficiency(score, cost):.2f} | {'yes' if name in frontier else 'no'} |"
+    else:
+        lines.extend(
+            [
+                "## Five-run stability",
+                "",
+                "| Model tier | Valid runs | Median passed | Mean passed | Range |",
+                "|---|---:|---:|---:|---:|",
+            ]
         )
-
-    lines.extend(
-        [
-            "",
-            "## Rolling stability",
-            "",
-            "| Configuration | Runs | Median passed | Mean passed | Range | Latest valid batch |",
-            "|---|---:|---:|---:|---:|---:|",
-        ]
-    )
 
     for values in sorted(grouped.values(), key=lambda group: label(group[-1])):
         valid = [row for row in values if not bool(row["anomaly"])]
         sample = valid[-5:] if valid else values[-5:]
         pass_values = [int(row["passed"]) for row in sample]
-        latest = sample[-1]
         lines.append(
-            f"| {label(latest)} | {len(sample)} | {median(pass_values):.1f} | "
-            f"{mean(pass_values):.2f} | {min(pass_values)}–{max(pass_values)} | {latest['batch_id']} |"
+            f"| {label(sample[-1])} | {len(sample)} | {median(pass_values):.1f} | "
+            f"{mean(pass_values):.2f} | {min(pass_values)}–{max(pass_values)} |"
         )
-
-    lines.extend(
-        [
-            "",
-            "## Interpretation",
-            "",
-            "- Use the latest complete batch to understand current service behavior.",
-            "- Use the rolling table and Pareto frontier for model recommendations.",
-            "- Anomalous batches remain visible but do not replace the latest valid comparison.",
-            "- A cheap model with a high score-per-dollar value may still have low absolute reliability.",
-            "",
-            "Data attribution: source benchmark data comes from Codex Radar (`codexradar.com`).",
-            "",
-        ]
-    )
-    return "\n".join(lines)
+    lines.append("")
 
 
 def render_chinese(
-    grouped: dict[tuple[str, str], list[dict[str, object]]],
-    latest_all: list[dict[str, object]],
-    latest_valid: list[dict[str, object]],
-    frontier: set[str],
+    rows: list[dict[str, object]], weights: list[dict[str, object]]
 ) -> str:
+    ordered_batches = batches(rows)
+    latest_id, latest_rows = ordered_batches[-1]
+    valid_id, valid_rows = latest_complete_valid_batch(ordered_batches)
+
     lines = [
         "# 模型雷达自动汇总报告 — 简体中文",
         "",
-        "> 根据 `data/history/runs.csv` 自动生成。缺少逐题加权分的历史行暂时使用原始通过百分比作为质量代理。",
+        "> 根据版本化 CSV 自动生成；正式解释和推荐仍以 `reports/latest.zh-CN.md` 为准。",
         "",
-        "## 最新记录批次",
+        "## 当前模型推荐",
         "",
-        "| 模型配置 | 批次 | 通过 | 质量分 | 费用 | 异常 |",
-        "|---|---:|---:|---:|---:|---:|",
+        "| 场景 | 推荐 |",
+        "|---|---|",
+        "| 机械、低风险、允许重试 | Luna Medium 或 Terra Medium，先看近期稳定性 |",
+        "| 日常开发 | **Sol Medium** |",
+        "| 高难、额度敏感、允许长时间运行 | **Luna Max** |",
+        "| 最高能力兜底 | 较低档失败后使用 **Sol Max** |",
+        "",
     ]
-
-    for row in sorted(latest_all, key=lambda item: (-quality(item), label(item))):
-        cost = "—" if row["cost_usd"] is None else f"${float(row['cost_usd']):.2f}"
-        lines.append(
-            f"| {label(row)} | {row['batch_id']} | {row['passed']}/{row['tasks']} | "
-            f"{quality(row):.2f} | {cost} | {'是' if row['anomaly'] else '否'} |"
-        )
-
-    lines.extend(
-        [
-            "",
-            "## 最新非异常批次成本—质量视图",
-            "",
-            "| 模型配置 | 通过 | 质量分 | 费用 | 每美元得分 | Pareto 前沿 |",
-            "|---|---:|---:|---:|---:|---:|",
-        ]
+    append_weights(lines, weights, zh=True)
+    append_ranking(
+        lines,
+        latest_id,
+        latest_rows,
+        title="最新观测批次排名",
+        warning="异常批次继续展示，但不应直接替代长期模型排序。"
+        if any(bool(row["anomaly"]) for row in latest_rows)
+        else "",
+        zh=True,
     )
-
-    comparable = [row for row in latest_valid if row["cost_usd"] is not None]
-    for row in sorted(comparable, key=lambda item: (-quality(item), float(item["cost_usd"]))):
-        score = quality(row)
-        cost = float(row["cost_usd"])
-        name = label(row)
-        lines.append(
-            f"| {name} | {row['passed']}/{row['tasks']} | {score:.2f} | ${cost:.2f} | "
-            f"{quota_efficiency(score, cost):.2f} | {'是' if name in frontier else '否'} |"
-        )
-
-    lines.extend(
-        [
-            "",
-            "## 滚动稳定性",
-            "",
-            "| 模型配置 | 样本数 | 通过数中位数 | 通过数均值 | 范围 | 最新有效批次 |",
-            "|---|---:|---:|---:|---:|---:|",
-        ]
+    append_ranking(
+        lines,
+        valid_id,
+        valid_rows,
+        title="最近正常完整批次排名",
+        warning="该表用于辅助长期推荐，不代表所有私人项目。",
+        zh=True,
     )
-
-    for values in sorted(grouped.values(), key=lambda group: label(group[-1])):
-        valid = [row for row in values if not bool(row["anomaly"])]
-        sample = valid[-5:] if valid else values[-5:]
-        pass_values = [int(row["passed"]) for row in sample]
-        latest = sample[-1]
-        lines.append(
-            f"| {label(latest)} | {len(sample)} | {median(pass_values):.1f} | "
-            f"{mean(pass_values):.2f} | {min(pass_values)}–{max(pass_values)} | {latest['batch_id']} |"
-        )
-
+    append_stability(lines, rows, zh=True)
     lines.extend(
         [
+            "## 历史数据",
             "",
-            "## 解读原则",
-            "",
-            "- 使用最新完整批次判断当前服务状态。",
-            "- 使用滚动统计和 Pareto 前沿形成模型推荐。",
-            "- 异常批次继续展示，但不替代最新有效批次的横向比较。",
-            "- 便宜模型即使每美元得分很高，也可能仍然缺乏足够的绝对可靠性。",
+            "[查看全部历史批次及跳转索引](history/README.md)。",
             "",
             "数据来源：Codex Radar（`codexradar.com`）。",
             "",
@@ -246,32 +270,86 @@ def render_chinese(
     return "\n".join(lines)
 
 
+def render_english(
+    rows: list[dict[str, object]], weights: list[dict[str, object]]
+) -> str:
+    ordered_batches = batches(rows)
+    latest_id, latest_rows = ordered_batches[-1]
+    valid_id, valid_rows = latest_complete_valid_batch(ordered_batches)
+
+    lines = [
+        "# Generated Model Radar Report — English",
+        "",
+        "> Generated from versioned CSV files; the maintained interpretation remains in `reports/latest.en.md`.",
+        "",
+        "## Current model recommendations",
+        "",
+        "| Work type | Recommendation |",
+        "|---|---|",
+        "| Mechanical, low-risk, retryable | Luna Medium or Terra Medium; check recent stability |",
+        "| General daily development | **Sol Medium** |",
+        "| Difficult, quota-sensitive, long-running | **Luna Max** |",
+        "| Maximum-capability fallback | **Sol Max** after cheaper tiers fail |",
+        "",
+    ]
+    append_weights(lines, weights, zh=False)
+    append_ranking(
+        lines,
+        latest_id,
+        latest_rows,
+        title="Latest observed weighted ranking",
+        warning="An anomalous batch remains visible but should not directly replace the long-term hierarchy."
+        if any(bool(row["anomaly"]) for row in latest_rows)
+        else "",
+        zh=False,
+    )
+    append_ranking(
+        lines,
+        valid_id,
+        valid_rows,
+        title="Latest complete non-anomalous ranking",
+        warning="This table supports the long-term recommendation but does not represent every private repository.",
+        zh=False,
+    )
+    append_stability(lines, rows, zh=False)
+    lines.extend(
+        [
+            "## Historical data",
+            "",
+            "[Browse every recorded batch through the history index](history/README.md).",
+            "",
+            "Data attribution: source benchmark data comes from Codex Radar (`codexradar.com`).",
+            "",
+        ]
+    )
+    return "\n".join(lines)
+
+
 def main() -> None:
     rows = load_rows()
-    grouped, latest_all, latest_valid, frontier = prepare(rows)
-
-    english = render_english(grouped, latest_all, latest_valid, frontier)
-    chinese = render_chinese(grouped, latest_all, latest_valid, frontier)
+    weights = load_weights()
+    chinese = render_chinese(rows, weights)
+    english = render_english(rows, weights)
     bilingual = "\n".join(
         [
             "# Generated Model Radar Report / 模型雷达自动汇总报告",
             "",
-            "[简体中文](#简体中文) · [English](#english)",
+            "[简体中文](#简体中文) · [English](#english) · [历史数据 / History](history/README.md)",
             "",
-            "<a id=\"简体中文\"></a>",
+            '<a id="简体中文"></a>',
             chinese,
             "",
             "---",
             "",
-            "<a id=\"english\"></a>",
+            '<a id="english"></a>',
             english,
             "",
         ]
     )
 
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
-    OUTPUT_EN.write_text(english, encoding="utf-8")
     OUTPUT_ZH.write_text(chinese, encoding="utf-8")
+    OUTPUT_EN.write_text(english, encoding="utf-8")
     OUTPUT_BILINGUAL.write_text(bilingual, encoding="utf-8")
 
     for output in (OUTPUT_ZH, OUTPUT_EN, OUTPUT_BILINGUAL):
