@@ -4,6 +4,14 @@ A community-maintained, reproducible monitor for **GPT‑5.6 Luna, Terra, and So
 
 > Data attribution: source benchmark data comes from **Codex Radar** (`codexradar.com`, formerly `codex-reset-radar.pages.dev`). This repository is an independent secondary analysis project and is not affiliated with OpenAI, Codex Radar, or DeepSWE.
 
+## English project statement
+
+This is an independent, non-commercial, open-source secondary-analysis project. It studies publicly visible Codex Radar benchmark results and adds reproducible difficulty weighting, stability analysis, anomaly handling, cost-efficiency metrics, and practical model recommendations.
+
+The current repository does **not** use a private API, bypass authentication, or access protected endpoints. Publicly displayed benchmark results are recorded with attribution and transformed through original analysis code. If the project later adds automated full-data synchronization, private API access, or redistribution of a complete historical dataset, the repository maintainer will first coordinate with the Codex Radar maintainer.
+
+A longer English overview is available in [`docs/PROJECT_OVERVIEW_EN.md`](docs/PROJECT_OVERVIEW_EN.md).
+
 ## What this repository tracks
 
 - Model families: **Luna, Terra, Sol**
@@ -69,6 +77,7 @@ See [`docs/COSTS.md`](docs/COSTS.md).
 │   ├── schema/task_results.example.csv
 │   └── weights/task_weights.csv  # task pass rates and current weights
 ├── docs/
+│   ├── PROJECT_OVERVIEW_EN.md
 │   ├── DATA_SOURCES.md
 │   ├── METHODOLOGY.md
 │   ├── COSTS.md
@@ -95,12 +104,17 @@ python scripts/build_report.py
 
 ## Data policy
 
-The public summary endpoint and visible website are used with attribution. Codex Radar states that its full JSON API and derivative integrations require authorization. This repository does not include credentials and does not bypass that requirement. New full-detail data should be added from:
+This project analyzes benchmark information that is publicly visible on Codex Radar and always attributes the original source.
 
-1. manually verified website snapshots, or
-2. an authorized API export supplied by the repository maintainer.
+Current maintenance may use:
 
-Each imported batch should retain its original timestamp, source URL, and provenance note.
+1. manually verified public website snapshots;
+2. public summary data exposed by the source site; and
+3. original calculations produced by this repository.
+
+The project does not use private credentials, evade access controls, or present itself as an official Codex Radar mirror. Permission is not treated as a prerequisite for the present public-page analysis. However, before adding automated full-history synchronization, private API access, or redistribution of a complete protected dataset, the project will contact the Codex Radar maintainer and follow any stated access and attribution requirements.
+
+Each imported batch should retain its original timestamp, source URL, provenance note, and any uncertainty caused by rounded or partial data.
 
 ## Limitations
 
