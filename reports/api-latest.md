@@ -9,7 +9,7 @@
 
 **API 快照：** `a74e838c747f14bc`  
 **源站观测时间：** `2026-07-13T22:08:07.261261+08:00`  
-**本次抓取时间：** `2026-07-13T16:57:37+00:00`
+**本次抓取时间：** `2026-07-13T18:48:13+00:00`
 
 > 这是 Codex Radar API 返回的模型级摘要，不是本项目根据逐题矩阵计算的难度加权分。
 
@@ -45,7 +45,7 @@
 
 **API snapshot:** `a74e838c747f14bc`  
 **Source observation:** `2026-07-13T22:08:07.261261+08:00`  
-**Retrieved:** `2026-07-13T16:57:37+00:00`
+**Retrieved:** `2026-07-13T18:48:13+00:00`
 
 > This is a model-level summary from the Codex Radar API, not the project's task-level difficulty-weighted score.
 
