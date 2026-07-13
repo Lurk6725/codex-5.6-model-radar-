@@ -1,0 +1,11 @@
+task_id,short_description,historical_pass_rate,soft_inverse_weight,weight_snapshot,source_note
+01,Ordered-map JSONPath API,0.79,7.76,2026-07-13-1405,Community-transcribed Codex Radar snapshot
+02,Module loading and cache behavior,0.80,7.71,2026-07-13-1405,Community-transcribed Codex Radar snapshot
+03,HTTPX multipart response parsing,0.95,7.09,2026-07-13-1405,Community-transcribed Codex Radar snapshot
+04,Bandit incremental cache controls,0.38,11.15,2026-07-13-1405,Community-transcribed Codex Radar snapshot
+05,IPython session replay behavior,0.34,11.81,2026-07-13-1405,Community-transcribed Codex Radar snapshot
+06,ofetch origin-aware circuit breaker,0.94,7.14,2026-07-13-1405,Community-transcribed Codex Radar snapshot
+07,Wiki and Markdown link conversion,0.16,17.11,2026-07-13-1405,Community-transcribed Codex Radar snapshot
+08,CSS lexer abbreviation conversion,0.49,9.91,2026-07-13-1405,Community-transcribed Codex Radar snapshot
+09,fd deterministic multi-key sorting,0.35,11.70,2026-07-13-1405,Community-transcribed Codex Radar snapshot
+10,Stylesheet selector structure,0.64,8.62,2026-07-13-1405,Community-transcribed Codex Radar snapshot
