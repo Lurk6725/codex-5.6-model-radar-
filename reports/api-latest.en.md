@@ -4,7 +4,7 @@
 
 **API snapshot:** `a74e838c747f14bc`  
 **Source observation:** `2026-07-13T22:08:07.261261+08:00`  
-**Retrieved:** `2026-07-13T22:33:20+00:00`
+**Retrieved:** `2026-07-13T23:32:25+00:00`
 
 > This is a model-level summary from the Codex Radar API, not the project's task-level difficulty-weighted score.
 
