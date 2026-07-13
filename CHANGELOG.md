@@ -1,23 +1,29 @@
 # Changelog / 更新日志
 
-All notable methodology, data, recommendation, and publication-format changes are documented here.  
-所有重要的评分方法、数据、模型推荐和发布格式变化都会记录在此。
+All notable methodology, data, recommendation, and presentation changes are documented here.  
+所有重要的评分方法、数据、模型推荐和页面展示变化都会记录在此。
 
 ## Unreleased / 尚未发布
 
 ### Added / 新增
 
-- Complete Simplified Chinese project overview in `docs/PROJECT_OVERVIEW_ZH_CN.md`.
-- Bilingual publication policy in `docs/BILINGUAL_POLICY.md`.
-- Separate Chinese and English latest reports plus a combined bilingual entry page.
-- Chinese, English, and combined outputs from `scripts/build_report.py`.
-- CI checks requiring both language versions for formal and generated reports.
-- README landing page with both Simplified Chinese and English project explanations.
+- Navigable historical batch index in `reports/history/README.md`.
+- Full latest task-weight table with historical pass rates and weights.
+- Latest observed and latest complete non-anomalous model rankings.
+- Weighted score `/100` and weighted score `/$` in the main ranking tables.
+- Direct links from the project home page to latest and historical results.
 
 ### Changed / 变更
 
-- Contribution rules now require identical data, anomaly decisions, recommendations, confidence, and limitations in both languages.
-- Public-page analysis is distinguished from optional future private API or full-history integration.
+- Model recommendations now appear before detailed weights and rankings.
+- README and reports were simplified to emphasize results instead of maintenance rules.
+- The report generator now outputs recommendations, weights, observed ranking, valid ranking, and rolling stability in that order.
+- Chinese, English, and combined result pages remain available without a standalone bilingual-policy document.
+
+### Removed / 删除
+
+- Redundant `docs/BILINGUAL_POLICY.md`.
+- Broken or unnecessary references to the removed policy document.
 
 ## 0.1.0 — 2026-07-13
 
@@ -44,4 +50,4 @@ All notable methodology, data, recommendation, and publication-format changes ar
 
 - Historical public-summary rows do not always expose task-level matrices or prior-run cost.
 - The 14:05 snapshot contains rounded manually transcribed values.
-- Private API access or protected full-history export, if later needed, requires coordination with the Codex Radar maintainer; current public-page analysis does not depend on it.
+- Complete protected exports or private API access, if later needed, require coordination with the Codex Radar maintainer; current public-page analysis does not depend on them.
