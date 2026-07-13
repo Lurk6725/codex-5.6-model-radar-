@@ -4,12 +4,21 @@
 from __future__ import annotations
 
 import os
+import sys
 from pathlib import Path
 
-from radar.api import DEFAULT_API_URL, append_history, fetch_current_payload, normalize_model_summary, token_from_environment
-
-
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+from radar.api import (  # noqa: E402
+    DEFAULT_API_URL,
+    append_history,
+    fetch_current_payload,
+    normalize_model_summary,
+    token_from_environment,
+)
+
+
 HISTORY_PATH = ROOT / "data" / "api" / "model_iq_history.csv"
 
 
