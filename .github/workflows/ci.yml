@@ -20,7 +20,19 @@ jobs:
         run: python -m pip install -e ".[dev]"
       - name: Test
         run: pytest
-      - name: Build report
+      - name: Build bilingual reports
         run: python scripts/build_report.py
-      - name: Verify generated report is non-empty
-        run: test -s reports/latest.generated.md
+      - name: Verify generated reports
+        run: |
+          test -s reports/latest.generated.md
+          test -s reports/latest.generated.zh-CN.md
+          test -s reports/latest.generated.en.md
+          grep -q "简体中文" reports/latest.generated.md
+          grep -q "English" reports/latest.generated.md
+      - name: Verify formal bilingual latest reports
+        run: |
+          test -s reports/latest.md
+          test -s reports/latest.zh-CN.md
+          test -s reports/latest.en.md
+          grep -q "简体中文" reports/latest.md
+          grep -q "English" reports/latest.md
