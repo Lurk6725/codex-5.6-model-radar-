@@ -1,0 +1,1 @@
+snapshot_id,observed_at,retrieved_at,source_date,model,effort,label,source_score,passed,tasks,invalid,valid_tasks,total_tokens,input_tokens,cached_input_tokens,output_tokens,wall_seconds,cost_usd,provenance,source_url

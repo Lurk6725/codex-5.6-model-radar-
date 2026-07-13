@@ -1,6 +1,6 @@
 # GPT‑5.6 Codex Model Radar
 
-[简体中文](#简体中文) · [English](#english) · [最新分析 / Latest report](reports/latest.md) · [历史数据 / History](reports/history/README.md)
+[简体中文](#简体中文) · [English](#english) · [最新分析 / Latest report](reports/latest.md) · [API 自动监控 / API monitor](reports/api-latest.md) · [历史数据 / History](reports/history/README.md)
 
 > **数据来源 / Data attribution:** 原始基准测试数据来自 **Codex Radar**（`codexradar.com`，原 `codex-reset-radar.pages.dev`）。本仓库是独立的二次分析项目，与 OpenAI、Codex Radar 或 DeepSWE 均无官方隶属关系。  
 > Source benchmark data comes from **Codex Radar** (`codexradar.com`, formerly `codex-reset-radar.pages.dev`). This is an independent secondary-analysis project and is not affiliated with OpenAI, Codex Radar, or DeepSWE.
@@ -20,6 +20,8 @@
 - 面向实际开发场景的模型推荐。
 
 当前项目只使用公开页面和公开摘要中的数据，并保留来源、时间戳、异常状态和数据精度说明。
+
+已获授权的 Codex Radar API 还会自动更新模型级摘要，见 [API 自动监控报告](reports/api-latest.md) 和 [API 接入说明](docs/API_INTEGRATION.md)。API 摘要没有逐题矩阵，因此不会被冒充为难度加权分。
 
 ## 当前模型推荐
 
@@ -107,6 +109,8 @@ This repository tracks GPT‑5.6 Codex **Luna, Terra, and Sol** model families a
 - practical recommendations by workload type.
 
 The project uses public-page and public-summary data and records provenance, timestamps, anomaly status, and data precision.
+
+An authorized Codex Radar API integration also refreshes model-level summaries automatically. See the [API monitor report](reports/api-latest.md) and [API integration notes](docs/API_INTEGRATION.md). Because the endpoint does not expose task-level outcomes, API summaries are not mislabeled as difficulty-weighted scores.
 
 ## Current model recommendations
 
