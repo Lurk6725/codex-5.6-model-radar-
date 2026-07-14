@@ -3,42 +3,88 @@ name: Update Codex Radar API data
 on:
   workflow_dispatch:
   schedule:
-    - cron: "5,35 * * * *"
+    # Avoid the busiest minutes near the top and half of each hour.
+    - cron: "17,47 * * * *"
 
 permissions:
   contents: write
 
 concurrency:
   group: codex-radar-api-update
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     env:
       CODEX_RADAR_API_TOKEN: ${{ secrets.CODEX_RADAR_API_TOKEN }}
       CODEX_RADAR_API_URL: https://codexradar.com/api/v1/current
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Fetch authorized API summary
-        run: python scripts/fetch_codex_radar.py
-      - name: Build bilingual API report
-        run: python scripts/build_api_report.py
-      - name: Commit changed data and reports
+
+      - name: Validate API configuration
         shell: bash
         run: |
-          if [[ -z "$(git status --porcelain -- data/api/model_iq_history.csv reports/api-latest.md reports/api-latest.zh-CN.md reports/api-latest.en.md)" ]]; then
-            echo "No new API snapshot"
+          if [[ -z "${CODEX_RADAR_API_TOKEN}" ]]; then
+            echo "CODEX_RADAR_API_TOKEN is not configured"
+            exit 1
+          fi
+
+      - name: Fetch authorized API summary
+        shell: bash
+        run: |
+          for attempt in 1 2 3; do
+            echo "API fetch attempt ${attempt}/3"
+            if python scripts/fetch_codex_radar.py; then
+              exit 0
+            fi
+            sleep $((attempt * 15))
+          done
+          echo "API fetch failed after three attempts"
+          exit 1
+
+      - name: Build bilingual API report
+        run: python scripts/build_api_report.py
+
+      - name: Commit changed data, heartbeat, and reports
+        shell: bash
+        run: |
+          paths=(
+            data/api/model_iq_history.csv
+            data/api/monitor_status.json
+            reports/api-latest.md
+            reports/api-latest.zh-CN.md
+            reports/api-latest.en.md
+          )
+
+          if [[ -z "$(git status --porcelain -- "${paths[@]}")" ]]; then
+            echo "No API or heartbeat changes"
             exit 0
           fi
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/api/model_iq_history.csv reports/api-latest.md reports/api-latest.zh-CN.md reports/api-latest.en.md
-          git commit -m "Update Codex Radar API snapshot"
-          git push
+          git add "${paths[@]}"
+          git commit -m "Update Codex Radar API monitor"
+
+          for attempt in 1 2 3; do
+            echo "Push attempt ${attempt}/3"
+            git fetch origin main
+            if git rebase origin/main && git push origin HEAD:main; then
+              exit 0
+            fi
+            git rebase --abort || true
+            sleep $((attempt * 10))
+          done
+
+          echo "Unable to push API monitor update after three attempts"
+          exit 1
