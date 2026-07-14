@@ -53,3 +53,12 @@ batch_id,model,effort,passed,tasks,raw_iq,total_tokens,input_tokens,cached_input
 2026-07-13-pm-anomaly,gpt-5.6-terra,medium,5,10,75,9400000,,,,2880,6.0,50.38,true,0.35,manual_snapshot_rounded,https://codexradar.com/
 2026-07-13-pm-anomaly,gpt-5.6-luna,max,7,10,105,118400000,,,,16560,18.9,70.31,true,0.35,manual_snapshot_rounded,https://codexradar.com/
 2026-07-13-pm-anomaly,gpt-5.6-luna,medium,2,10,30,10500000,,,,3240,2.4,18.24,true,0.35,manual_snapshot_rounded,https://codexradar.com/
+2026-07-14-am,gpt-5.6-sol,max,6,10,90,72000000,,,,13680,60.2,59.15,false,1.0,public_page_task_matrix_and_summary,https://codexradar.com/
+2026-07-14-am,gpt-5.6-sol,xhigh,6,10,90,40667099,40351837,38782976,315262,2709,37.965333,54.64,false,1.0,authorized_api_plus_public_page_task_matrix,https://codexradar.com/
+2026-07-14-am,gpt-5.6-sol,high,9,10,135,23496190,23259299,22182656,236891,1932,24.619993,82.75,false,1.0,authorized_api_plus_public_page_task_matrix,https://codexradar.com/
+2026-07-14-am,gpt-5.6-sol,medium,9,10,135,18483032,18324721,17501440,158311,1672,18.410695,82.75,false,1.0,authorized_api_plus_public_page_task_matrix,https://codexradar.com/
+2026-07-14-am,gpt-5.6-sol,low,8,10,120,8195968,8117612,7498496,78356,974,9.733748,71.63,false,1.0,authorized_api_plus_public_page_task_matrix,https://codexradar.com/
+2026-07-14-am,gpt-5.6-terra,max,7,10,105,65722639,65171332,62758912,551307,2259,30.912623,62.92,false,1.0,authorized_api_plus_public_page_task_matrix,https://codexradar.com/
+2026-07-14-am,gpt-5.6-terra,medium,5,10,75,8014450,7917172,7251456,97278,1399,5.184964,45.25,false,1.0,authorized_api_plus_public_page_task_matrix,https://codexradar.com/
+2026-07-14-am,gpt-5.6-luna,max,6,10,90,88731185,88134190,85539072,596995,2367,15.110003,60.29,false,1.0,authorized_api_plus_public_page_task_matrix,https://codexradar.com/
+2026-07-14-am,gpt-5.6-luna,medium,1,10,15,10811042,10715647,9974784,95395,1484,2.436535,11.65,false,1.0,authorized_api_plus_public_page_task_matrix,https://codexradar.com/
