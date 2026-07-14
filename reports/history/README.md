@@ -19,6 +19,7 @@ This page preserves every recorded public batch. Blank cost or weighted-score fi
 | 2026-07-13-am | 正常 / valid | 9 | [查看 / View](#2026-07-13-am) |
 | 2026-07-13-pm-anomaly | **异常 / anomalous** | 9 | [查看 / View](#2026-07-13-pm-anomaly) |
 | 2026-07-14-am | **有效，高消耗警告 / valid, high-consumption warning** | 9 | [查看 / View](#2026-07-14-am) |
+| 2026-07-14-pm | **有效，高消耗与来源一致性警告 / valid, high-consumption and source-consistency warnings** | 9 | [查看 / View](2026-07-14-pm.md) |
 
 ---
 
@@ -171,10 +172,12 @@ This page preserves every recorded public batch. Blank cost or weighted-score fi
 - `data/history/task_matrices.csv` 保存可复现的十题通过位图；
 - 早期摘要缺少费用或逐题矩阵时显示 `—`，不会使用后续权重倒推；
 - `2026-07-13-pm-anomaly` 是异常批次；
-- `2026-07-14-am` 的 API 时间字段存在陈旧值，批次时间以公开网页 07:46 为准。
+- `2026-07-14-am` 的 API 时间字段存在陈旧值，批次时间以公开网页 07:46 为准；
+- `2026-07-14-pm` 的 Sol Medium 逐题列表与汇总通过数不一致，详细页保留两份来源陈述。
 
 - `data/history/runs.csv` stores aggregate runs;
 - `data/history/task_matrices.csv` stores reproducible ten-task pass bitmaps;
 - missing early fields remain blank rather than being reconstructed with later weights;
 - `2026-07-13-pm-anomaly` is down-weighted;
-- the 2026-07-14 API timestamp was stale, so the public-page time of 07:46 is used.
+- the 2026-07-14 AM API timestamp was stale, so the public-page time of 07:46 is used;
+- the 2026-07-14 PM Sol Medium task list conflicts with its aggregate pass count, and the detailed page preserves both source statements.
