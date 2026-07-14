@@ -13,24 +13,28 @@ All notable methodology, data, recommendation, and presentation changes are docu
 - Weighted score `/100` and weighted score `/$` in the main ranking tables.
 - Direct links from the project home page to latest and historical results.
 - Authorized API aggregate monitoring with archived normalized snapshots.
-- 2026-07-14 AM aggregate trend analysis in Chinese, English, and combined reports.
+- 2026-07-14 AM and PM analysis in Chinese, English, and combined reports.
+- Dedicated historical snapshot page for `2026-07-14-pm`.
+- Machine-readable PM task matrix and updated task-weight snapshot.
 
 ### Changed / 变更
 
 - Model recommendations now appear before detailed weights and rankings.
 - README and reports were simplified to emphasize results instead of maintenance rules.
-- The report generator now outputs recommendations, weights, observed ranking, valid ranking, and rolling stability in that order.
 - Chinese, English, and combined result pages remain available without a standalone bilingual-policy document.
-- Daily recommendation remains Sol Medium; the latest API snapshot strengthens this conclusion because Medium tied High at 9/10 with lower cost and resource use.
-- Luna Max was reduced from a clear difficult-work recommendation to a watchlist option after the latest aggregate result fell to 6/10.
-- Luna Medium was removed from the low-risk recommendation after falling to 1/10 in the latest aggregate snapshot.
-- API documentation now states that aggregate changes do not prove reruns and that the endpoint lacks task matrices, per-model run IDs, and full/partial batch markers.
+- Low-cost retryable recommendation changed to **Sol Low** after two consecutive 8/10 results.
+- Daily development and small-project bug-review recommendation remains **Sol Medium** because it ties High and XHigh in aggregate quality at lower cost.
+- **Sol Max** returned to the maximum-capability fallback position after reaching the highest PM weighted score.
+- Luna Max is no longer a general difficult-work recommendation.
+- API documentation states that aggregate changes do not prove reruns and that the endpoint lacks task matrices, per-model run IDs, and full/partial batch markers.
 
 ### Data-quality notes / 数据质量说明
 
-- The 2026-07-14 AM API snapshot contains eight tiers and omits Sol Max.
-- The snapshot `source_date` changed to `2026-07-14-am`, while the API `observed_at` value remained unchanged, so freshness metadata is inconsistent.
-- Task-weighted scores remain based on the latest available task matrix and are not recomputed from aggregate API values.
+- The 2026-07-14 PM API snapshot contains eight tiers and omits Sol Max; the public page supplies Sol Max and the task matrix.
+- Terra Medium and Luna Medium were replaced by Terra High and Luna High in the PM active lineup, so these are not like-for-like trend comparisons.
+- Sol Medium is reported as 7/10 by the API and aggregate table, while the public per-task list contains six explicit passes. The repository preserves both source statements and reports a weighted-score range instead of guessing.
+- The PM batch is valid with high-consumption and source-consistency warnings.
+- The API `observed_at` field remains stale while comparison values change; `retrieved_at` and public-page update time are retained separately.
 
 ### Removed / 删除
 
