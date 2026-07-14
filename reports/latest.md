@@ -2,66 +2,67 @@
 
 [中文完整分析](latest.zh-CN.md) · [Full English analysis](latest.en.md) · [API 自动监控 / API monitor](api-latest.md) · [历史数据 / History](history/README.md) · [项目首页 / Project home](../README.md)
 
-**分析截止 / Cutoff:** 2026-07-14 07:46 Asia/Shanghai  
-**批次 / Batch:** `2026-07-14-am`  
+**分析截止 / Cutoff:** 2026-07-14 14:34 Asia/Shanghai  
+**批次 / Batch:** `2026-07-14-pm`  
+**API 快照 / API snapshot:** `e0ac3269c1279e22`  
 **数据 / Sources:** Codex Radar 授权 API + 公开网页逐题矩阵 / authorized API + public task matrix
 
-> API 返回八个档位，公开网页补齐 Sol Max、九档逐题矩阵和最新历史通过率。  
-> The API returned eight tiers; the public page supplied Sol Max, the nine-tier task matrix, and updated historical pass rates.
+> 源站将 Sol Medium 汇总为 7/10，但公开逐题列表只显示六个明确通过项，因此本报告展示加权分范围，不猜测缺失题目。  
+> The source reports Sol Medium as 7/10, while its public task list contains only six explicit passes. The report therefore shows a weighted-score range instead of guessing the missing task.
 
 ## 模型推荐 / Model recommendations
 
 | 场景 / Work type | 当前建议 / Recommendation | 说明 / Rationale |
 |---|---|---|
-| 机械、低风险、允许重试 / Mechanical, low-risk, retryable | **Terra Medium**；Sol Low 作为波动候选 / Sol Low as a volatile candidate | Terra 更便宜；Low 本轮 8/10 但长期波动大 |
-| 日常开发与小项目 Bug 审查 / Daily development and small-project bug review | **Sol Medium** | 与 High 同为 9/10 且逐题相同，但更便宜 / same 9/10 task pattern as High at lower cost |
-| 高难、额度敏感、可长跑 / Difficult, quota-sensitive, long-running | **先用 Sol Medium；Luna Max 仅专项候选 / Try Medium first; Luna Max specialized only** | Luna Max 6/10，但唯一通过第 07 题 |
-| 最高能力兜底 / Maximum-capability fallback | **Sol Max 仅保留历史上限含义 / historical-ceiling only** | 本轮 6/10 且费用最高 |
+| 机械、低风险、允许重试 / Mechanical, low-risk, retryable | **Sol Low** | 连续两轮 8/10；本轮加权分/$ 8.46 / two consecutive 8/10 runs; weighted/$ 8.46 |
+| 日常开发与小项目 Bug 审查 / Daily development and small-project bug review | **Sol Medium** | 与 High、XHigh 同为汇总 7/10，但明显更便宜 / same aggregate 7/10 as High and XHigh at much lower cost |
+| 高难任务与最终兜底 / Difficult work and final fallback | **Sol Max** | 加权分最高 83.33，但费用 $49.90 / highest weighted score, but costs $49.90 |
 
 ## 最新权重 / Latest task weights
 
-**快照 / Snapshot:** `2026-07-14-0746`  
-`weight_i ∝ 1 / sqrt(historical_pass_rate_i)`，总和 / normalized total = 100.
+**快照 / Snapshot:** `2026-07-14-1434`
 
 | 题号 / Task | 历史通过率 / Pass rate | 权重 /100 |
 |---:|---:|---:|
-| 01 | 78.88% | 7.80 |
-| 02 | 79.81% | 7.76 |
-| 03 | 94.41% | 7.13 |
-| 04 | 38.82% | 11.12 |
-| 05 | 35.40% | 11.65 |
-| 06 | 93.48% | 7.17 |
-| 07 | 16.15% | **17.25** |
-| 08 | 49.38% | 9.86 |
-| 09 | 36.02% | 11.55 |
-| 10 | 63.24% | 8.71 |
+| 01 | 78.92% | 7.85 |
+| 02 | 79.22% | 7.83 |
+| 03 | 94.58% | 7.17 |
+| 04 | 39.16% | 11.14 |
+| 05 | 36.45% | 11.55 |
+| 06 | 93.67% | 7.20 |
+| 07 | 16.57% | **17.13** |
+| 08 | 49.40% | 9.92 |
+| 09 | 37.65% | 11.36 |
+| 10 | 62.24% | 8.84 |
 |  | **合计 / Total** | **100.00** |
 
 ## 最新逐题加权排名 / Latest task-weighted ranking
 
 | 排名 / Rank | 模型 / Tier | 通过 / Passed | 加权分 /100 | 费用 / Cost | 加权分/$ / Weighted/$ |
 |---:|---|---:|---:|---:|---:|
-| 1 | **Sol Medium** | 9/10 | **82.75** | $18.41 | **4.49** |
-| 2 | Sol High | 9/10 | **82.75** | $24.62 | 3.36 |
-| 3 | Sol Low | 8/10 | 71.63 | $9.73 | 7.36 |
-| 4 | Terra Max | 7/10 | 62.92 | $30.91 | 2.04 |
-| 5 | Luna Max | 6/10 | 60.29 | $15.11 | 3.99 |
-| 6 | Sol Max | 6/10 | 59.15 | $60.20 | 0.98 |
-| 7 | Sol XHigh | 6/10 | 54.64 | $37.97 | 1.44 |
-| 8 | **Terra Medium** | 5/10 | 45.25 | **$5.18** | **8.73** |
-| 9 | Luna Medium | 1/10 | 11.65 | $2.44 | 4.78 |
+| 1 | **Sol Max** | 8/10 | **83.33** | $49.90 | 1.67 |
+| 2 | **Sol Low** | 8/10 | **78.94** | $9.33 | **8.46** |
+| 3–5* | **Sol Medium** | 7/10 | **66.18–75.48** | $16.85 | 3.93–4.48 |
+| 3–5 | Sol High | 7/10 | 66.20 | $27.03 | 2.45 |
+| 3–5 | Sol XHigh | 7/10 | 66.20 | $37.05 | 1.79 |
+| 6 | Terra Max | 7/10 | 62.48 | $34.91 | 1.79 |
+| 7 | Luna Max | 6/10 | 52.97 | $16.33 | 3.24 |
+| 8 | Luna High | 5/10 | 41.42 | $5.88 | 7.05 |
+| 9 | Terra High | 3/10 | 22.21 | $9.14 | 2.43 |
+
+\* Sol Medium 的逐题列表与汇总总数不一致；机器可读数据保留该矛盾。 / Sol Medium's task list conflicts with its aggregate pass count; the machine-readable data preserves the discrepancy.
 
 ## 核心结论 / Core findings
 
-- **Sol Medium 继续是默认档 / remains the default.** Medium 与 High 逐题结果完全相同，但成本更低。
-- **Sol Low 值得观察 / is worth watching**, but one 8/10 run does not erase its weak historical median.
-- **Luna Max 是专项而非通用优势 / is specialized, not broadly superior.** It uniquely passed task 07.
-- **Sol Max 和 XHigh 再次没有单调收益 / again show no monotonic gain.** Both scored 6/10 at much higher cost.
-- **Luna Medium 不再推荐 / is no longer recommended** after a 1/10 result.
+- **Sol Low 升级为低成本推荐 / becomes the low-cost recommendation.** 连续两轮 8/10，且本轮通过最难第 07 题。 / Two consecutive 8/10 runs, including task 07 this time.
+- **Sol Medium 保持日常默认 / remains the daily default.** 同为汇总 7/10 时，它比 High 和 XHigh 明显更便宜。 / At the same aggregate 7/10, it is much cheaper than High and XHigh.
+- **Sol Max 恢复最高能力兜底 / restores the maximum-capability fallback.** 本轮加权分第一，但单位成本效率低。 / Highest weighted score, but poor cost efficiency.
+- **High/XHigh 没有升级价值 / offer no upgrade value.** 两者逐题结果相同，High 更便宜；Medium 总分相同且更便宜。 / High and XHigh share the same task bitmap; Medium has the same aggregate score at lower cost.
+- **Terra High 与 Luna High 是新档位 / are new active tiers.** 不能与上午的 Medium 档直接做同档趋势比较。 / They cannot be directly compared with the morning Medium tiers.
 
 ## 批次状态 / Batch status
 
-本轮 57/90，总费用约 $204.59，总 Token 约 336.1M。质量较 7 月 13 日异常批次明显恢复，但消耗仍高。它不满足项目异常规则中的 15% 质量下降条件，因此记为**有效批次，附高消耗警告**。  
-The batch reached 57/90 with about $204.59 cost and 336.1M tokens. Quality recovered, while consumption remained high. It is recorded as **valid with a high-consumption warning**.
+本轮 58/90，总费用约 $206.40，总 Token 约 363.7M。相较上午，质量 +1.8%、费用 +0.9%、Token +8.2%。记录为**有效批次，附高消耗和来源一致性警告**。  
+The batch reached 58/90 at about $206.40 and 363.7M tokens. Versus the morning run, quality rose 1.8%, cost rose 0.9%, and tokens rose 8.2%. It is recorded as **valid with high-consumption and source-consistency warnings**.
 
 [逐题矩阵 / Task matrix](../data/history/task_matrices.csv) · [汇总历史 / Aggregate history](../data/history/runs.csv)
