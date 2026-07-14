@@ -62,3 +62,12 @@ batch_id,model,effort,passed,tasks,raw_iq,total_tokens,input_tokens,cached_input
 2026-07-14-am,gpt-5.6-terra,medium,5,10,75,8014450,7917172,7251456,97278,1399,5.184964,45.25,false,1.0,authorized_api_plus_public_page_task_matrix,https://codexradar.com/
 2026-07-14-am,gpt-5.6-luna,max,6,10,90,88731185,88134190,85539072,596995,2367,15.110003,60.29,false,1.0,authorized_api_plus_public_page_task_matrix,https://codexradar.com/
 2026-07-14-am,gpt-5.6-luna,medium,1,10,15,10811042,10715647,9974784,95395,1484,2.436535,11.65,false,1.0,authorized_api_plus_public_page_task_matrix,https://codexradar.com/
+2026-07-14-pm,gpt-5.6-sol,max,8,10,120,55900000,,,,11160,49.9,83.33,false,1.0,public_page_task_matrix_and_summary,https://codexradar.com/
+2026-07-14-pm,gpt-5.6-sol,xhigh,7,10,105,39829593,39513910,38054144,315683,3268,37.047592,66.20,false,1.0,authorized_api_plus_public_page_task_matrix,https://codexradar.com/
+2026-07-14-pm,gpt-5.6-sol,high,7,10,105,28255888,28026133,26890240,229755,2321,27.027795,66.20,false,1.0,authorized_api_plus_public_page_task_matrix,https://codexradar.com/
+2026-07-14-pm,gpt-5.6-sol,medium,7,10,105,14937807,14789951,13844224,147856,1812,16.846107,,false,1.0,authorized_api_plus_public_page_matrix_mismatch,https://codexradar.com/
+2026-07-14-pm,gpt-5.6-sol,low,8,10,120,7285339,7205582,6572288,79757,597,9.328524,78.94,false,1.0,authorized_api_plus_public_page_task_matrix,https://codexradar.com/
+2026-07-14-pm,gpt-5.6-terra,max,7,10,105,74176496,73590009,70576384,586487,3081,34.905063,62.48,false,1.0,authorized_api_plus_public_page_task_matrix,https://codexradar.com/
+2026-07-14-pm,gpt-5.6-terra,high,3,10,45,13781313,13627188,12279552,154125,2198,9.136133,22.21,false,1.0,authorized_api_plus_public_page_task_matrix,https://codexradar.com/
+2026-07-14-pm,gpt-5.6-luna,max,6,10,90,100118634,99505362,96934400,613272,2940,16.329186,52.97,false,1.0,authorized_api_plus_public_page_task_matrix,https://codexradar.com/
+2026-07-14-pm,gpt-5.6-luna,high,5,10,75,29450769,29215125,27741440,235644,2342,5.876605,41.42,false,1.0,authorized_api_plus_public_page_task_matrix,https://codexradar.com/
