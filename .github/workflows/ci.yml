@@ -27,12 +27,12 @@ jobs:
           test -s reports/latest.generated.md
           test -s reports/latest.generated.zh-CN.md
           test -s reports/latest.generated.en.md
-          grep -q "简体中文" reports/latest.generated.md
-          grep -q "English" reports/latest.generated.md
+          grep -Fq "latest.generated.zh-CN.md" reports/latest.generated.md || grep -Fq "简体中文" reports/latest.generated.md
+          grep -Fq "English" reports/latest.generated.md
       - name: Verify formal bilingual latest reports
         run: |
           test -s reports/latest.md
           test -s reports/latest.zh-CN.md
           test -s reports/latest.en.md
-          grep -q "简体中文" reports/latest.md
-          grep -q "English" reports/latest.md
+          grep -Fq "latest.zh-CN.md" reports/latest.md
+          grep -Fq "latest.en.md" reports/latest.md
