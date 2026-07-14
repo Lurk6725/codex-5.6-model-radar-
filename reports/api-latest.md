@@ -7,9 +7,9 @@
 
 [English](api-latest.en.md) · [项目首页](../README.md) · [API 历史 CSV](../data/api/model_iq_history.csv)
 
-**API 快照：** `a74e838c747f14bc`  
+**API 快照：** `56b5641f66b1a557`  
 **源站观测时间：** `2026-07-13T22:08:07.261261+08:00`  
-**本次抓取时间：** `2026-07-13T23:32:25+00:00`
+**本次抓取时间：** `2026-07-14T01:00:55+00:00`
 
 > 这是 Codex Radar API 返回的模型级摘要，不是本项目根据逐题矩阵计算的难度加权分。
 
@@ -17,14 +17,14 @@
 
 | 排名 | 模型档位 | 源站分数 | 通过 | 任务数 | 费用 | 总 Token | 耗时 |
 |---:|---|---:|---:|---:|---:|---:|---:|
-| 1 | Luna Max | 105 | 7/10 | 10 | $18.94 | 118,365,538 | 1.42h |
-| 2 | Sol Xhigh | 105 | 7/10 | 10 | $33.63 | 36,684,441 | 0.85h |
-| 3 | Sol High | 90 | 6/10 | 10 | $26.78 | 26,956,544 | 0.63h |
-| 4 | Sol Low | 90 | 6/10 | 10 | $9.37 | 7,213,131 | 0.39h |
-| 5 | Terra Max | 90 | 6/10 | 10 | $32.21 | 72,580,591 | 0.72h |
-| 6 | Sol Medium | 75 | 5/10 | 10 | $16.14 | 15,100,079 | 0.59h |
-| 7 | Terra Medium | 75 | 5/10 | 10 | $5.96 | 9,364,303 | 0.56h |
-| 8 | Luna Medium | 30 | 2/10 | 10 | $2.43 | 10,458,978 | 0.54h |
+| 1 | Sol High | 135 | 9/10 | 10 | $24.62 | 23,496,190 | 0.54h |
+| 2 | Sol Medium | 135 | 9/10 | 10 | $18.41 | 18,483,032 | 0.46h |
+| 3 | Sol Low | 120 | 8/10 | 10 | $9.73 | 8,195,968 | 0.27h |
+| 4 | Terra Max | 105 | 7/10 | 10 | $30.91 | 65,722,639 | 0.63h |
+| 5 | Luna Max | 90 | 6/10 | 10 | $15.11 | 88,731,185 | 0.66h |
+| 6 | Sol Xhigh | 90 | 6/10 | 10 | $37.97 | 40,667,099 | 0.75h |
+| 7 | Terra Medium | 75 | 5/10 | 10 | $5.18 | 8,014,450 | 0.39h |
+| 8 | Luna Medium | 15 | 1/10 | 10 | $2.44 | 10,811,042 | 0.41h |
 
 ## 口径说明
 
@@ -33,7 +33,7 @@
 - 加权排名仍以仓库中的逐题数据和权重快照为准；本报告用于自动监控源站最新摘要。
 - 原始 API 响应不写入公开仓库，只保存必要的模型摘要字段。
 
-当前已归档 API 快照数：**1**。
+当前已归档 API 快照数：**2**。
 
 
 ---
@@ -43,9 +43,9 @@
 
 [简体中文](api-latest.zh-CN.md) · [Project home](../README.md) · [API history CSV](../data/api/model_iq_history.csv)
 
-**API snapshot:** `a74e838c747f14bc`  
+**API snapshot:** `56b5641f66b1a557`  
 **Source observation:** `2026-07-13T22:08:07.261261+08:00`  
-**Retrieved:** `2026-07-13T23:32:25+00:00`
+**Retrieved:** `2026-07-14T01:00:55+00:00`
 
 > This is a model-level summary from the Codex Radar API, not the project's task-level difficulty-weighted score.
 
@@ -53,14 +53,14 @@
 
 | Rank | Model tier | Source score | Passed | Tasks | Cost | Total tokens | Wall time |
 |---:|---|---:|---:|---:|---:|---:|---:|
-| 1 | Luna Max | 105 | 7/10 | 10 | $18.94 | 118,365,538 | 1.42h |
-| 2 | Sol Xhigh | 105 | 7/10 | 10 | $33.63 | 36,684,441 | 0.85h |
-| 3 | Sol High | 90 | 6/10 | 10 | $26.78 | 26,956,544 | 0.63h |
-| 4 | Sol Low | 90 | 6/10 | 10 | $9.37 | 7,213,131 | 0.39h |
-| 5 | Terra Max | 90 | 6/10 | 10 | $32.21 | 72,580,591 | 0.72h |
-| 6 | Sol Medium | 75 | 5/10 | 10 | $16.14 | 15,100,079 | 0.59h |
-| 7 | Terra Medium | 75 | 5/10 | 10 | $5.96 | 9,364,303 | 0.56h |
-| 8 | Luna Medium | 30 | 2/10 | 10 | $2.43 | 10,458,978 | 0.54h |
+| 1 | Sol High | 135 | 9/10 | 10 | $24.62 | 23,496,190 | 0.54h |
+| 2 | Sol Medium | 135 | 9/10 | 10 | $18.41 | 18,483,032 | 0.46h |
+| 3 | Sol Low | 120 | 8/10 | 10 | $9.73 | 8,195,968 | 0.27h |
+| 4 | Terra Max | 105 | 7/10 | 10 | $30.91 | 65,722,639 | 0.63h |
+| 5 | Luna Max | 90 | 6/10 | 10 | $15.11 | 88,731,185 | 0.66h |
+| 6 | Sol Xhigh | 90 | 6/10 | 10 | $37.97 | 40,667,099 | 0.75h |
+| 7 | Terra Medium | 75 | 5/10 | 10 | $5.18 | 8,014,450 | 0.39h |
+| 8 | Luna Medium | 15 | 1/10 | 10 | $2.44 | 10,811,042 | 0.41h |
 
 ## Interpretation
 
@@ -69,5 +69,5 @@
 - Task-weighted rankings remain based on the repository's task matrix and weight snapshots; this report monitors the latest API summary.
 - The raw API response is not stored in the public repository; only required model-summary fields are archived.
 
-Archived API snapshots: **1**.
+Archived API snapshots: **2**.
 
