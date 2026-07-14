@@ -1,117 +1,107 @@
 # Latest Analysis Report — English
 
-[Project home](../README.md) · [简体中文](latest.zh-CN.md) · [Historical data](history/README.md)
+[Project home](../README.md) · [简体中文](latest.zh-CN.md) · [API monitor](api-latest.md) · [Historical data](history/README.md)
 
-**Analysis cutoff:** 2026-07-13 14:05 Asia/Shanghai  
-**Primary source:** Codex Radar  
-**Latest batch status:** anomalous; raw results retained with trend reliability weight `0.35`
+**Analysis cutoff:** 2026-07-14 09:00 Asia/Shanghai  
+**Latest API snapshot:** `56b5641f66b1a557`  
+**API source date:** `2026-07-14-am`  
+**Latest available task matrix:** 2026-07-13 14:05
 
-> Source benchmark data comes from Codex Radar (`codexradar.com`).
+> This refresh contains model-level aggregates only. It does not include task outcomes, per-model run IDs, or full-versus-partial rerun markers. The report therefore updates real-time aggregate trends and recommendations without fabricating new difficulty-weighted scores.
 
 ## Model recommendations
 
-The 14:05 batch combines lower aggregate quality with higher estimated cost and token activity, so it should not receive full weight when changing the long-term recommendation.
-
-| Work type | Current recommendation | Rationale |
+| Work type | Current recommendation | Change |
 |---|---|---|
-| Mechanical, low-risk, retryable | Luna Medium or Terra Medium | Check recent stability first |
-| General daily development | **Sol Medium** | Best current balance across normal runs |
-| Difficult, quota-sensitive, long-running | **Luna Max** | Strong multi-run results, but high latency and token use |
-| Maximum-capability fallback | **Sol Max** | Highest observed ceiling, but also the highest cost and volatility |
+| Mechanical, low-risk, retryable | **Terra Medium**; Sol Low is a stronger candidate pending repetition | Luna Medium fell to 1/10 and is no longer recommended |
+| Daily development and small-project bug review | **Sol Medium** | Latest API result is 9/10 and it is cheaper and faster than Sol High |
+| Difficult, quota-sensitive, long-running | **Try Sol Medium first; Luna Max moves to watchlist status** | Luna Max fell to 6/10, weakening its case as the clear quota-first choice |
+| Maximum-capability fallback | **Sol Max, based on historical evidence** | Sol Max is absent from the latest API snapshot, so its current state is unknown |
 
-High, XHigh, and Max do not reliably form a monotonic capability ladder. Upgrade only after the current tier fails or project-specific reproducible evidence shows a real benefit.
+### Main interpretation
 
-## Latest task-difficulty weights
+- **The daily-default case for Sol Medium is stronger.** It ties Sol High at 9/10 while costing about 25% less, using about 21% fewer tokens, and finishing faster.
+- **Sol High currently provides no clear upgrade value.** It is more expensive and slower at the same pass count.
+- **Sol Low's 8/10 is notable, but one aggregate-only snapshot is not enough to make it a default.** The task mix is unknown.
+- **Both Luna tiers weakened.** Luna Max moved from 7/10 to 6/10, while Luna Medium moved from 2/10 to 1/10.
+- **Sol XHigh is currently one of the least attractive tiers.** It achieved only 6/10 while being the most expensive returned configuration.
 
-**Weight snapshot:** `2026-07-13-1405`  
-**Formula:** `weight_i ∝ 1 / sqrt(historical_pass_rate_i)`, normalized to 100.
+## Latest API aggregate ranking
 
-| Task | Short description | Historical pass rate | Weight /100 | Difficulty note |
-|---:|---|---:|---:|---|
-| 01 | Ordered-map JSONPath API | 79% | 7.76 | Relatively easy |
-| 02 | Module loading and cache behavior | 80% | 7.71 | Relatively easy |
-| 03 | HTTPX multipart response parsing | 95% | 7.09 | One of the easiest |
-| 04 | Bandit incremental cache controls | 38% | 11.15 | Difficult |
-| 05 | IPython session replay behavior | 34% | 11.81 | Very difficult |
-| 06 | ofetch origin-aware circuit breaker | 94% | 7.14 | One of the easiest |
-| 07 | Wiki and Markdown link conversion | 16% | **17.11** | Most difficult |
-| 08 | CSS lexer abbreviation conversion | 49% | 9.91 | Medium |
-| 09 | fd deterministic multi-key sorting | 35% | 11.70 | Very difficult |
-| 10 | Stylesheet selector structure | 64% | 8.62 | Medium-easy |
-|  | **Total** |  | **100.00** |  |
+This table is sorted by pass count. `Raw score / $` divides the source score—15 points per passed task—by estimated cost. It is not the task-weighted efficiency metric.
 
-Weight file: [`data/weights/task_weights.csv`](../data/weights/task_weights.csv)
+| Rank | Model tier | Passed | Source score | Cost | Raw score / $ | Total tokens | Wall time |
+|---:|---|---:|---:|---:|---:|---:|---:|
+| 1 | Sol High | 9/10 | 135 | $24.62 | 5.48 | 23.50M | 0.54h |
+| 1 | **Sol Medium** | 9/10 | 135 | **$18.41** | **7.33** | **18.48M** | **0.46h** |
+| 3 | Sol Low | 8/10 | 120 | $9.73 | 12.33 | 8.20M | 0.27h |
+| 4 | Terra Max | 7/10 | 105 | $30.91 | 3.40 | 65.72M | 0.63h |
+| 5 | Luna Max | 6/10 | 90 | $15.11 | 5.96 | 88.73M | 0.66h |
+| 5 | Sol XHigh | 6/10 | 90 | $37.97 | 2.37 | 40.67M | 0.75h |
+| 7 | Terra Medium | 5/10 | 75 | $5.18 | **14.48** | 8.01M | 0.39h |
+| 8 | Luna Medium | 1/10 | 15 | $2.44 | 6.15 | 10.81M | 0.41h |
 
-## Latest observed weighted ranking
+## Change from the preceding API snapshot
 
-**Batch:** `2026-07-13-pm-anomaly` (14:05)  
-**Caution:** this is the latest observation, but it is an anomalous batch and should not be treated as the long-term hierarchy.
+The preceding snapshot contained the same eight model tiers and represented the 2026-07-13-pm aggregate state.
 
-| Rank | Model tier | Passed | Weighted /100 | Estimated cost | Weighted/$ |
-|---:|---|---:|---:|---:|---:|
-| 1 | Luna Max | 7/10 | **70.31** | $18.90 | 3.72 |
-| 2 | Sol XHigh | 7/10 | 66.56 | $33.60 | 1.98 |
-| 3 | Sol High | 6/10 | 59.47 | $26.80 | 2.22 |
-| 4 | Terra Max | 6/10 | 56.60 | $32.20 | 1.76 |
-| 5 | Sol Low | 6/10 | 53.21 | $9.40 | 5.66 |
-| 6 | Terra Medium | 5/10 | 50.38 | $6.00 | **8.40** |
-| 7 | Sol Max | 5/10 | 48.32 | $59.80 | 0.81 |
-| 8 | Sol Medium | 5/10 | 45.50 | $16.10 | 2.83 |
-| 9 | Luna Medium | 2/10 | 18.24 | $2.40 | 7.60 |
+| Model | Pass change | Cost change | Interpretation |
+|---|---:|---:|---|
+| Sol High | 6 → **9** | $26.78 → $24.62 | Strong recovery, but no advantage over Medium |
+| Sol Medium | 5 → **9** | $16.14 → $18.41 | Strongest positive signal; reinforces default status |
+| Sol Low | 6 → **8** | $9.37 → $9.73 | Promising, but requires repetition |
+| Terra Max | 6 → **7** | $32.21 → $30.91 | Modest improvement, still expensive |
+| Terra Medium | 5 → 5 | $5.96 → $5.18 | Same quality at lower cost |
+| Luna Max | 7 → **6** | $18.94 → $15.11 | Cheaper but weaker |
+| Sol XHigh | 7 → **6** | $33.63 → $37.97 | More expensive and less successful |
+| Luna Medium | 2 → **1** | $2.43 → $2.44 | Not recommended in the current state |
 
-## Latest complete non-anomalous ranking
+Across the eight returned tiers, total passes rose from 44 to 51, about +15.9%. Aggregate estimated cost was almost flat, falling from roughly $145.46 to $144.37; total token use fell about 11%, and total wall time fell about 28%. This is a broad recovery signal from the July 13 anomalous state.
 
-To prevent the anomalous batch from directly distorting recommendations, the latest complete valid batch `2026-07-13-am` (about 09:16) is shown alongside it:
+## Data confidence and limitations
 
-| Rank | Model tier | Passed | Weighted /100 | Estimated cost | Weighted/$ |
-|---:|---|---:|---:|---:|---:|
-| 1 | Sol Max | 10/10 | **100.00** | $34.94 | 2.86 |
-| 2 | Sol Medium | 9/10 | **82.81** | $8.23 | **10.06** |
-| 3 | Luna Max | 8/10 | 74.35 | $14.35 | 5.18 |
-| 4 | Sol High | 7/10 | 72.79 | $15.01 | 4.85 |
-| 5 | Sol XHigh | 7/10 | 66.75 | $26.39 | 2.53 |
-| 6 | Terra Max | 7/10 | 62.38 | $30.19 | 2.07 |
-| 7 | Sol Low | 5/10 | 46.28 | $5.96 | 7.77 |
-| 8 | Terra Medium | 4/10 | 33.71 | $6.17 | 5.46 |
-| 8 | Luna Medium | 4/10 | 33.71 | $2.42 | **13.95** |
+1. The API returns eight tiers and **does not include Sol Max**, so this cannot be called a complete nine-tier batch.
+2. The API does not expose task outcomes, so we cannot tell which difficult tasks produced the 9/10 and 8/10 results.
+3. There are no per-model run IDs, update timestamps, or partial-rerun markers. We can state that aggregate values changed, not prove that every model was independently rerun.
+4. The snapshot's `source_date` is `2026-07-14-am`, but `observed_at` remains `2026-07-13T22:08:07+08:00`, creating a source timestamp inconsistency.
 
-Weighted score per dollar naturally favors very cheap models even when their absolute capability is low, so it must be read together with pass count, weighted score, and rolling stability.
+The refresh is therefore a **strong real-time aggregate signal**, but it does not replace the task-weighted ranking.
 
-## Why the 14:05 batch is down-weighted
+## Latest computable task weights
 
-Relative to the preceding valid morning batch:
+The latest task matrix remains `2026-07-13-1405`. The formula is:
 
-- aggregate passes fell by roughly one fifth;
-- total estimated cost rose by more than 40%;
-- aggregate token activity rose by more than 40%;
-- several unrelated tiers simultaneously became less successful and more expensive.
+```text
+raw_difficulty_i = 1 / sqrt(historical_pass_rate_i)
+weight_i = 100 * raw_difficulty_i / sum(raw_difficulty)
+weighted_score = sum(weight_i * passed_i)
+```
 
-The default anomaly rule is a quality drop of at least 15% combined with a cost or token increase of at least 30%. Both conditions were met, so the batch remains visible but receives only `0.35` trend weight.
+| Task | Historical pass rate | Weight /100 |
+|---:|---:|---:|
+| 01 | 79% | 7.76 |
+| 02 | 80% | 7.71 |
+| 03 | 95% | 7.09 |
+| 04 | 38% | 11.15 |
+| 05 | 34% | 11.81 |
+| 06 | 94% | 7.14 |
+| 07 | 16% | **17.11** |
+| 08 | 49% | 9.91 |
+| 09 | 35% | 11.70 |
+| 10 | 64% | 8.62 |
+|  | **Total** | **100.00** |
 
-## Stable interpretation
+The latest computable task-weighted ranking remains available through the [historical report](history/README.md) and project home page; it is not recomputed from this aggregate API snapshot.
 
-### Sol Medium remains the daily default
+## Final conclusion
 
-Sol Medium has one of the most useful continuous histories in the repository. Its normal-run center is around 7/10 and its cost is usually much lower than High, XHigh, and Max. The anomalous 5/10 run is important service-state evidence, but not enough to erase its long-term position by itself.
+The current usage ladder is:
 
-### Luna Max remains the quota-sensitive difficult-work route
+```text
+Low-cost mechanical work: Terra Medium
+Daily development / small-project bug review: Sol Medium
+Difficult work: try Sol Medium first; Luna Max is a long-running watchlist option
+Final fallback: Sol Max, pending refreshed data
+```
 
-Luna Max has produced strong multi-run pass counts at relatively low estimated cost, but it uses very large token volumes and long wall time. It is more suitable for background execution than interactive debugging.
-
-### Sol Max is a ceiling fallback, not a default
-
-Sol Max has produced a 10/10 public-summary result and also a 5/10, very expensive anomalous run. Max increases potential ceiling; it does not guarantee single-run reliability.
-
-## Confidence
-
-| Conclusion | Confidence |
-|---|---|
-| Sol Medium is the best general default | Moderate to high |
-| Luna Max is a strong quota-sensitive difficult tier | Moderate |
-| Sol Max has the highest observed single-run ceiling | Moderate |
-| The 14:05 batch represents normal model capability | Low |
-| One anomalous batch should change the default ladder | Very low |
-
-## Historical records
-
-[Browse every recorded batch through the history index](history/README.md). Machine-readable aggregate history is stored in [`data/history/runs.csv`](../data/history/runs.csv).
+This refresh does not overturn the Sol Medium recommendation. It strengthens the broader finding that moving directly from Medium to High, XHigh, or Max often provides no stable benefit without project-specific evidence.
