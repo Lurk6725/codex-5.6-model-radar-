@@ -1,96 +1,64 @@
 # 最新分析报告 / Latest Analysis Report
 
-[简体中文完整页](latest.zh-CN.md) · [Full English page](latest.en.md) · [历史数据 / History](history/README.md) · [项目首页 / Project home](../README.md)
+[中文完整分析](latest.zh-CN.md) · [Full English analysis](latest.en.md) · [API 自动监控 / API monitor](api-latest.md) · [历史数据 / History](history/README.md) · [项目首页 / Project home](../README.md)
 
-**分析截止 / Cutoff:** 2026-07-13 14:05 Asia/Shanghai  
-**数据来源 / Source:** Codex Radar  
-**最新批次 / Latest batch:** `2026-07-13-pm-anomaly` — 异常批次 / anomalous, trend reliability `0.35`
+**分析截止 / Cutoff:** 2026-07-14 09:00 Asia/Shanghai  
+**最新 API 快照 / Latest API snapshot:** `56b5641f66b1a557`  
+**API 数据日期 / Source date:** `2026-07-14-am`  
+**逐题矩阵最后可用时间 / Latest task matrix:** 2026-07-13 14:05
 
----
+> 本次只有模型级 API 汇总，没有逐题矩阵、每模型 run ID 或完整/部分重跑标记。以下更新实时趋势与推荐，不重新计算难度加权分。  
+> This refresh contains aggregate API data only. There is no task matrix, per-model run ID, or full-versus-partial rerun marker, so real-time trends and recommendations are updated without fabricating new task-weighted scores.
 
 ## 模型推荐 / Model recommendations
 
-| 场景 / Work type | 推荐 / Recommendation | 说明 / Rationale |
+| 场景 / Work type | 当前建议 / Recommendation | 说明 / Rationale |
 |---|---|---|
-| 机械、低风险、允许重试 / Mechanical, low-risk, retryable | Luna Medium 或 / or Terra Medium | 先看近期稳定性 / check recent stability |
-| 日常开发 / General daily development | **Sol Medium** | 正常批次中最均衡 / best balance across normal runs |
-| 高难、额度敏感、可长跑 / Difficult, quota-sensitive, long-running | **Luna Max** | 多轮较强，但慢且 Token 高 / strong multi-run results, but slow and token-heavy |
-| 最高能力兜底 / Maximum-capability fallback | **Sol Max** | 上限最高，但费用和波动也最大 / highest ceiling, but highest cost and volatility |
+| 机械、低风险、允许重试 / Mechanical, low-risk, retryable | **Terra Medium**；Sol Low 待复测 / Sol Low pending repetition | Luna Medium 最新仅 1/10 / Luna Medium fell to 1/10 |
+| 日常开发与小项目 Bug 审查 / Daily development and small-project bug review | **Sol Medium** | 与 High 同为 9/10，但更便宜、更快 / ties High at 9/10 while cheaper and faster |
+| 高难、额度敏感、可长跑 / Difficult, quota-sensitive, long-running | **先用 Sol Medium；Luna Max 降为观察候选 / Try Sol Medium first; Luna Max on watchlist** | Luna Max 最新为 6/10 / Luna Max fell to 6/10 |
+| 最高能力兜底 / Maximum-capability fallback | **Sol Max（历史结论 / historical evidence）** | 最新 API 未返回 Sol Max / absent from the latest API snapshot |
 
-14:05 批次整体质量下降、费用和 Token 同时上升，因此不会以完整权重改变长期推荐。  
-The 14:05 batch combines lower aggregate quality with higher cost and token activity, so it does not receive full weight when changing the long-term recommendation.
+## 最新 API 汇总 / Latest API aggregate view
 
-## 最新任务难度权重 / Latest task-difficulty weights
+`原始分/$ / Raw score/$` 使用源站等权分除以费用，并非逐题难度加权效率。
 
-**权重快照 / Weight snapshot:** `2026-07-13-1405`  
-**公式 / Formula:** `weight_i ∝ 1 / sqrt(historical_pass_rate_i)`, normalized to 100.
+| 排名 / Rank | 模型 / Tier | 通过 / Passed | 源站分数 / Score | 费用 / Cost | 原始分/$ / Raw score/$ | Token | 耗时 / Time |
+|---:|---|---:|---:|---:|---:|---:|---:|
+| 1 | Sol High | 9/10 | 135 | $24.62 | 5.48 | 23.50M | 0.54h |
+| 1 | **Sol Medium** | 9/10 | 135 | **$18.41** | **7.33** | **18.48M** | **0.46h** |
+| 3 | Sol Low | 8/10 | 120 | $9.73 | 12.33 | 8.20M | 0.27h |
+| 4 | Terra Max | 7/10 | 105 | $30.91 | 3.40 | 65.72M | 0.63h |
+| 5 | Luna Max | 6/10 | 90 | $15.11 | 5.96 | 88.73M | 0.66h |
+| 5 | Sol XHigh | 6/10 | 90 | $37.97 | 2.37 | 40.67M | 0.75h |
+| 7 | Terra Medium | 5/10 | 75 | $5.18 | **14.48** | 8.01M | 0.39h |
+| 8 | Luna Medium | 1/10 | 15 | $2.44 | 6.15 | 10.81M | 0.41h |
 
-| 题号 / Task | 任务摘要 / Short description | 历史通过率 / Pass rate | 权重 /100 |
-|---:|---|---:|---:|
-| 01 | Ordered-map JSONPath API | 79% | 7.76 |
-| 02 | Module loading and cache behavior | 80% | 7.71 |
-| 03 | HTTPX multipart response parsing | 95% | 7.09 |
-| 04 | Bandit incremental cache controls | 38% | 11.15 |
-| 05 | IPython session replay behavior | 34% | 11.81 |
-| 06 | ofetch origin-aware circuit breaker | 94% | 7.14 |
-| 07 | Wiki and Markdown link conversion | 16% | **17.11** |
-| 08 | CSS lexer abbreviation conversion | 49% | 9.91 |
-| 09 | fd deterministic multi-key sorting | 35% | 11.70 |
-| 10 | Stylesheet selector structure | 64% | 8.62 |
-|  | **合计 / Total** |  | **100.00** |
+## 变化摘要 / Change summary
 
-[权重 CSV / Weight CSV](../data/weights/task_weights.csv)
+- 八个返回档位总通过数由 44 升至 51（约 +15.9%）；总费用基本持平，Token 下降约 11%，总耗时下降约 28%。  
+  Across the eight returned tiers, passes rose from 44 to 51 (+15.9%); aggregate cost was nearly flat, tokens fell about 11%, and wall time fell about 28%.
+- Sol Medium 从 5/10 回升至 9/10；Sol High 同为 9/10，但成本与资源消耗更高。  
+  Sol Medium recovered from 5/10 to 9/10; Sol High also reached 9/10 but at higher cost and resource use.
+- Sol Low 从 6/10 升至 8/10，但没有逐题结构，暂不根据单轮改为默认。  
+  Sol Low rose from 6/10 to 8/10, but the task mix is unknown and one aggregate snapshot is insufficient for default status.
+- Luna Max 降至 6/10，Luna Medium 降至 1/10；Sol XHigh 降至 6/10且费用上升。  
+  Luna Max fell to 6/10, Luna Medium to 1/10, and Sol XHigh fell to 6/10 while becoming more expensive.
 
-## 最新观测排名 / Latest observed weighted ranking
+## 数据限制 / Data limitations
 
-> 最新观测值属于异常批次，不应直接视为长期模型层级。  
-> The latest observation is anomalous and should not be treated as the long-term model hierarchy.
+- 最新 API 只返回八个档位，没有 Sol Max。  
+  The latest API returns eight tiers and omits Sol Max.
+- 没有逐题矩阵，所以无法更新 `加权分 /100` 与 `加权分/$`。  
+  Without task outcomes, `Weighted /100` and task-weighted `Weighted/$` cannot be updated.
+- 没有 per-model run ID 或部分重跑标记，只能确认汇总值变化。  
+  There are no per-model run IDs or partial-rerun markers; only aggregate value changes can be confirmed.
+- `source_date` 已变为 `2026-07-14-am`，但 API `observed_at` 仍保留旧时间，存在时间元数据不一致。  
+  `source_date` is `2026-07-14-am`, while API `observed_at` remains stale, creating a timestamp inconsistency.
 
-| 排名 / Rank | 模型 / Tier | 通过 / Passed | 加权分 /100 | 费用 / Cost | 加权分/$ / Weighted/$ |
-|---:|---|---:|---:|---:|---:|
-| 1 | Luna Max | 7/10 | **70.31** | $18.90 | 3.72 |
-| 2 | Sol XHigh | 7/10 | 66.56 | $33.60 | 1.98 |
-| 3 | Sol High | 6/10 | 59.47 | $26.80 | 2.22 |
-| 4 | Terra Max | 6/10 | 56.60 | $32.20 | 1.76 |
-| 5 | Sol Low | 6/10 | 53.21 | $9.40 | 5.66 |
-| 6 | Terra Medium | 5/10 | 50.38 | $6.00 | **8.40** |
-| 7 | Sol Max | 5/10 | 48.32 | $59.80 | 0.81 |
-| 8 | Sol Medium | 5/10 | 45.50 | $16.10 | 2.83 |
-| 9 | Luna Medium | 2/10 | 18.24 | $2.40 | 7.60 |
+## 最近可计算的逐题加权结果 / Latest computable task-weighted result
 
-## 最近正常完整批次 / Latest complete non-anomalous ranking
+逐题权重和加权榜仍以 `2026-07-13-1405` 矩阵为准。最新 API 汇总不会被冒充为新加权榜。  
+Task weights and the weighted ranking remain based on the `2026-07-13-1405` matrix. The aggregate API refresh is not mislabeled as a new weighted ranking.
 
-**批次 / Batch:** `2026-07-13-am`（约 / about 09:16）
-
-| 排名 / Rank | 模型 / Tier | 通过 / Passed | 加权分 /100 | 费用 / Cost | 加权分/$ / Weighted/$ |
-|---:|---|---:|---:|---:|---:|
-| 1 | Sol Max | 10/10 | **100.00** | $34.94 | 2.86 |
-| 2 | Sol Medium | 9/10 | **82.81** | $8.23 | **10.06** |
-| 3 | Luna Max | 8/10 | 74.35 | $14.35 | 5.18 |
-| 4 | Sol High | 7/10 | 72.79 | $15.01 | 4.85 |
-| 5 | Sol XHigh | 7/10 | 66.75 | $26.39 | 2.53 |
-| 6 | Terra Max | 7/10 | 62.38 | $30.19 | 2.07 |
-| 7 | Sol Low | 5/10 | 46.28 | $5.96 | 7.77 |
-| 8 | Terra Medium | 4/10 | 33.71 | $6.17 | 5.46 |
-| 8 | Luna Medium | 4/10 | 33.71 | $2.42 | **13.95** |
-
-“加权分/$”天然偏爱便宜模型，不能脱离绝对加权分和多轮稳定性单独使用。  
-Weighted score per dollar naturally favors cheap models and must be read together with absolute quality and rolling stability.
-
-## 异常批次判断 / Anomaly assessment
-
-与上午正常批次相比，14:05 批次的总通过数下降约五分之一，而总估算费用和 Token 活动量均上升超过 40%。多个互不相关档位同时出现“更贵但更差”的结果，因此保留原始数据，但长期趋势仅计 `0.35` 权重。
-
-Relative to the valid morning batch, aggregate passes fell by roughly one fifth while total estimated cost and token activity each rose by more than 40%. Several unrelated tiers became both more expensive and less successful, so the raw data is retained but receives only `0.35` trend weight.
-
-## 稳定结论 / Stable interpretation
-
-- **Sol Medium** 仍是日常默认 / remains the daily default.
-- **Luna Max** 仍是高难、额度敏感的长时间后台路线 / remains the quota-sensitive difficult-work route for long background runs.
-- **Sol Max** 是最高上限兜底，而不是常驻默认 / is a maximum-ceiling fallback, not a standing default.
-- High、XHigh、Max 并不稳定地单调提升 / High, XHigh, and Max do not reliably improve monotonically.
-
-## 历史数据 / Historical data
-
-[查看全部批次及跳转索引 / Browse every recorded batch](history/README.md)  
-[原始汇总 CSV / Raw aggregate CSV](../data/history/runs.csv)
+[查看中文详细分析](latest.zh-CN.md) · [Read the full English analysis](latest.en.md) · [查看 API 历史 CSV / API history CSV](../data/api/model_iq_history.csv)
