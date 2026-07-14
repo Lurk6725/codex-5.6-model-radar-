@@ -1,11 +1,11 @@
 task_id,short_description,historical_pass_rate,soft_inverse_weight,weight_snapshot,source_note
-01,Ordered-map JSONPath API,0.788820,7.802981,2026-07-14-0746,Codex Radar public task matrix
-02,Module loading and cache behavior,0.798137,7.757305,2026-07-14-0746,Codex Radar public task matrix
-03,HTTPX multipart response parsing,0.944099,7.132481,2026-07-14-0746,Codex Radar public task matrix
-04,Bandit incremental cache controls,0.388199,11.123012,2026-07-14-0746,Codex Radar public task matrix
-05,IPython session replay behavior,0.354037,11.647293,2026-07-14-0746,Codex Radar public task matrix
-06,ofetch origin-aware circuit breaker,0.934783,7.167937,2026-07-14-0746,Codex Radar public task matrix
-07,Wiki and Markdown link conversion,0.161491,17.245498,2026-07-14-0746,Codex Radar public task matrix
-08,CSS lexer abbreviation conversion,0.493789,9.862315,2026-07-14-0746,Codex Radar public task matrix
-09,fd deterministic multi-key sorting,0.360248,11.546448,2026-07-14-0746,Codex Radar public task matrix
-10,Stylesheet selector structure,0.632399,8.714731,2026-07-14-0746,Codex Radar public task matrix
+01,Ordered-map JSONPath API,0.789157,7.848757,2026-07-14-1434,Codex Radar public task matrix 262/332
+02,Module loading and cache behavior,0.792169,7.833821,2026-07-14-1434,Codex Radar public task matrix 263/332
+03,HTTPX multipart response parsing,0.945783,7.169464,2026-07-14-1434,Codex Radar public task matrix 314/332
+04,Bandit incremental cache controls,0.391566,11.142428,2026-07-14-1434,Codex Radar public task matrix 130/332
+05,IPython session replay behavior,0.364458,11.549384,2026-07-14-1434,Codex Radar public task matrix 121/332
+06,ofetch origin-aware circuit breaker,0.936747,7.203960,2026-07-14-1434,Codex Radar public task matrix 311/332
+07,Wiki and Markdown link conversion,0.165663,17.130505,2026-07-14-1434,Codex Radar public task matrix 55/332
+08,CSS lexer abbreviation conversion,0.493976,9.920409,2026-07-14-1434,Codex Radar public task matrix 164/332
+09,fd deterministic multi-key sorting,0.376506,11.363092,2026-07-14-1434,Codex Radar public task matrix 125/332
+10,Stylesheet selector structure,0.622356,8.838180,2026-07-14-1434,Codex Radar public task matrix 206/331
