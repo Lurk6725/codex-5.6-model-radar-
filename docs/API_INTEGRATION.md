@@ -15,9 +15,9 @@ The endpoint does **not** currently expose:
 
 Therefore API snapshots support aggregate trend monitoring, raw score-per-cost analysis, and model-level change alerts, but they cannot independently recompute the project's difficulty-weighted score. A changed aggregate row means the displayed values changed; it is not automatically labeled a confirmed rerun.
 
-The API `observed_at` field may occasionally remain unchanged while comparison values change. The repository preserves both `observed_at` and `retrieved_at` and treats such snapshots as freshness-metadata inconsistencies rather than silently correcting the source timestamp.
+The API `observed_at` field may occasionally remain unchanged while comparison values change. The repository preserves both the upstream observation time and the local successful-check time. `data/api/monitor_status.json` records the latest successful API heartbeat, current snapshot ID, model count, and whether that check detected a new snapshot.
 
-The scheduled workflow runs at 5 and 35 minutes past each hour and can also be started manually. Identical normalized snapshots are deduplicated by a content hash.
+The scheduled workflow runs at 17 and 47 minutes past each hour and can also be started manually. Fetching is retried up to three times, and pushes are retried after rebasing on the latest `main` branch. Scheduled GitHub Actions are best-effort and may start later than the exact cron minute, so monitor health should be read from **Last successful check**, not from the nominal schedule alone.
 
 ## 简体中文
 
@@ -34,6 +34,6 @@ The scheduled workflow runs at 5 and 35 minutes past each hour and can also be s
 
 因此 API 快照可用于总分趋势、原始分数/费用和模型级变化提醒，但不能独立重新计算本项目的难度加权分。某行汇总值发生变化，只能说明公开值改变，不能自动写成“已确认重新测试”。
 
-API 的 `observed_at` 字段偶尔可能在汇总值变化后仍保持旧值。仓库同时保留 `observed_at` 与 `retrieved_at`，并将这种情况标记为时间元数据不一致，不擅自修正来源时间。
+API 的 `observed_at` 字段偶尔可能在汇总值变化后仍保持旧值。仓库同时保留源站观测时间与本地成功检查时间。`data/api/monitor_status.json` 会记录最近成功访问 API 的心跳、当前快照 ID、返回模型数以及本次是否发现新快照。
 
-自动工作流每小时的第 5 分钟和第 35 分钟运行，也支持手动触发。规范化内容完全相同的快照会通过内容哈希去重。
+自动工作流改为每小时第 17 分钟和第 47 分钟运行，也支持手动触发。API 请求最多重试三次，推送前会基于最新 `main` 分支变基并重试推送。GitHub 定时任务属于尽力调度，实际启动时间可能晚于 cron，因此判断监控是否正常应查看“最近成功检查”，而不是只看计划时间。
