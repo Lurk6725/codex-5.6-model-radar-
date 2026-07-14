@@ -8,3 +8,12 @@ batch_id,observed_at,model,effort,task_order,pass_bitmap,passed,valid_tasks,weig
 2026-07-14-am,2026-07-14T07:46:00+08:00,gpt-5.6-terra,medium,01-02-03-04-05-06-07-08-09-10,0110110010,5,10,2026-07-14-0746,public_page_task_matrix,https://codexradar.com/
 2026-07-14-am,2026-07-14T07:46:00+08:00,gpt-5.6-luna,max,01-02-03-04-05-06-07-08-09-10,0111011100,6,10,2026-07-14-0746,public_page_task_matrix,https://codexradar.com/
 2026-07-14-am,2026-07-14T07:46:00+08:00,gpt-5.6-luna,medium,01-02-03-04-05-06-07-08-09-10,0000100000,1,10,2026-07-14-0746,public_page_task_matrix,https://codexradar.com/
+2026-07-14-pm,2026-07-14T14:34:00+08:00,gpt-5.6-sol,max,01-02-03-04-05-06-07-08-09-10,1011111110,8,10,2026-07-14-1434,public_page_task_matrix,https://codexradar.com/
+2026-07-14-pm,2026-07-14T14:34:00+08:00,gpt-5.6-sol,xhigh,01-02-03-04-05-06-07-08-09-10,1011110110,7,10,2026-07-14-1434,public_page_task_matrix,https://codexradar.com/
+2026-07-14-pm,2026-07-14T14:34:00+08:00,gpt-5.6-sol,high,01-02-03-04-05-06-07-08-09-10,1011110110,7,10,2026-07-14-1434,public_page_task_matrix,https://codexradar.com/
+2026-07-14-pm,2026-07-14T14:34:00+08:00,gpt-5.6-sol,medium,01-02-03-04-05-06-07-08-09-10,0011110110,7,10,2026-07-14-1434,public_page_matrix_summary_mismatch,https://codexradar.com/
+2026-07-14-pm,2026-07-14T14:34:00+08:00,gpt-5.6-sol,low,01-02-03-04-05-06-07-08-09-10,1110111011,8,10,2026-07-14-1434,public_page_task_matrix,https://codexradar.com/
+2026-07-14-pm,2026-07-14T14:34:00+08:00,gpt-5.6-terra,max,01-02-03-04-05-06-07-08-09-10,1111010110,7,10,2026-07-14-1434,public_page_task_matrix,https://codexradar.com/
+2026-07-14-pm,2026-07-14T14:34:00+08:00,gpt-5.6-terra,high,01-02-03-04-05-06-07-08-09-10,0110010000,3,10,2026-07-14-1434,public_page_task_matrix,https://codexradar.com/
+2026-07-14-pm,2026-07-14T14:34:00+08:00,gpt-5.6-luna,max,01-02-03-04-05-06-07-08-09-10,1110110010,6,10,2026-07-14-1434,public_page_task_matrix,https://codexradar.com/
+2026-07-14-pm,2026-07-14T14:34:00+08:00,gpt-5.6-luna,high,01-02-03-04-05-06-07-08-09-10,1110010010,5,10,2026-07-14-1434,public_page_task_matrix,https://codexradar.com/
