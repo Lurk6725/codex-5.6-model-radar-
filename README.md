@@ -2,8 +2,8 @@
 
 [简体中文](#简体中文) · [English](#english) · [最新分析 / Latest report](reports/latest.md) · [API 自动监控 / API monitor](reports/api-latest.md) · [历史数据 / History](reports/history/README.md)
 
-> **数据来源 / Data attribution:** 原始基准测试数据来自 **Codex Radar**（`codexradar.com`，原 `codex-reset-radar.pages.dev`）。本仓库是独立的二次分析项目，与 OpenAI、Codex Radar 或 DeepSWE 均无官方隶属关系。  
-> Source benchmark data comes from **Codex Radar** (`codexradar.com`, formerly `codex-reset-radar.pages.dev`). This is an independent secondary-analysis project and is not affiliated with OpenAI, Codex Radar, or DeepSWE.
+> **数据来源 / Data attribution:** 原始基准测试数据来自 **Codex Radar**（`codexradar.com`）。本仓库是独立二次分析项目，与 OpenAI、Codex Radar 或 DeepSWE 无官方隶属关系。  
+> Source benchmark data comes from **Codex Radar** (`codexradar.com`). This is an independent secondary-analysis project and is not affiliated with OpenAI, Codex Radar, or DeepSWE.
 
 ---
 
@@ -11,87 +11,72 @@
 
 ## 项目简介
 
-本项目长期记录 GPT‑5.6 Codex 的 **Luna、Terra、Sol** 各模型家族及不同推理强度，并提供：
+本项目长期记录 GPT‑5.6 Codex 的 **Luna、Terra、Sol** 各模型家族与推理强度，并同时维护：
 
-- 逐题难度加权分与加权分/$；
-- API 模型级总分、费用、Token 和耗时趋势；
-- 多轮稳定性、异常状态和推荐变化；
-- 面向真实开发场景的模型选择建议。
+- 授权 API 提供的模型级总分、通过数、费用、Token 和耗时趋势；
+- 公开网页提供的逐题矩阵、任务难度权重和加权分；
+- 多轮稳定性、异常批次和模型推荐。
 
-已获授权的 Codex Radar API 自动更新模型级摘要，见 [API 自动监控](reports/api-latest.md)。API 不提供逐题矩阵、每模型 run ID 或完整/部分重跑标记，因此模型级 API 汇总与逐题加权榜分开维护。
+API 不提供逐题结果、每模型 run ID 或完整/部分重跑标记。因此自动 API 汇总与逐题加权榜分开保存；缺失数据由公开网页人工核对补齐。
 
 ## 当前模型推荐
 
-**最新 API 数据日期：** `2026-07-14-am`  
-**最新逐题矩阵：** `2026-07-13-1405`
+**最新数据：** `2026-07-14-am`，网页更新时间 07:46  
+**最新逐题权重快照：** `2026-07-14-0746`
 
 | 使用场景 | 当前建议 | 说明 |
 |---|---|---|
-| 机械、低风险、允许重试 | **Terra Medium**；Sol Low 待复测 | Luna Medium 最新只有 1/10；Sol Low 的 8/10 仍需重复验证 |
-| 日常开发与小项目 Bug 审查 | **Sol Medium** | 最新 9/10，与 High 同分但更便宜、更快 |
-| 高难、额度敏感、允许后台长跑 | **先用 Sol Medium；Luna Max 作为观察候选** | Luna Max 最新降至 6/10，暂不再列为明确首选 |
-| 最高能力兜底 | **Sol Max（历史结论）** | 最新 API 未返回 Sol Max，当前状态无法确认 |
+| 机械、低风险、允许重试 | **Terra Medium**；Sol Low 为更强但波动较大的候选 | Terra Medium 成本低；Sol Low 本轮 8/10，但历史波动明显 |
+| 日常开发与小项目 Bug 审查 | **Sol Medium** | 与 Sol High 同为 9/10、逐题完全相同，但更便宜 |
+| 高难、额度敏感、允许后台长跑 | **先用 Sol Medium；Luna Max 仅作专项候选** | Luna Max 本轮 6/10，唯一通过第 07 题，但通用质量不如 Medium |
+| 最高能力兜底 | **Sol Max 仅保留历史上限含义** | 本轮 6/10 且费用最高，Max 不等于稳定更强 |
 
-## 最新 API 汇总趋势
+## 最新任务难度权重
 
-> 下面是模型级等权总分，不是逐题难度加权排名。
+`weight_i ∝ 1 / sqrt(historical_pass_rate_i)`，归一化总分为 100。
 
-| 排名 | 模型档位 | 通过 | 源站分数 | 费用 | 原始分/$ | Token | 耗时 |
-|---:|---|---:|---:|---:|---:|---:|---:|
-| 1 | Sol High | 9/10 | 135 | $24.62 | 5.48 | 23.50M | 0.54h |
-| 1 | **Sol Medium** | 9/10 | 135 | **$18.41** | **7.33** | **18.48M** | **0.46h** |
-| 3 | Sol Low | 8/10 | 120 | $9.73 | 12.33 | 8.20M | 0.27h |
-| 4 | Terra Max | 7/10 | 105 | $30.91 | 3.40 | 65.72M | 0.63h |
-| 5 | Luna Max | 6/10 | 90 | $15.11 | 5.96 | 88.73M | 0.66h |
-| 5 | Sol XHigh | 6/10 | 90 | $37.97 | 2.37 | 40.67M | 0.75h |
-| 7 | Terra Medium | 5/10 | 75 | $5.18 | **14.48** | 8.01M | 0.39h |
-| 8 | Luna Medium | 1/10 | 15 | $2.44 | 6.15 | 10.81M | 0.41h |
+| 题号 | 历史通过率 | 权重 /100 |
+|---:|---:|---:|
+| 01 | 78.88% | 7.80 |
+| 02 | 79.81% | 7.76 |
+| 03 | 94.41% | 7.13 |
+| 04 | 38.82% | 11.12 |
+| 05 | 35.40% | 11.65 |
+| 06 | 93.48% | 7.17 |
+| 07 | 16.15% | **17.25** |
+| 08 | 49.38% | 9.86 |
+| 09 | 36.02% | 11.55 |
+| 10 | 63.24% | 8.71 |
+|  | **合计** | **100.00** |
 
-与上一 API 快照相比，八个返回档位的通过数总和从 44 增加到 51，费用基本持平，Token 下降约 11%，耗时下降约 28%。这说明整体状态从 7 月 13 日异常快照中明显恢复，但最新接口没有 Sol Max，也无法确认是否为完整重跑。
+## 最新模型加权排名
 
-## 最近可计算的任务难度权重
-
-**权重快照：** `2026-07-13-1405`  
-**计算方法：** `weight_i ∝ 1 / sqrt(historical_pass_rate_i)`，归一化总分为 100。
-
-| 题号 | 任务摘要 | 历史通过率 | 权重 /100 |
-|---:|---|---:|---:|
-| 01 | Ordered-map JSONPath API | 79% | 7.76 |
-| 02 | Module loading and cache behavior | 80% | 7.71 |
-| 03 | HTTPX multipart response parsing | 95% | 7.09 |
-| 04 | Bandit incremental cache controls | 38% | 11.15 |
-| 05 | IPython session replay behavior | 34% | 11.81 |
-| 06 | ofetch origin-aware circuit breaker | 94% | 7.14 |
-| 07 | Wiki and Markdown link conversion | 16% | **17.11** |
-| 08 | CSS lexer abbreviation conversion | 49% | 9.91 |
-| 09 | fd deterministic multi-key sorting | 35% | 11.70 |
-| 10 | Stylesheet selector structure | 64% | 8.62 |
-|  | **合计** |  | **100.00** |
-
-## 最近可计算的模型加权排名
-
-**逐题矩阵：** `2026-07-13-pm-anomaly`（14:05，异常批次，长期趋势权重 `0.35`）
-
-| 排名 | 模型档位 | 通过 | 加权分 /100 | 估算费用 | 加权分/$ |
+| 排名 | 模型档位 | 通过 | 加权分 /100 | 费用 | 加权分/$ |
 |---:|---|---:|---:|---:|---:|
-| 1 | Luna Max | 7/10 | **70.31** | $18.90 | 3.72 |
-| 2 | Sol XHigh | 7/10 | 66.56 | $33.60 | 1.98 |
-| 3 | Sol High | 6/10 | 59.47 | $26.80 | 2.22 |
-| 4 | Terra Max | 6/10 | 56.60 | $32.20 | 1.76 |
-| 5 | Sol Low | 6/10 | 53.21 | $9.40 | 5.66 |
-| 6 | Terra Medium | 5/10 | 50.38 | $6.00 | **8.40** |
-| 7 | Sol Max | 5/10 | 48.32 | $59.80 | 0.81 |
-| 8 | Sol Medium | 5/10 | 45.50 | $16.10 | 2.83 |
-| 9 | Luna Medium | 2/10 | 18.24 | $2.40 | 7.60 |
+| 1 | **Sol Medium** | 9/10 | **82.75** | $18.41 | **4.49** |
+| 2 | Sol High | 9/10 | **82.75** | $24.62 | 3.36 |
+| 3 | Sol Low | 8/10 | 71.63 | $9.73 | 7.36 |
+| 4 | Terra Max | 7/10 | 62.92 | $30.91 | 2.04 |
+| 5 | Luna Max | 6/10 | 60.29 | $15.11 | 3.99 |
+| 6 | Sol Max | 6/10 | 59.15 | $60.20 | 0.98 |
+| 7 | Sol XHigh | 6/10 | 54.64 | $37.97 | 1.44 |
+| 8 | **Terra Medium** | 5/10 | 45.25 | **$5.18** | **8.73** |
+| 9 | Luna Medium | 1/10 | 11.65 | $2.44 | 4.78 |
 
-此表不会随模型级 API 摘要自动重算。只有获得新的逐题矩阵后，才会更新加权分与加权分/$。
+`加权分/$` 会偏爱便宜模型，不能脱离绝对加权分和长期稳定性单独使用。
 
-## 历史数据与方法
+## 最新批次判断
+
+本轮九个档位合计 57/90，总费用约 $204.59，总 Token 约 336.1M。质量较 7 月 13 日异常批次明显恢复，但消耗仍高。由于质量相较最近正常批次只下降约 6.6%，未达到项目异常规则要求的 15%，因此记为**有效批次，附高消耗警告**。
+
+## 数据入口
 
 - [最新中英文分析](reports/latest.md)
-- [API 自动监控报告](reports/api-latest.md)
-- [API 历史 CSV](data/api/model_iq_history.csv)
+- [API 自动监控](reports/api-latest.md)
 - [逐批次历史索引](reports/history/README.md)
+- [模型汇总历史 CSV](data/history/runs.csv)
+- [逐题矩阵历史 CSV](data/history/task_matrices.csv)
+- [最新任务权重 CSV](data/weights/task_weights.csv)
 - [评分方法](docs/METHODOLOGY.md)
 - [API 接入与限制](docs/API_INTEGRATION.md)
 
@@ -101,87 +86,67 @@
 
 ## Project overview
 
-This repository monitors GPT‑5.6 Codex **Luna, Terra, and Sol** families and their reasoning-effort tiers. It maintains two separate evidence tracks:
+This repository tracks GPT‑5.6 Codex **Luna, Terra, and Sol** families and reasoning-effort tiers using two evidence streams:
 
-- task-matrix difficulty-weighted scores and weighted score per dollar;
-- authorized API aggregate trends for score, pass count, cost, tokens, and wall time.
+- authorized API aggregates for score, passes, cost, tokens, and wall time;
+- public-page task matrices for difficulty-weighted scores and weighted score per dollar.
 
-The API does not expose task outcomes, per-model run IDs, or full-versus-partial rerun markers. Aggregate API snapshots are therefore not mislabeled as task-weighted rankings.
+The API does not expose task outcomes, per-model run IDs, or full-versus-partial rerun markers. Missing task-level information is therefore verified from the public page rather than inferred from aggregate totals.
 
 ## Current model recommendations
 
-**Latest API source date:** `2026-07-14-am`  
-**Latest task matrix:** `2026-07-13-1405`
+**Latest data:** `2026-07-14-am`, public-page update 07:46  
+**Latest weight snapshot:** `2026-07-14-0746`
 
-| Work type | Current recommendation | Rationale |
+| Work type | Recommendation | Rationale |
 |---|---|---|
-| Mechanical, low-risk, retryable | **Terra Medium**; Sol Low pending repetition | Luna Medium fell to 1/10; Sol Low's 8/10 needs confirmation |
-| Daily development and small-project bug review | **Sol Medium** | Latest result is 9/10, tying High while cheaper and faster |
-| Difficult, quota-sensitive, long-running | **Try Sol Medium first; Luna Max remains a watchlist option** | Luna Max fell to 6/10 and is no longer the clear default |
-| Maximum-capability fallback | **Sol Max, based on historical evidence** | Sol Max is absent from the latest API snapshot |
+| Mechanical, low-risk, retryable | **Terra Medium**; Sol Low as a stronger but volatile candidate | Terra Medium is cheap; Sol Low reached 8/10 but remains unstable historically |
+| Daily development and small-project bug review | **Sol Medium** | It tied Sol High at 9/10 with identical task outcomes at lower cost |
+| Difficult, quota-sensitive, long-running | **Try Sol Medium first; Luna Max only as a specialized candidate** | Luna Max reached 6/10 and uniquely passed task 07, but broad quality was lower |
+| Maximum-capability fallback | **Sol Max only as a historical-ceiling fallback** | It reached 6/10 at the highest cost |
 
-## Latest API aggregate trend
-
-> This is an equal-weight model-level summary, not a task-weighted ranking.
-
-| Rank | Model tier | Passed | Source score | Cost | Raw score/$ | Tokens | Time |
-|---:|---|---:|---:|---:|---:|---:|---:|
-| 1 | Sol High | 9/10 | 135 | $24.62 | 5.48 | 23.50M | 0.54h |
-| 1 | **Sol Medium** | 9/10 | 135 | **$18.41** | **7.33** | **18.48M** | **0.46h** |
-| 3 | Sol Low | 8/10 | 120 | $9.73 | 12.33 | 8.20M | 0.27h |
-| 4 | Terra Max | 7/10 | 105 | $30.91 | 3.40 | 65.72M | 0.63h |
-| 5 | Luna Max | 6/10 | 90 | $15.11 | 5.96 | 88.73M | 0.66h |
-| 5 | Sol XHigh | 6/10 | 90 | $37.97 | 2.37 | 40.67M | 0.75h |
-| 7 | Terra Medium | 5/10 | 75 | $5.18 | **14.48** | 8.01M | 0.39h |
-| 8 | Luna Medium | 1/10 | 15 | $2.44 | 6.15 | 10.81M | 0.41h |
-
-Across the eight returned tiers, total passes rose from 44 to 51 while aggregate cost was nearly flat, tokens fell about 11%, and wall time fell about 28%. This is a broad recovery signal from the July 13 anomalous snapshot. However, Sol Max is missing and the API cannot confirm a complete rerun.
-
-## Latest computable task weights
-
-**Weight snapshot:** `2026-07-13-1405`  
-**Formula:** `weight_i ∝ 1 / sqrt(historical_pass_rate_i)`, normalized to 100.
+## Latest task weights
 
 | Task | Historical pass rate | Weight /100 |
 |---:|---:|---:|
-| 01 | 79% | 7.76 |
-| 02 | 80% | 7.71 |
-| 03 | 95% | 7.09 |
-| 04 | 38% | 11.15 |
-| 05 | 34% | 11.81 |
-| 06 | 94% | 7.14 |
-| 07 | 16% | **17.11** |
-| 08 | 49% | 9.91 |
-| 09 | 35% | 11.70 |
-| 10 | 64% | 8.62 |
+| 01 | 78.88% | 7.80 |
+| 02 | 79.81% | 7.76 |
+| 03 | 94.41% | 7.13 |
+| 04 | 38.82% | 11.12 |
+| 05 | 35.40% | 11.65 |
+| 06 | 93.48% | 7.17 |
+| 07 | 16.15% | **17.25** |
+| 08 | 49.38% | 9.86 |
+| 09 | 36.02% | 11.55 |
+| 10 | 63.24% | 8.71 |
 |  | **Total** | **100.00** |
 
-## Latest computable weighted ranking
+## Latest weighted ranking
 
-**Task matrix:** `2026-07-13-pm-anomaly` (14:05, trend reliability `0.35`)
-
-| Rank | Model tier | Passed | Weighted /100 | Estimated cost | Weighted/$ |
+| Rank | Model tier | Passed | Weighted /100 | Cost | Weighted/$ |
 |---:|---|---:|---:|---:|---:|
-| 1 | Luna Max | 7/10 | **70.31** | $18.90 | 3.72 |
-| 2 | Sol XHigh | 7/10 | 66.56 | $33.60 | 1.98 |
-| 3 | Sol High | 6/10 | 59.47 | $26.80 | 2.22 |
-| 4 | Terra Max | 6/10 | 56.60 | $32.20 | 1.76 |
-| 5 | Sol Low | 6/10 | 53.21 | $9.40 | 5.66 |
-| 6 | Terra Medium | 5/10 | 50.38 | $6.00 | **8.40** |
-| 7 | Sol Max | 5/10 | 48.32 | $59.80 | 0.81 |
-| 8 | Sol Medium | 5/10 | 45.50 | $16.10 | 2.83 |
-| 9 | Luna Medium | 2/10 | 18.24 | $2.40 | 7.60 |
+| 1 | **Sol Medium** | 9/10 | **82.75** | $18.41 | **4.49** |
+| 2 | Sol High | 9/10 | **82.75** | $24.62 | 3.36 |
+| 3 | Sol Low | 8/10 | 71.63 | $9.73 | 7.36 |
+| 4 | Terra Max | 7/10 | 62.92 | $30.91 | 2.04 |
+| 5 | Luna Max | 6/10 | 60.29 | $15.11 | 3.99 |
+| 6 | Sol Max | 6/10 | 59.15 | $60.20 | 0.98 |
+| 7 | Sol XHigh | 6/10 | 54.64 | $37.97 | 1.44 |
+| 8 | **Terra Medium** | 5/10 | 45.25 | **$5.18** | **8.73** |
+| 9 | Luna Medium | 1/10 | 11.65 | $2.44 | 4.78 |
 
-This table is not automatically recomputed from aggregate API data. It changes only when a new task-level matrix is available.
+## Batch status
 
-## Data and methodology
+The nine tiers produced 57/90 at about $204.59 and 336.1M tokens. Quality recovered substantially from the July 13 anomalous batch, while consumption remained elevated. Because the quality decline versus the latest valid morning batch was only about 6.6%, the batch is recorded as **valid with a high-consumption warning**.
+
+## Data links
 
 - [Latest bilingual analysis](reports/latest.md)
 - [API monitor](reports/api-latest.md)
-- [API history CSV](data/api/model_iq_history.csv)
-- [Historical batch index](reports/history/README.md)
-- [Scoring methodology](docs/METHODOLOGY.md)
-- [API integration and limitations](docs/API_INTEGRATION.md)
+- [Historical index](reports/history/README.md)
+- [Aggregate run history](data/history/runs.csv)
+- [Task-matrix history](data/history/task_matrices.csv)
+- [Current weights](data/weights/task_weights.csv)
 
 ## License
 
