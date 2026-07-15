@@ -10,29 +10,28 @@ All notable methodology, data, recommendation, and presentation changes are docu
 - Navigable historical batch index in `reports/history/README.md`.
 - Full task-weight tables and weighted score `/100` plus weighted score `/$` rankings.
 - Authorized API aggregate monitoring with archived normalized snapshots.
-- Chinese, English, and combined analyses for the July 14 AM/PM and July 15 AM batches.
-- Dedicated historical snapshot pages for `2026-07-14-pm` and `2026-07-15-am`.
+- Chinese, English, and combined analyses for the July 14 AM/PM and July 15 AM/PM batches.
+- Dedicated historical snapshot pages for `2026-07-14-pm`, `2026-07-15-am`, and `2026-07-15-pm`.
 - Per-batch aggregate files under `data/history/batches/`.
-- Report generation now merges the legacy aggregate CSV with per-batch files and de-duplicates by batch/model/effort.
+- Report generation merges the legacy aggregate CSV with per-batch files and de-duplicates by batch/model/effort.
 
 ### Changed / 变更
 
 - Model recommendations appear before detailed weights and rankings.
 - README and reports emphasize results rather than maintenance rules.
-- Daily development and small-project bug-review recommendation remains **Sol Medium**.
-- **Sol XHigh** is now the preferred current escalation after Medium fails, following a 10/10 July 15 result; confidence remains medium until repeated.
-- **Sol Low** remains the low-cost retryable tier, but its confidence was reduced after falling from two 8/10 rounds to 6/10.
-- **Terra Max** is listed as a specialist candidate for task-07-like work.
-- **Sol Max** is no longer treated as an automatic maximum-capability upgrade; on July 15 it tied Sol High on task outcomes while costing much more.
-- Luna Max is no longer a general difficult-work recommendation.
+- Daily development and small-project bug-review recommendation remains **Sol Medium**, but confidence is reduced to medium after a 6/10 July 15 PM result.
+- **Luna Max** returns as the preferred difficult, quota-sensitive background tier after reaching 9/10 and 90.08 weighted points at about $16.30.
+- **Sol Low** remains the low-cost retryable tier after returning to 8/10; historical volatility still prevents it from becoming the important-work default.
+- Within the Sol family, **Sol High** is the preferred current escalation after Medium fails. XHigh's morning 10/10 did not repeat in the afternoon.
+- **Sol Max** remains non-default: it reached 6/10 and 54.61 weighted points at the highest cost in the July 15 PM batch.
 
 ### Data-quality notes / 数据质量说明
 
 - The 2026-07-14 PM API snapshot contains eight tiers and omits Sol Max; the public page supplies Sol Max and the task matrix.
 - Sol Medium's July 14 PM aggregate and per-task list disagree; the repository preserves the mismatch rather than guessing.
-- The July 15 AM authorized API history had not archived a new snapshot at analysis time. Aggregate cost, token, and wall-time values are therefore rounded public-page values.
-- The July 15 AM task matrix is complete and internally consistent: nine tiers, 66/90 total passes.
-- The July 15 AM batch is valid; quality improved while total cost remained essentially flat.
+- The July 15 AM and PM authorized API history had not archived new snapshots at analysis time. Aggregate cost, token, and wall-time values therefore use rounded public-page values.
+- The July 15 PM task matrix is complete and internally consistent: nine tiers, 60/90 total passes.
+- The July 15 PM batch is valid; quality declined 9.1% from the morning while cost and tokens also declined slightly, so anomaly down-weighting is not applied.
 
 ### Removed / 删除
 
