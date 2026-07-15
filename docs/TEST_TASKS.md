@@ -1,28 +1,28 @@
 # Benchmark Task Coverage
 
-The tracked benchmark uses ten fixed repository-level engineering tasks surfaced by Codex Radar. The short descriptions below are community transcriptions intended for analysis and navigation; consult the source site for the authoritative task wording.
+The tracked benchmark uses ten fixed repository-level engineering tasks surfaced by Codex Radar. The short descriptions below are community transcriptions intended for analysis and navigation; consult the source site for the authoritative wording.
 
-**Latest rate snapshot:** `2026-07-14-1434`
+**Latest rate snapshot:** `2026-07-15-0803`
 
 | ID | Short description | Historical pass rate | Interpretation |
 |---:|---|---:|---|
-| 01 | Ordered-map JSONPath API | 78.92% (262/332) | Relatively easy |
-| 02 | Module loading and cache behavior | 79.22% (263/332) | Relatively easy |
-| 03 | HTTPX multipart response parsing | 94.58% (314/332) | Easiest group |
-| 04 | Bandit incremental cache controls | 39.16% (130/332) | Difficult |
-| 05 | IPython session replay behavior | 36.45% (121/332) | Very difficult |
-| 06 | ofetch origin-aware circuit breaker | 93.67% (311/332) | Easiest group |
-| 07 | Wiki and Markdown link conversion | 16.57% (55/332) | Hardest observed task |
-| 08 | CSS lexer abbreviation conversion | 49.40% (164/332) | Medium difficulty |
-| 09 | fd deterministic multi-key sorting | 37.65% (125/332) | Difficult |
-| 10 | Stylesheet selector structure | 62.24% (206/331) | Medium-easy |
+| 01 | Ordered-map JSONPath API | 78.59% (268/341) | Relatively easy |
+| 02 | Module loading and cache behavior | 79.77% (272/341) | Relatively easy |
+| 03 | HTTPX multipart response parsing | 94.43% (322/341) | Easiest group |
+| 04 | Bandit incremental cache controls | 39.59% (135/341) | Difficult |
+| 05 | IPython session replay behavior | 37.54% (128/341) | Very difficult |
+| 06 | ofetch origin-aware circuit breaker | 93.84% (320/341) | Easiest group |
+| 07 | Wiki and Markdown link conversion | 17.01% (58/341) | Hardest observed task |
+| 08 | CSS lexer abbreviation conversion | 49.85% (170/341) | Medium difficulty |
+| 09 | fd deterministic multi-key sorting | 39.00% (133/341) | Difficult |
+| 10 | Stylesheet selector structure | 62.06% (211/340) | Medium-easy |
 
 ## What the set measures well
 
 - repository exploration;
 - multi-file implementation;
 - integration with existing tests;
-- maintaining compatibility with an established codebase;
+- compatibility with an established codebase;
 - medium- to long-horizon agent execution.
 
 ## What the set does not measure well
@@ -33,20 +33,21 @@ The tracked benchmark uses ten fixed repository-level engineering tasks surfaced
 - tiny one-line bug fixes;
 - private enterprise repositories;
 - long conversational analysis;
-- project management or requirements discovery.
+- requirements discovery and project management.
 
 ## Task-family bias
 
-Task 07 has an unusually low global pass rate but has sometimes been passed disproportionately by a specific model family or effort tier. This may represent genuine specialization, training overlap, implementation preference, or stochastic trajectory effects. The soft inverse weighting rewards the task while limiting its maximum influence.
+Task 07 has the lowest global pass rate and has sometimes been passed disproportionately by particular model families. This may represent genuine specialization, training overlap, implementation preference, or stochastic trajectory effects. Soft inverse weighting rewards the task while limiting its influence.
+
+The July 15 batch illustrates this clearly: Sol XHigh and Terra Max passed task 07, while Sol Medium missed it despite a stronger broad result than most other tiers. Task-weighted rankings should therefore be read as task-set performance, not universal capability.
 
 ## Updating the task table
 
 When historical pass rates change:
 
 1. create a new weight snapshot;
-2. do not overwrite prior snapshots silently;
+2. do not overwrite prior report snapshots silently;
 3. retain the pass rate used for every published report;
-4. compare recommendation sensitivity before changing the default formula;
-5. preserve source inconsistencies rather than guessing missing task outcomes.
+4. compare recommendation sensitivity before changing the default formula.
 
 Data attribution: 数据来自 Codex 雷达 codexradar.com
