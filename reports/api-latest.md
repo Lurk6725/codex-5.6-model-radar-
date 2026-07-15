@@ -7,10 +7,10 @@
 
 [English](api-latest.en.md) · [项目首页](../README.md) · [API 历史 CSV](../data/api/model_iq_history.csv) · [监控状态](../data/api/monitor_status.json)
 
-**最近成功检查：** `2026-07-15T09:23:56+00:00`  
-**当前 API 快照：** `156dd40c56c1b3ab`  
+**最近成功检查：** `2026-07-15T11:16:06+00:00`  
+**当前 API 快照：** `16cded5d24c0bda2`  
 **源站观测时间：** `2026-07-13T22:08:07.261261+08:00`  
-**本次发现新快照：** 否；源站仍返回同一快照  
+**本次发现新快照：** 是  
 **返回模型数：** 8
 
 > “最近成功检查”表示自动任务已正常访问 API；“源站观测时间”由上游接口提供，两者可能不同。
@@ -21,14 +21,14 @@
 
 | 排名 | 模型档位 | 源站分数 | 通过 | 任务数 | 费用 | 总 Token | 耗时 |
 |---:|---|---:|---:|---:|---:|---:|---:|
-| 1 | Sol Xhigh | 150 | 10/10 | 10 | $34.78 | 37,853,653 | 0.73h |
-| 2 | Sol Medium | 135 | 9/10 | 10 | $17.78 | 17,508,917 | 0.51h |
-| 3 | Sol High | 120 | 8/10 | 10 | $23.50 | 27,047,460 | 0.79h |
-| 4 | Terra Max | 120 | 8/10 | 10 | $28.28 | 58,386,881 | 0.66h |
-| 5 | Luna Max | 90 | 6/10 | 10 | $17.10 | 101,431,174 | 0.79h |
-| 6 | Sol Low | 90 | 6/10 | 10 | $8.82 | 7,497,736 | 0.31h |
-| 7 | Terra High | 90 | 6/10 | 10 | $9.25 | 15,975,263 | 0.37h |
-| 8 | Luna High | 75 | 5/10 | 10 | $6.28 | 31,051,103 | 0.57h |
+| 1 | Luna Max | 135 | 9/10 | 10 | $16.31 | 90,986,992 | 0.86h |
+| 2 | Sol Low | 120 | 8/10 | 10 | $10.73 | 9,859,047 | 0.42h |
+| 3 | Sol High | 105 | 7/10 | 10 | $24.99 | 24,760,599 | 0.77h |
+| 4 | Sol Xhigh | 105 | 7/10 | 10 | $32.60 | 33,292,820 | 0.91h |
+| 5 | Terra Max | 105 | 7/10 | 10 | $34.01 | 73,507,940 | 2.00h |
+| 6 | Sol Medium | 90 | 6/10 | 10 | $16.63 | 15,274,427 | 0.69h |
+| 7 | Luna High | 75 | 5/10 | 10 | $6.68 | 37,373,527 | 0.65h |
+| 8 | Terra High | 75 | 5/10 | 10 | $9.26 | 16,730,290 | 0.43h |
 
 ## 口径说明
 
@@ -38,7 +38,7 @@
 - 源站数据未变化时，自动任务仍会更新监控心跳，但不会把它描述成新的模型测试批次。
 - 原始 API 响应不写入公开仓库，只保存必要的模型摘要字段。
 
-当前已归档 API 快照数：**4**。
+当前已归档 API 快照数：**5**。
 
 
 ---
@@ -48,10 +48,10 @@
 
 [简体中文](api-latest.zh-CN.md) · [Project home](../README.md) · [API history CSV](../data/api/model_iq_history.csv) · [Monitor status](../data/api/monitor_status.json)
 
-**Last successful check:** `2026-07-15T09:23:56+00:00`  
-**Current API snapshot:** `156dd40c56c1b3ab`  
+**Last successful check:** `2026-07-15T11:16:06+00:00`  
+**Current API snapshot:** `16cded5d24c0bda2`  
 **Source observation:** `2026-07-13T22:08:07.261261+08:00`  
-**New snapshot detected:** no; the source returned the same snapshot  
+**New snapshot detected:** yes  
 **Models returned:** 8
 
 > “Last successful check” confirms that the automation reached the API. “Source observation” is supplied by the upstream endpoint and may be older.
@@ -62,14 +62,14 @@
 
 | Rank | Model tier | Source score | Passed | Tasks | Cost | Total tokens | Wall time |
 |---:|---|---:|---:|---:|---:|---:|---:|
-| 1 | Sol Xhigh | 150 | 10/10 | 10 | $34.78 | 37,853,653 | 0.73h |
-| 2 | Sol Medium | 135 | 9/10 | 10 | $17.78 | 17,508,917 | 0.51h |
-| 3 | Sol High | 120 | 8/10 | 10 | $23.50 | 27,047,460 | 0.79h |
-| 4 | Terra Max | 120 | 8/10 | 10 | $28.28 | 58,386,881 | 0.66h |
-| 5 | Luna Max | 90 | 6/10 | 10 | $17.10 | 101,431,174 | 0.79h |
-| 6 | Sol Low | 90 | 6/10 | 10 | $8.82 | 7,497,736 | 0.31h |
-| 7 | Terra High | 90 | 6/10 | 10 | $9.25 | 15,975,263 | 0.37h |
-| 8 | Luna High | 75 | 5/10 | 10 | $6.28 | 31,051,103 | 0.57h |
+| 1 | Luna Max | 135 | 9/10 | 10 | $16.31 | 90,986,992 | 0.86h |
+| 2 | Sol Low | 120 | 8/10 | 10 | $10.73 | 9,859,047 | 0.42h |
+| 3 | Sol High | 105 | 7/10 | 10 | $24.99 | 24,760,599 | 0.77h |
+| 4 | Sol Xhigh | 105 | 7/10 | 10 | $32.60 | 33,292,820 | 0.91h |
+| 5 | Terra Max | 105 | 7/10 | 10 | $34.01 | 73,507,940 | 2.00h |
+| 6 | Sol Medium | 90 | 6/10 | 10 | $16.63 | 15,274,427 | 0.69h |
+| 7 | Luna High | 75 | 5/10 | 10 | $6.68 | 37,373,527 | 0.65h |
+| 8 | Terra High | 75 | 5/10 | 10 | $9.26 | 16,730,290 | 0.43h |
 
 ## Interpretation
 
@@ -79,5 +79,5 @@
 - When source data is unchanged, the automation still updates its heartbeat without presenting it as a new benchmark batch.
 - The raw API response is not stored in the public repository; only required model-summary fields are archived.
 
-Archived API snapshots: **4**.
+Archived API snapshots: **5**.
 
