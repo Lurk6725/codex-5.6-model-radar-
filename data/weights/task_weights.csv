@@ -1,11 +1,11 @@
 task_id,short_description,historical_pass_rate,soft_inverse_weight,weight_snapshot,source_note
-01,Ordered-map JSONPath API,0.789157,7.848757,2026-07-14-1434,Codex Radar public task matrix 262/332
-02,Module loading and cache behavior,0.792169,7.833821,2026-07-14-1434,Codex Radar public task matrix 263/332
-03,HTTPX multipart response parsing,0.945783,7.169464,2026-07-14-1434,Codex Radar public task matrix 314/332
-04,Bandit incremental cache controls,0.391566,11.142428,2026-07-14-1434,Codex Radar public task matrix 130/332
-05,IPython session replay behavior,0.364458,11.549384,2026-07-14-1434,Codex Radar public task matrix 121/332
-06,ofetch origin-aware circuit breaker,0.936747,7.203960,2026-07-14-1434,Codex Radar public task matrix 311/332
-07,Wiki and Markdown link conversion,0.165663,17.130505,2026-07-14-1434,Codex Radar public task matrix 55/332
-08,CSS lexer abbreviation conversion,0.493976,9.920409,2026-07-14-1434,Codex Radar public task matrix 164/332
-09,fd deterministic multi-key sorting,0.376506,11.363092,2026-07-14-1434,Codex Radar public task matrix 125/332
-10,Stylesheet selector structure,0.622356,8.838180,2026-07-14-1434,Codex Radar public task matrix 206/331
+01,Ordered-map JSONPath API,0.785924,7.920136,2026-07-15-0803,Codex Radar public task matrix 268/341
+02,Module loading and cache behavior,0.797654,7.861684,2026-07-15-0803,Codex Radar public task matrix 272/341
+03,HTTPX multipart response parsing,0.944282,7.225569,2026-07-15-0803,Codex Radar public task matrix 322/341
+04,Bandit incremental cache controls,0.395894,11.159202,2026-07-15-0803,Codex Radar public task matrix 135/341
+05,IPython session replay behavior,0.375367,11.460275,2026-07-15-0803,Codex Radar public task matrix 128/341
+06,ofetch origin-aware circuit breaker,0.938416,7.248114,2026-07-15-0803,Codex Radar public task matrix 320/341
+07,Wiki and Markdown link conversion,0.170088,17.024957,2026-07-15-0803,Codex Radar public task matrix 58/341
+08,CSS lexer abbreviation conversion,0.498534,9.944331,2026-07-15-0803,Codex Radar public task matrix 170/341
+09,fd deterministic multi-key sorting,0.390029,11.242792,2026-07-15-0803,Codex Radar public task matrix 133/341
+10,Stylesheet selector structure,0.620588,8.912941,2026-07-15-0803,Codex Radar public task matrix 211/340
