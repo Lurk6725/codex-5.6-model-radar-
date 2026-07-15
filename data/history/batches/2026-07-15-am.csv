@@ -1,0 +1,10 @@
+batch_id,model,effort,passed,tasks,raw_iq,total_tokens,input_tokens,cached_input_tokens,output_tokens,wall_seconds,cost_usd,weighted_score,anomaly,reliability_weight,provenance,source_url
+2026-07-15-am,gpt-5.6-sol,max,8,10,120,69900000,,,,12960,60.1,74.06,false,1.0,public_page_summary_rounded_plus_task_matrix,https://codexradar.com/
+2026-07-15-am,gpt-5.6-sol,xhigh,10,10,150,37900000,,,,8280,34.8,100.00,false,1.0,public_page_summary_rounded_plus_task_matrix,https://codexradar.com/
+2026-07-15-am,gpt-5.6-sol,high,8,10,120,27000000,,,,6480,23.5,74.06,false,1.0,public_page_summary_rounded_plus_task_matrix,https://codexradar.com/
+2026-07-15-am,gpt-5.6-sol,medium,9,10,135,17500000,,,,4680,17.8,82.98,false,1.0,public_page_summary_rounded_plus_task_matrix,https://codexradar.com/
+2026-07-15-am,gpt-5.6-sol,low,6,10,90,7500000,,,,2520,8.8,59.73,false,1.0,public_page_summary_rounded_plus_task_matrix,https://codexradar.com/
+2026-07-15-am,gpt-5.6-terra,max,8,10,120,58400000,,,,12240,28.3,79.93,false,1.0,public_page_summary_rounded_plus_task_matrix,https://codexradar.com/
+2026-07-15-am,gpt-5.6-terra,high,6,10,90,16000000,,,,4680,9.2,50.41,false,1.0,public_page_summary_rounded_plus_task_matrix,https://codexradar.com/
+2026-07-15-am,gpt-5.6-luna,max,6,10,90,101400000,,,,14400,17.1,54.98,false,1.0,public_page_summary_rounded_plus_task_matrix,https://codexradar.com/
+2026-07-15-am,gpt-5.6-luna,high,5,10,75,31100000,,,,6480,6.3,46.42,false,1.0,public_page_summary_rounded_plus_task_matrix,https://codexradar.com/
