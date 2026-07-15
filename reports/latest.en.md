@@ -2,118 +2,109 @@
 
 [Project home](../README.md) · [简体中文](latest.zh-CN.md) · [API monitor](api-latest.md) · [Historical data](history/README.md)
 
-**Analysis cutoff:** 2026-07-14 14:34 Asia/Shanghai  
-**Batch:** `2026-07-14-pm`  
-**API snapshot:** `e0ac3269c1279e22`  
-**Sources:** authorized Codex Radar API plus the public task matrix
+**Analysis cutoff:** 2026-07-15 08:03 Asia/Shanghai  
+**Batch:** `2026-07-15-am`  
+**Weight snapshot:** `2026-07-15-0803`  
+**Source:** Codex Radar public aggregate table, task matrix, and historical pass counts
 
-> The API provides precise aggregate data for eight tiers; the public page supplies Sol Max, nine-tier task outcomes, and updated historical pass rates. The source reports Sol Medium as 7/10, but its public per-task list contains only six explicit passes. This report therefore preserves the inconsistency and reports a weighted-score range instead of guessing the missing task.
+> At analysis time, the authorized API history had not yet archived this batch. Cost, token, and wall-time fields therefore use the rounded values displayed on the public page. Task outcomes and historical pass counts come from the public matrix. More precise API aggregates may later replace only those rounded fields without changing the task-weighted result.
 
 ## Model recommendations
 
-| Work type | Current recommendation | Conclusion |
+| Work type | Current recommendation | Rationale |
 |---|---|---|
-| Mechanical, low-risk, retryable | **Sol Low** | Two consecutive 8/10 runs; weighted score 78.94 and weighted/$ 8.46, though older results remain volatile |
-| Daily development and small-project bug review | **Sol Medium** | Aggregate 7/10, tying High and XHigh while costing about 38% and 55% less; confidence is medium due to the task-list mismatch |
-| Difficult work and final fallback | **Sol Max** | Highest weighted score at 83.33 and passed task 07; its $49.90 cost makes it a fallback, not a default |
-| Not recommended as defaults | Terra High, Luna High, Luna Max, Sol XHigh | Current absolute quality, cost, or stability is not competitive |
+| Low-cost and retryable | **Sol Low** | It fell to 6/10, so confidence in the cheap tier is back to medium |
+| Daily development and small-project bug review | **Sol Medium** | 9/10, 82.98 weighted points, and $17.80 remain the best quality/cost/stability balance |
+| High-value difficult work | **Start with Sol Medium, then escalate to Sol XHigh** | XHigh reached 10/10, but its long-run median remains below this one perfect batch |
+| Task-07-like specialization | **Terra Max as a specialist candidate** | It reached 8/10 and passed the hardest task at lower cost than Sol XHigh and Sol Max |
+| Do not upgrade automatically | Sol Max and Sol High | They had identical task outcomes, while High cost about 39% as much as Max |
 
-## Latest task weights
+The main recommendation does not change: **Sol Medium remains the daily default.** The new evidence strengthens Sol XHigh as an escalation tier after failure, not as a permanent default.
 
-```text
-raw_difficulty_i = 1 / sqrt(historical_pass_rate_i)
-weight_i = 100 * raw_difficulty_i / sum(raw_difficulty)
-weighted_score = sum(weight_i * passed_i)
-```
-
-**Weight snapshot:** `2026-07-14-1434`
+## Latest task-difficulty weights
 
 | Task | Historical pass rate | Weight /100 |
 |---:|---:|---:|
-| 01 | 78.92% (262/332) | 7.85 |
-| 02 | 79.22% (263/332) | 7.83 |
-| 03 | 94.58% (314/332) | 7.17 |
-| 04 | 39.16% (130/332) | 11.14 |
-| 05 | 36.45% (121/332) | 11.55 |
-| 06 | 93.67% (311/332) | 7.20 |
-| 07 | 16.57% (55/332) | **17.13** |
-| 08 | 49.40% (164/332) | 9.92 |
-| 09 | 37.65% (125/332) | 11.36 |
-| 10 | 62.24% (206/331) | 8.84 |
+| 01 | 78.59% (268/341) | 7.92 |
+| 02 | 79.77% (272/341) | 7.86 |
+| 03 | 94.43% (322/341) | 7.23 |
+| 04 | 39.59% (135/341) | 11.16 |
+| 05 | 37.54% (128/341) | 11.46 |
+| 06 | 93.84% (320/341) | 7.25 |
+| 07 | 17.01% (58/341) | **17.02** |
+| 08 | 49.85% (170/341) | 9.94 |
+| 09 | 39.00% (133/341) | 11.24 |
+| 10 | 62.06% (211/340) | 8.91 |
 |  |  | **100.00** |
 
 ## Latest task-weighted ranking
 
 | Rank | Model tier | Passed | Weighted /100 | Cost | Weighted/$ |
 |---:|---|---:|---:|---:|---:|
-| 1 | **Sol Max** | 8/10 | **83.33** | $49.90 | 1.67 |
-| 2 | **Sol Low** | 8/10 | **78.94** | $9.33 | **8.46** |
-| 3–5* | **Sol Medium** | 7/10 | **66.18–75.48** | $16.85 | 3.93–4.48 |
-| 3–5 | Sol High | 7/10 | 66.20 | $27.03 | 2.45 |
-| 3–5 | Sol XHigh | 7/10 | 66.20 | $37.05 | 1.79 |
-| 6 | Terra Max | 7/10 | 62.48 | $34.91 | 1.79 |
-| 7 | Luna Max | 6/10 | 52.97 | $16.33 | 3.24 |
-| 8 | Luna High | 5/10 | 41.42 | $5.88 | 7.05 |
-| 9 | Terra High | 3/10 | 22.21 | $9.14 | 2.43 |
+| 1 | **Sol XHigh** | 10/10 | **100.00** | $34.80 | 2.87 |
+| 2 | **Sol Medium** | 9/10 | **82.98** | $17.80 | **4.66** |
+| 3 | Terra Max | 8/10 | 79.93 | $28.30 | 2.82 |
+| 4 | Sol High | 8/10 | 74.06 | $23.50 | 3.15 |
+| 5 | Sol Max | 8/10 | 74.06 | $60.10 | 1.23 |
+| 6 | Sol Low | 6/10 | 59.73 | $8.80 | 6.79 |
+| 7 | Luna Max | 6/10 | 54.98 | $17.10 | 3.22 |
+| 8 | Terra High | 6/10 | 50.41 | $9.20 | 5.48 |
+| 9 | Luna High | 5/10 | 46.42 | $6.30 | **7.37** |
 
-\* The public per-task list explicitly shows Sol Medium passing tasks 03, 04, 05, 06, 08, and 09—six tasks—while the API and aggregate table report 7/10. If a seventh task was passed, it must be one of the listed failures 01, 02, 07, or 10, producing a weighted score between 66.18 and 75.48. The machine-readable matrix preserves the six-pass bitmap and seven-pass aggregate with a source-mismatch marker.
+The ranking is ordered by weighted score, with lower cost breaking ties. Weighted score per dollar favors cheap tiers with lower absolute reliability and must not be used without an absolute-quality threshold.
 
-## Most informative findings
+## Most informative results
 
-### Sol Low moves from watchlist to low-cost recommendation
+### Sol XHigh reached 10/10
 
-Sol Low reached 8/10 in both morning and afternoon runs. This time it passed the highest-weight task 07 and task 10, producing 78.94 at only $9.33. Its older history includes 3/10 and 4/10 results, so it remains unsuitable for high-value, non-retryable work, but it is now the preferred cheap tier for mechanical and low-risk tasks.
+XHigh passed all ten tasks, including task 07, and reached 100 weighted points. At $34.80 it was also far cheaper than Sol Max. This makes it the strongest current escalation option after Medium fails. However, XHigh has usually landed around 6–8/10 in prior rounds, so the perfect result still needs two or three additional batches before becoming a structural conclusion.
 
-### Sol Max restores its maximum-capability case
+### Sol Medium remains the daily default
 
-Sol Max recovered from 6/10 to 8/10, while cost fell from about $60.20 to $49.90. It passed task 07 and achieved the highest weighted score, 83.33. This restores its value as a final fallback, but its weighted/$ of 1.67 is too low for routine use.
+Medium passed 9/10 and missed only task 07. At 82.98 weighted points and $17.80, it retained a large cost advantage over XHigh and delivered better task coverage than High. It remains the best starting tier for daily coding, focused bug review, and normal repository work.
 
-### Sol Medium remains the daily default, with a data warning
+### Sol Max was strictly dominated by Sol High
 
-The source aggregate reports Medium, High, and XHigh at 7/10. Medium costs $16.85 versus $27.03 for High and $37.05 for XHigh, so it remains the best default even without relying on the task structure. However, the task-list inconsistency prevents a precise weighted score for this run.
+Max and High passed exactly the same tasks—01 through 06, 08, and 09—and both scored 74.06. High cost $23.50 versus Max at $60.10. This round provides no evidence for upgrading from High to Max.
 
-### High and XHigh offer no upgrade value
+### Terra Max showed specialist value
 
-High and XHigh have identical public task bitmaps and both score 66.20. High is about 27% cheaper than XHigh. Upgrading from Medium to XHigh has no support in this batch, and High should only be used when project-specific reproduction shows Medium fails.
+Terra Max passed task 07 and scored 79.93, above Sol High and Sol Max despite the same raw 8/10 pass count. It is a plausible specialist option for task-07-like work or long background execution, not a universal replacement for Medium.
 
-### Terra and Luna changed active effort tiers
+### Sol Low lost its recent stability claim
 
-Terra Medium and Luna Medium from the morning batch were replaced by Terra High and Luna High in the afternoon. These are not like-for-like trend comparisons. Terra High scored 3/10; Luna High scored 5/10 and is cheap, but has only one observed run. Neither is promoted to a default recommendation.
+After two consecutive 8/10 rounds, Sol Low fell to 6/10. It remains inexpensive and useful for retryable work, but should no longer be described as continuously stable and is unsuitable for important one-shot tasks.
 
-## Change from the morning batch
+### Luna High's efficiency lead is misleading
 
-| Model | Pass change | Cost change | Interpretation |
-|---|---:|---:|---|
-| Sol Max | 6 → **8** | $60.20 → $49.90 | Strong recovery; maximum-capability fallback restored |
-| Sol XHigh | 6 → **7** | $37.97 → $37.05 | Slight recovery, still poor value |
-| Sol High | 9 → **7** | $24.62 → $27.03 | Lower quality and higher cost |
-| Sol Medium | 9 → **7** | $18.41 → $16.85 | Lower aggregate result, but still the cheapest equal-score Sol tier |
-| Sol Low | 8 → **8** | $9.73 → $9.33 | Consecutive stability strengthens the low-cost recommendation |
-| Terra Max | 7 → 7 | $30.91 → $34.91 | Same pass count at higher cost |
-| Luna Max | 6 → 6 | $15.11 → $16.33 | Same pass count at higher cost |
+Luna High ranked first on weighted score per dollar at 7.37, but its absolute weighted score was only 46.42 with 5/10 tasks passed. This is another example of why cost efficiency requires a minimum quality threshold.
 
-Terra High and Luna High are new active tiers in this batch and should not be directly compared with the morning Medium tiers.
+## Change from the previous batch
+
+| Metric | July 14 PM | July 15 AM | Change |
+|---|---:|---:|---:|
+| Total passes | 58/90 | **66/90** | **+13.8%** |
+| Total cost | about $206.40 | about **$205.89** | essentially flat |
+| Total tokens | about 363.7M | about **366.7M** | +0.8% |
+
+Quality improved materially without a corresponding cost or token spike, so this batch does not meet the anomaly rule.
 
 ## Batch status
 
-Across nine tiers:
+> **Valid batch.** No reliability down-weight is applied. Aggregate cost, token, and wall-time values remain rounded until the authorized API archives a more precise snapshot.
 
-- passes: **58/90**;
-- estimated cost: about **$206.40**;
-- total tokens: about **363.7M**;
-- versus the morning batch: quality +1.8%, cost +0.9%, tokens +8.2%.
-
-Quality did not decline and cost did not spike enough to meet the anomaly rule. The batch is recorded as:
-
-> **Valid, with high-consumption and Sol Medium source-consistency warnings.**
-
-## Final recommendation
+## Practical route
 
 ```text
-Low-cost, retryable work: Sol Low
+Low-cost, retryable work: Sol Low; escalate important tasks
 Daily development and small-project bug review: Sol Medium
-High-value difficult work: try Medium first, then escalate to Sol Max
-Avoid as defaults: Sol XHigh, Terra High, Luna High, Luna Max
+High-value difficult work: try Sol XHigh after Medium fails
+Task-07-like specialist work: consider Terra Max
+Do not choose Max automatically; it was much less cost-effective than High
 ```
 
-Machine-readable task outcomes are stored in [`data/history/task_matrices.csv`](../data/history/task_matrices.csv), and aggregate history is stored in [`data/history/runs.csv`](../data/history/runs.csv).
+Machine-readable data:
+
+- [`data/history/batches/2026-07-15-am.csv`](../data/history/batches/2026-07-15-am.csv)
+- [`data/history/task_matrices.csv`](../data/history/task_matrices.csv)
+- [`data/weights/task_weights.csv`](../data/weights/task_weights.csv)
