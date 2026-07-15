@@ -2,7 +2,7 @@
 
 [English](api-latest.en.md) · [项目首页](../README.md) · [API 历史 CSV](../data/api/model_iq_history.csv) · [监控状态](../data/api/monitor_status.json)
 
-**最近成功检查：** `2026-07-15T22:42:43+00:00`  
+**最近成功检查：** `2026-07-15T23:43:37+00:00`  
 **当前 API 快照：** `16cded5d24c0bda2`  
 **源站观测时间：** `2026-07-13T22:08:07.261261+08:00`  
 **本次发现新快照：** 否；源站仍返回同一快照  
