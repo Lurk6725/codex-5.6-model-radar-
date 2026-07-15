@@ -1,85 +1,77 @@
 # Model Recommendation Framework
 
-Recommendations are provisional and should change only when several valid batches support the change. The current ladder reflects data through `2026-07-14-pm`.
+Recommendations are provisional and should change only when several valid batches support the change. The current ladder reflects data through `2026-07-15-am`.
 
 ## Current recommendation ladder
 
-### 1. Mechanical, low-risk, retryable tasks
+### 1. Low-cost, retryable work
 
-Use **Sol Low**.
+Use **Sol Low** when failure is inexpensive and retrying or escalating is acceptable.
 
-Why:
-
-- two consecutive 8/10 aggregate results on 2026-07-14;
-- the latest task-weighted score is 78.94;
-- the latest weighted score per estimated dollar is 8.46;
-- it is substantially cheaper and faster than the higher Sol tiers.
+Current caution: after two 8/10 rounds, Low fell to 6/10 on July 15. It remains useful for mechanical work, but should not be described as consistently reliable.
 
 Typical work:
 
+- formatting and renaming;
 - documentation edits;
-- renaming and formatting;
-- small test additions;
-- clearly specified changes;
-- executing an already approved plan.
+- small, clearly specified changes;
+- executing an approved plan;
+- cheap first attempts before escalation.
 
-Caveat: older Sol Low runs include 3/10 and 4/10 results. Use it where retrying or escalating is inexpensive.
-
-### 2. General daily development and small-project bug review
+### 2. General daily development
 
 Use **Sol Medium** as the default starting point.
 
 Reasons:
 
-- the largest useful history sample among the evaluated mid/high Sol tiers;
-- lower cost than High, XHigh, and Max;
-- higher reasoning tiers have not shown monotonic gains;
-- in the latest aggregate, Medium tied High and XHigh at 7/10 while costing much less.
-
-The 2026-07-14 PM source has a data-quality warning: the aggregate/API reports Medium as 7/10, while the public task list contains six explicit passes. This prevents a unique task-weighted score for that run, but it does not change the aggregate cost advantage over High and XHigh.
+- it reached 9/10 and 82.98 weighted points in the latest batch;
+- it remains substantially cheaper than XHigh and Max;
+- its multi-round history is stronger and more stable than Low;
+- higher reasoning tiers have not shown monotonic gains.
 
 Typical work:
 
 - multi-file feature implementation;
-- bug fixing and user-experience review;
+- focused bug fixing;
+- small-project bug review;
 - moderate refactoring;
-- test-driven changes;
 - repository exploration followed by implementation.
 
-### 3. Difficult work and maximum-capability fallback
+### 3. High-value difficult work
 
-Use **Sol Max** only after a cheaper tier fails or when failure is unusually costly.
+Start with **Sol Medium**. If it fails and the task is valuable enough to justify a large quota increase, try **Sol XHigh** next.
 
-The latest batch gives Sol Max the highest task-weighted score, 83.33, and it passed the highest-weight task 07. However, it cost about $49.90 and achieved only 1.67 weighted points per estimated dollar.
+XHigh reached 10/10 in `2026-07-15-am`, including the hardest task 07, at lower cost than Sol Max. This is strong current evidence, but still only one perfect batch; its long-run median remains closer to seven tasks.
 
-Use it when:
+### 4. Specialist route
 
-- Sol Medium or Sol Low already failed;
-- the task has unusually high value;
-- passing one additional difficult task justifies a large quota increase;
-- maximum demonstrated capability matters more than latency or cost.
+Consider **Terra Max** for work resembling task 07 or for long-running background execution where its family-specific task profile is relevant.
 
-### 4. Tiers not recommended as defaults
+In the latest batch, Terra Max reached 8/10 and 79.93 weighted points while passing task 07. This is a specialist signal, not evidence that it universally beats Sol Medium.
 
-- **Sol XHigh:** same latest task bitmap as High at higher cost; aggregate score also ties Medium.
-- **Sol High:** can be useful only with project-specific evidence; it is not an automatic upgrade from Medium.
-- **Terra Max:** reasonable aggregate quality but expensive for its weighted result.
-- **Terra High:** latest result is 3/10; only one observed High-tier batch.
-- **Luna Max:** high token and wall-time use without a current quality advantage.
-- **Luna High:** cheap and 5/10 in its first observed batch, but insufficient history for a default recommendation.
+### 5. Max is not an automatic upgrade
+
+Do not select **Sol Max** solely because it is the highest reasoning label.
+
+In `2026-07-15-am`, Sol Max and Sol High passed exactly the same tasks and both scored 74.06, while Max cost $60.10 and High cost $23.50. Max should be used only when project-specific evidence shows a benefit or when cheaper tiers have already failed.
 
 ## Decision table
 
 | Priority | Suggested tier | Upgrade condition |
 |---|---|---|
-| Lowest-cost useful attempt | **Sol Low** | Failure is inexpensive and retrying is acceptable |
-| Daily balance | **Sol Medium** | Default for important normal work and bug review |
-| Maximum-capability fallback | **Sol Max** | Medium/Low failed or failure cost is very high |
-| Project-specific alternative | High, XHigh, Terra, or Luna tiers | Only after repository-specific evidence shows an advantage |
+| Lowest cost | Sol Low | Failure is cheap and retryable |
+| Daily balance | Sol Medium | Default for important normal work |
+| Difficult escalation | Sol XHigh | Medium failed and the task value justifies higher quota |
+| Task-07-like specialist work | Terra Max | Task profile or private evidence supports it |
+| Highest label | Sol Max | Only with project-specific evidence; never automatic |
 
-## Prompt-scope controls for quota stability
+## Why weighted score per dollar is not enough
 
-For narrowly scoped tasks, consider adding:
+Cheap tiers can lead the efficiency table while passing too few tasks. Apply an absolute quality threshold before using cost efficiency as a recommendation signal. For important work, a tier below roughly 60 weighted points should not become the default solely because it is inexpensive.
+
+## Prompt-scope controls
+
+For narrow tasks, add explicit scope controls:
 
 ```text
 Do not create sub-agents.
@@ -87,11 +79,9 @@ Read only files required for this task.
 Do not redesign the approved plan.
 Run only tests directly related to the change.
 Record unrelated issues instead of fixing them.
-Stop immediately once the acceptance criteria pass.
+Stop once the acceptance criteria pass.
 Ask before expanding scope or changing architecture.
 ```
-
-These controls cannot fix a metering issue, but they can reduce unnecessary agent expansion.
 
 ## When recommendations should change
 
@@ -102,5 +92,3 @@ A default tier should change only when at least one of these holds:
 3. a cost-quality Pareto relationship persists across multiple batches;
 4. an official model or Codex configuration change explains a structural shift;
 5. project-specific private benchmarks consistently disagree with the public set.
-
-A source inconsistency must be recorded rather than resolved by guessing. Exact task-weighted recommendations should wait for a corrected task matrix when aggregate and per-task totals conflict.
