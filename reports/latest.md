@@ -2,67 +2,68 @@
 
 [中文完整分析](latest.zh-CN.md) · [Full English analysis](latest.en.md) · [API 自动监控 / API monitor](api-latest.md) · [历史数据 / History](history/README.md) · [项目首页 / Project home](../README.md)
 
-**分析截止 / Cutoff:** 2026-07-14 14:34 Asia/Shanghai  
-**批次 / Batch:** `2026-07-14-pm`  
-**API 快照 / API snapshot:** `e0ac3269c1279e22`  
-**数据 / Sources:** Codex Radar 授权 API + 公开网页逐题矩阵 / authorized API + public task matrix
+**分析截止 / Cutoff:** 2026-07-15 08:03 Asia/Shanghai  
+**批次 / Batch:** `2026-07-15-am`  
+**权重快照 / Weight snapshot:** `2026-07-15-0803`
 
-> 源站将 Sol Medium 汇总为 7/10，但公开逐题列表只显示六个明确通过项，因此本报告展示加权分范围，不猜测缺失题目。  
-> The source reports Sol Medium as 7/10, while its public task list contains only six explicit passes. The report therefore shows a weighted-score range instead of guessing the missing task.
+## 简体中文
 
-## 模型推荐 / Model recommendations
+### 当前推荐
 
-| 场景 / Work type | 当前建议 / Recommendation | 说明 / Rationale |
-|---|---|---|
-| 机械、低风险、允许重试 / Mechanical, low-risk, retryable | **Sol Low** | 连续两轮 8/10；本轮加权分/$ 8.46 / two consecutive 8/10 runs; weighted/$ 8.46 |
-| 日常开发与小项目 Bug 审查 / Daily development and small-project bug review | **Sol Medium** | 与 High、XHigh 同为汇总 7/10，但明显更便宜 / same aggregate 7/10 as High and XHigh at much lower cost |
-| 高难任务与最终兜底 / Difficult work and final fallback | **Sol Max** | 加权分最高 83.33，但费用 $49.90 / highest weighted score, but costs $49.90 |
+| 场景 | 推荐 |
+|---|---|
+| 低成本、允许重试 | **Sol Low**，但本轮回落到 6/10，重要任务应升级 |
+| 日常开发、小项目 Bug 审查 | **Sol Medium** |
+| 高价值困难任务 | Medium 失败后升级 **Sol XHigh** |
+| 第 07 类专项任务 | 可考虑 **Terra Max** |
+| 不建议自动升级 | Sol Max；本轮与 High 同题同分但贵得多 |
 
-## 最新权重 / Latest task weights
+### 最新排名
 
-**快照 / Snapshot:** `2026-07-14-1434`
-
-| 题号 / Task | 历史通过率 / Pass rate | 权重 /100 |
-|---:|---:|---:|
-| 01 | 78.92% | 7.85 |
-| 02 | 79.22% | 7.83 |
-| 03 | 94.58% | 7.17 |
-| 04 | 39.16% | 11.14 |
-| 05 | 36.45% | 11.55 |
-| 06 | 93.67% | 7.20 |
-| 07 | 16.57% | **17.13** |
-| 08 | 49.40% | 9.92 |
-| 09 | 37.65% | 11.36 |
-| 10 | 62.24% | 8.84 |
-|  | **合计 / Total** | **100.00** |
-
-## 最新逐题加权排名 / Latest task-weighted ranking
-
-| 排名 / Rank | 模型 / Tier | 通过 / Passed | 加权分 /100 | 费用 / Cost | 加权分/$ / Weighted/$ |
+| 排名 | 模型 | 通过 | 加权分 /100 | 费用 | 加权分/$ |
 |---:|---|---:|---:|---:|---:|
-| 1 | **Sol Max** | 8/10 | **83.33** | $49.90 | 1.67 |
-| 2 | **Sol Low** | 8/10 | **78.94** | $9.33 | **8.46** |
-| 3–5* | **Sol Medium** | 7/10 | **66.18–75.48** | $16.85 | 3.93–4.48 |
-| 3–5 | Sol High | 7/10 | 66.20 | $27.03 | 2.45 |
-| 3–5 | Sol XHigh | 7/10 | 66.20 | $37.05 | 1.79 |
-| 6 | Terra Max | 7/10 | 62.48 | $34.91 | 1.79 |
-| 7 | Luna Max | 6/10 | 52.97 | $16.33 | 3.24 |
-| 8 | Luna High | 5/10 | 41.42 | $5.88 | 7.05 |
-| 9 | Terra High | 3/10 | 22.21 | $9.14 | 2.43 |
+| 1 | **Sol XHigh** | 10/10 | **100.00** | $34.80 | 2.87 |
+| 2 | **Sol Medium** | 9/10 | **82.98** | $17.80 | **4.66** |
+| 3 | Terra Max | 8/10 | 79.93 | $28.30 | 2.82 |
+| 4 | Sol High | 8/10 | 74.06 | $23.50 | 3.15 |
+| 5 | Sol Max | 8/10 | 74.06 | $60.10 | 1.23 |
+| 6 | Sol Low | 6/10 | 59.73 | $8.80 | 6.79 |
+| 7 | Luna Max | 6/10 | 54.98 | $17.10 | 3.22 |
+| 8 | Terra High | 6/10 | 50.41 | $9.20 | 5.48 |
+| 9 | Luna High | 5/10 | 46.42 | $6.30 | **7.37** |
 
-\* Sol Medium 的逐题列表与汇总总数不一致；机器可读数据保留该矛盾。 / Sol Medium's task list conflicts with its aggregate pass count; the machine-readable data preserves the discrepancy.
+本轮九档合计 **66/90**，费用约 **$205.89**，Token 约 **366.7M**。相比上一批次，质量提高约 13.8%，成本基本持平，因此记为**有效批次**。
 
-## 核心结论 / Core findings
+> 本轮 API 自动历史尚未归档新快照，费用、Token 与耗时使用公开网页的四舍五入显示值；逐题矩阵和加权分可复现。
 
-- **Sol Low 升级为低成本推荐 / becomes the low-cost recommendation.** 连续两轮 8/10，且本轮通过最难第 07 题。 / Two consecutive 8/10 runs, including task 07 this time.
-- **Sol Medium 保持日常默认 / remains the daily default.** 同为汇总 7/10 时，它比 High 和 XHigh 明显更便宜。 / At the same aggregate 7/10, it is much cheaper than High and XHigh.
-- **Sol Max 恢复最高能力兜底 / restores the maximum-capability fallback.** 本轮加权分第一，但单位成本效率低。 / Highest weighted score, but poor cost efficiency.
-- **High/XHigh 没有升级价值 / offer no upgrade value.** 两者逐题结果相同，High 更便宜；Medium 总分相同且更便宜。 / High and XHigh share the same task bitmap; Medium has the same aggregate score at lower cost.
-- **Terra High 与 Luna High 是新档位 / are new active tiers.** 不能与上午的 Medium 档直接做同档趋势比较。 / They cannot be directly compared with the morning Medium tiers.
+---
 
-## 批次状态 / Batch status
+## English
 
-本轮 58/90，总费用约 $206.40，总 Token 约 363.7M。相较上午，质量 +1.8%、费用 +0.9%、Token +8.2%。记录为**有效批次，附高消耗和来源一致性警告**。  
-The batch reached 58/90 at about $206.40 and 363.7M tokens. Versus the morning run, quality rose 1.8%, cost rose 0.9%, and tokens rose 8.2%. It is recorded as **valid with high-consumption and source-consistency warnings**.
+### Current recommendations
 
-[逐题矩阵 / Task matrix](../data/history/task_matrices.csv) · [汇总历史 / Aggregate history](../data/history/runs.csv)
+| Work type | Recommendation |
+|---|---|
+| Low-cost and retryable | **Sol Low**, but escalate important work after its fall to 6/10 |
+| Daily development and small-project bug review | **Sol Medium** |
+| High-value difficult work | Escalate to **Sol XHigh** after Medium fails |
+| Task-07-like specialist work | Consider **Terra Max** |
+| Do not upgrade automatically | Sol Max; it tied High on tasks while costing much more |
+
+### Latest ranking
+
+| Rank | Model | Passed | Weighted /100 | Cost | Weighted/$ |
+|---:|---|---:|---:|---:|---:|
+| 1 | **Sol XHigh** | 10/10 | **100.00** | $34.80 | 2.87 |
+| 2 | **Sol Medium** | 9/10 | **82.98** | $17.80 | **4.66** |
+| 3 | Terra Max | 8/10 | 79.93 | $28.30 | 2.82 |
+| 4 | Sol High | 8/10 | 74.06 | $23.50 | 3.15 |
+| 5 | Sol Max | 8/10 | 74.06 | $60.10 | 1.23 |
+| 6 | Sol Low | 6/10 | 59.73 | $8.80 | 6.79 |
+| 7 | Luna Max | 6/10 | 54.98 | $17.10 | 3.22 |
+| 8 | Terra High | 6/10 | 50.41 | $9.20 | 5.48 |
+| 9 | Luna High | 5/10 | 46.42 | $6.30 | **7.37** |
+
+The nine tiers produced **66/90** at about **$205.89** and **366.7M tokens**. Quality improved about 13.8% while cost was essentially flat, so this is a **valid batch**.
+
+> The authorized API history had not yet archived the new snapshot. Aggregate cost, token, and wall-time values use the rounded public-page display; the task matrix and weighted scores are reproducible.
