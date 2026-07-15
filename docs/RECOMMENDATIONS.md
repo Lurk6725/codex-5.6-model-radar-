@@ -1,6 +1,6 @@
 # Model Recommendation Framework
 
-Recommendations are provisional and should change only when several valid batches support the change. The current ladder reflects data through `2026-07-15-am`.
+Recommendations are provisional and should change only when several valid batches support the change. The current ladder reflects data through `2026-07-15-pm`.
 
 ## Current recommendation ladder
 
@@ -8,7 +8,7 @@ Recommendations are provisional and should change only when several valid batche
 
 Use **Sol Low** when failure is inexpensive and retrying or escalating is acceptable.
 
-Current caution: after two 8/10 rounds, Low fell to 6/10 on July 15. It remains useful for mechanical work, but should not be described as consistently reliable.
+It reached 8/10 in the latest batch and remains inexpensive, but prior 3/10 and 4/10 rounds prevent it from becoming the default for important one-shot work.
 
 Typical work:
 
@@ -20,14 +20,15 @@ Typical work:
 
 ### 2. General daily development
 
-Use **Sol Medium** as the default starting point.
+Use **Sol Medium** as the default starting point, with **medium confidence** after the latest 6/10 round.
 
 Reasons:
 
-- it reached 9/10 and 82.98 weighted points in the latest batch;
-- it remains substantially cheaper than XHigh and Max;
-- its multi-round history is stronger and more stable than Low;
-- higher reasoning tiers have not shown monotonic gains.
+- its recent and long-run median remains near seven tasks;
+- it is substantially cheaper than High, XHigh, and Max;
+- its multi-round history is stronger than Low;
+- it is generally easier to constrain than higher Sol reasoning tiers;
+- one weak batch is not enough to replace the default.
 
 Typical work:
 
@@ -37,33 +38,33 @@ Typical work:
 - moderate refactoring;
 - repository exploration followed by implementation.
 
-### 3. High-value difficult work
+### 3. Difficult, quota-sensitive background work
 
-Start with **Sol Medium**. If it fails and the task is valuable enough to justify a large quota increase, try **Sol XHigh** next.
+Use **Luna Max** when long execution time and high token consumption are acceptable.
 
-XHigh reached 10/10 in `2026-07-15-am`, including the hardest task 07, at lower cost than Sol Max. This is strong current evidence, but still only one perfect batch; its long-run median remains closer to seven tasks.
+In `2026-07-15-pm`, Luna Max reached 9/10 and 90.08 weighted points, uniquely passed task 07, and cost about $16.30. Its main trade-offs are roughly four hours of wall time and about 91M tokens.
 
-### 4. Specialist route
+### 4. Escalation within the Sol family
 
-Consider **Terra Max** for work resembling task 07 or for long-running background execution where its family-specific task profile is relevant.
+If Sol Medium fails and the task should remain in the Sol family, prefer **Sol High** before XHigh or Max unless private project evidence says otherwise.
 
-In the latest batch, Terra Max reached 8/10 and 79.93 weighted points while passing task 07. This is a specialist signal, not evidence that it universally beats Sol Medium.
+In the latest batch High and XHigh both reached 7/10, while High was cheaper and scored slightly higher. XHigh's morning 10/10 demonstrates ceiling, but the afternoon regression shows that one perfect batch is not stable evidence.
 
 ### 5. Max is not an automatic upgrade
 
 Do not select **Sol Max** solely because it is the highest reasoning label.
 
-In `2026-07-15-am`, Sol Max and Sol High passed exactly the same tasks and both scored 74.06, while Max cost $60.10 and High cost $23.50. Max should be used only when project-specific evidence shows a benefit or when cheaper tiers have already failed.
+In `2026-07-15-pm`, Sol Max reached only 6/10 and 54.61 weighted points at about $51.40. Multiple cheaper tiers produced higher quality.
 
 ## Decision table
 
 | Priority | Suggested tier | Upgrade condition |
 |---|---|---|
 | Lowest cost | Sol Low | Failure is cheap and retryable |
-| Daily balance | Sol Medium | Default for important normal work |
-| Difficult escalation | Sol XHigh | Medium failed and the task value justifies higher quota |
-| Task-07-like specialist work | Terra Max | Task profile or private evidence supports it |
-| Highest label | Sol Max | Only with project-specific evidence; never automatic |
+| Daily balance | Sol Medium | Default for important normal work; confidence currently medium |
+| Difficult background work | Luna Max | Long latency and token use are acceptable |
+| Sol-family escalation | Sol High | Medium failed and staying within Sol matters |
+| Higher Sol labels | XHigh or Max | Only with project-specific evidence; never automatic |
 
 ## Why weighted score per dollar is not enough
 
