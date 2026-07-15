@@ -2,9 +2,9 @@
 
 [中文完整分析](latest.zh-CN.md) · [Full English analysis](latest.en.md) · [API 自动监控 / API monitor](api-latest.md) · [历史数据 / History](history/README.md) · [项目首页 / Project home](../README.md)
 
-**分析截止 / Cutoff:** 2026-07-15 08:03 Asia/Shanghai  
-**批次 / Batch:** `2026-07-15-am`  
-**权重快照 / Weight snapshot:** `2026-07-15-0803`
+**分析截止 / Cutoff:** 2026-07-15 17:22 Asia/Shanghai  
+**批次 / Batch:** `2026-07-15-pm`  
+**权重快照 / Weight snapshot:** `2026-07-15-1722`
 
 ## 简体中文
 
@@ -12,29 +12,29 @@
 
 | 场景 | 推荐 |
 |---|---|
-| 低成本、允许重试 | **Sol Low**，但本轮回落到 6/10，重要任务应升级 |
-| 日常开发、小项目 Bug 审查 | **Sol Medium** |
-| 高价值困难任务 | Medium 失败后升级 **Sol XHigh** |
-| 第 07 类专项任务 | 可考虑 **Terra Max** |
-| 不建议自动升级 | Sol Max；本轮与 High 同题同分但贵得多 |
+| 低成本、允许重试 | **Sol Low**；本轮 8/10，但重要任务不能停留在 Low |
+| 日常开发、小项目 Bug 审查 | **Sol Medium**；本轮置信度下降为中等 |
+| 高难、额度敏感、后台长跑 | **Luna Max** |
+| Sol 系失败后的升级 | 优先 **Sol High**，不要从上午单轮 10/10 推断 XHigh 稳定占优 |
+| 不建议自动升级 | Sol Max；本轮 6/10 且费用最高 |
 
 ### 最新排名
 
 | 排名 | 模型 | 通过 | 加权分 /100 | 费用 | 加权分/$ |
 |---:|---|---:|---:|---:|---:|
-| 1 | **Sol XHigh** | 10/10 | **100.00** | $34.80 | 2.87 |
-| 2 | **Sol Medium** | 9/10 | **82.98** | $17.80 | **4.66** |
-| 3 | Terra Max | 8/10 | 79.93 | $28.30 | 2.82 |
-| 4 | Sol High | 8/10 | 74.06 | $23.50 | 3.15 |
-| 5 | Sol Max | 8/10 | 74.06 | $60.10 | 1.23 |
-| 6 | Sol Low | 6/10 | 59.73 | $8.80 | 6.79 |
-| 7 | Luna Max | 6/10 | 54.98 | $17.10 | 3.22 |
-| 8 | Terra High | 6/10 | 50.41 | $9.20 | 5.48 |
-| 9 | Luna High | 5/10 | 46.42 | $6.30 | **7.37** |
+| 1 | **Luna Max** | 9/10 | **90.08** | $16.30 | **5.53** |
+| 2 | **Sol Low** | 8/10 | **71.69** | $10.70 | **6.70** |
+| 3 | Sol High | 7/10 | 64.44 | $25.00 | 2.58 |
+| 4 | Terra Max | 7/10 | 62.78 | $34.00 | 1.85 |
+| 5 | Sol XHigh | 7/10 | 62.50 | $32.60 | 1.92 |
+| 6 | Sol Medium | 6/10 | 54.82 | $16.60 | 3.30 |
+| 7 | Sol Max | 6/10 | 54.61 | $51.40 | 1.06 |
+| 8 | Terra High | 5/10 | 44.85 | $9.30 | 4.82 |
+| 9 | Luna High | 5/10 | 41.40 | $6.70 | 6.18 |
 
-本轮九档合计 **66/90**，费用约 **$205.89**，Token 约 **366.7M**。相比上一批次，质量提高约 13.8%，成本基本持平，因此记为**有效批次**。
+本轮九档合计 **60/90**，费用约 **$202.58**，Token 约 **360.7M**。相较上午，质量下降约 9.1%，费用与 Token 均小幅下降，未触发异常规则，记为**有效批次**。
 
-> 本轮 API 自动历史尚未归档新快照，费用、Token 与耗时使用公开网页的四舍五入显示值；逐题矩阵和加权分可复现。
+> API 自动历史尚未归档本轮，费用、Token 与耗时使用公开网页四舍五入值；逐题矩阵和加权分可复现。
 
 ---
 
@@ -44,26 +44,26 @@
 
 | Work type | Recommendation |
 |---|---|
-| Low-cost and retryable | **Sol Low**, but escalate important work after its fall to 6/10 |
-| Daily development and small-project bug review | **Sol Medium** |
-| High-value difficult work | Escalate to **Sol XHigh** after Medium fails |
-| Task-07-like specialist work | Consider **Terra Max** |
-| Do not upgrade automatically | Sol Max; it tied High on tasks while costing much more |
+| Low-cost and retryable | **Sol Low**; do not leave important work at Low |
+| Daily development and small-project bug review | **Sol Medium**, with medium confidence after this weaker round |
+| Difficult, quota-sensitive background work | **Luna Max** |
+| Escalation within Sol | Prefer **Sol High**; one perfect XHigh morning did not establish stable dominance |
+| Do not upgrade automatically | Sol Max; 6/10 at the highest cost |
 
 ### Latest ranking
 
 | Rank | Model | Passed | Weighted /100 | Cost | Weighted/$ |
 |---:|---|---:|---:|---:|---:|
-| 1 | **Sol XHigh** | 10/10 | **100.00** | $34.80 | 2.87 |
-| 2 | **Sol Medium** | 9/10 | **82.98** | $17.80 | **4.66** |
-| 3 | Terra Max | 8/10 | 79.93 | $28.30 | 2.82 |
-| 4 | Sol High | 8/10 | 74.06 | $23.50 | 3.15 |
-| 5 | Sol Max | 8/10 | 74.06 | $60.10 | 1.23 |
-| 6 | Sol Low | 6/10 | 59.73 | $8.80 | 6.79 |
-| 7 | Luna Max | 6/10 | 54.98 | $17.10 | 3.22 |
-| 8 | Terra High | 6/10 | 50.41 | $9.20 | 5.48 |
-| 9 | Luna High | 5/10 | 46.42 | $6.30 | **7.37** |
+| 1 | **Luna Max** | 9/10 | **90.08** | $16.30 | **5.53** |
+| 2 | **Sol Low** | 8/10 | **71.69** | $10.70 | **6.70** |
+| 3 | Sol High | 7/10 | 64.44 | $25.00 | 2.58 |
+| 4 | Terra Max | 7/10 | 62.78 | $34.00 | 1.85 |
+| 5 | Sol XHigh | 7/10 | 62.50 | $32.60 | 1.92 |
+| 6 | Sol Medium | 6/10 | 54.82 | $16.60 | 3.30 |
+| 7 | Sol Max | 6/10 | 54.61 | $51.40 | 1.06 |
+| 8 | Terra High | 5/10 | 44.85 | $9.30 | 4.82 |
+| 9 | Luna High | 5/10 | 41.40 | $6.70 | 6.18 |
 
-The nine tiers produced **66/90** at about **$205.89** and **366.7M tokens**. Quality improved about 13.8% while cost was essentially flat, so this is a **valid batch**.
+The nine tiers produced **60/90** at about **$202.58** and **360.7M tokens**. Quality declined about 9.1% from the morning batch, while cost and tokens also declined slightly, so this remains a **valid batch**.
 
-> The authorized API history had not yet archived the new snapshot. Aggregate cost, token, and wall-time values use the rounded public-page display; the task matrix and weighted scores are reproducible.
+> The authorized API history had not yet archived this round. Aggregate values use the rounded public-page display; task outcomes and weighted scores are reproducible.
