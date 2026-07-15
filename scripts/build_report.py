@@ -6,9 +6,9 @@ from collections import defaultdict
 from pathlib import Path
 from statistics import mean, median
 
-
 ROOT = Path(__file__).resolve().parents[1]
 RUNS_PATH = ROOT / "data" / "history" / "runs.csv"
+BATCH_DIR = ROOT / "data" / "history" / "batches"
 WEIGHTS_PATH = ROOT / "data" / "weights" / "task_weights.csv"
 REPORTS_DIR = ROOT / "reports"
 OUTPUT_EN = REPORTS_DIR / "latest.generated.en.md"
@@ -16,49 +16,64 @@ OUTPUT_ZH = REPORTS_DIR / "latest.generated.zh-CN.md"
 OUTPUT_BILINGUAL = REPORTS_DIR / "latest.generated.md"
 
 
-def as_float(value: str) -> float | None:
-    value = value.strip()
+def as_float(value: str | None) -> float | None:
+    value = (value or "").strip()
     return float(value) if value else None
 
 
-def as_bool(value: str) -> bool:
-    return value.strip().lower() == "true"
+def as_bool(value: str | None) -> bool:
+    return (value or "").strip().lower() == "true"
 
 
-def load_rows() -> list[dict[str, object]]:
+def read_run_file(path: Path) -> list[dict[str, object]]:
+    if not path.exists():
+        return []
     rows: list[dict[str, object]] = []
-    with RUNS_PATH.open(newline="", encoding="utf-8") as handle:
+    with path.open(newline="", encoding="utf-8") as handle:
         for raw in csv.DictReader(handle):
             rows.append(
                 {
                     **raw,
                     "passed": int(raw["passed"]),
                     "tasks": int(raw["tasks"]),
-                    "cost_usd": as_float(raw["cost_usd"]),
-                    "weighted_score": as_float(raw["weighted_score"]),
-                    "anomaly": as_bool(raw["anomaly"]),
-                    "reliability_weight": float(raw["reliability_weight"]),
+                    "cost_usd": as_float(raw.get("cost_usd")),
+                    "weighted_score": as_float(raw.get("weighted_score")),
+                    "anomaly": as_bool(raw.get("anomaly")),
+                    "reliability_weight": float(raw.get("reliability_weight") or 1.0),
                 }
             )
-    if not rows:
-        raise ValueError("runs.csv contains no rows")
     return rows
 
 
+def load_rows() -> list[dict[str, object]]:
+    rows = read_run_file(RUNS_PATH)
+    for path in sorted(BATCH_DIR.glob("*.csv")):
+        rows.extend(read_run_file(path))
+
+    # Per-batch files override matching legacy aggregate rows.
+    deduped: dict[tuple[str, str, str], dict[str, object]] = {}
+    for row in rows:
+        key = (str(row["batch_id"]), str(row["model"]), str(row["effort"]))
+        deduped[key] = row
+    result = list(deduped.values())
+    if not result:
+        raise ValueError("no run data found")
+    return result
+
+
 def load_weights() -> list[dict[str, object]]:
-    weights: list[dict[str, object]] = []
     with WEIGHTS_PATH.open(newline="", encoding="utf-8") as handle:
-        for raw in csv.DictReader(handle):
-            weights.append(
-                {
-                    **raw,
-                    "historical_pass_rate": float(raw["historical_pass_rate"]),
-                    "soft_inverse_weight": float(raw["soft_inverse_weight"]),
-                }
-            )
-    if not weights:
+        rows = [
+            {
+                **raw,
+                "historical_pass_rate": float(raw["historical_pass_rate"]),
+                "soft_inverse_weight": float(raw["soft_inverse_weight"]),
+            }
+            for raw in csv.DictReader(handle)
+        ]
+    if not rows:
         raise ValueError("task_weights.csv contains no rows")
-    return weights
+    return rows
 
 
 def label(row: dict[str, object]) -> str:
@@ -81,277 +96,124 @@ def efficiency(row: dict[str, object]) -> float | None:
     return quality(row) / float(cost)
 
 
-def batches(rows: list[dict[str, object]]) -> list[tuple[str, list[dict[str, object]]]]:
-    order: list[str] = []
+def grouped_batches(rows: list[dict[str, object]]) -> dict[str, list[dict[str, object]]]:
     grouped: dict[str, list[dict[str, object]]] = defaultdict(list)
     for row in rows:
-        batch_id = str(row["batch_id"])
-        if batch_id not in grouped:
-            order.append(batch_id)
-        grouped[batch_id].append(row)
-    return [(batch_id, grouped[batch_id]) for batch_id in order]
+        grouped[str(row["batch_id"])].append(row)
+    return grouped
 
 
-def latest_complete_valid_batch(
-    ordered_batches: list[tuple[str, list[dict[str, object]]]],
-) -> tuple[str, list[dict[str, object]]]:
-    largest_batch = max(len(rows) for _, rows in ordered_batches)
-    for batch_id, batch_rows in reversed(ordered_batches):
-        if len(batch_rows) == largest_batch and not any(bool(row["anomaly"]) for row in batch_rows):
-            return batch_id, batch_rows
-    raise ValueError("no complete non-anomalous batch found")
+def latest_batch(rows: list[dict[str, object]]) -> tuple[str, list[dict[str, object]]]:
+    grouped = grouped_batches(rows)
+    batch_id = sorted(grouped)[-1]
+    return batch_id, grouped[batch_id]
+
+
+def append_recommendations(lines: list[str], *, zh: bool) -> None:
+    if zh:
+        lines.extend([
+            "## 当前模型推荐", "",
+            "| 场景 | 推荐 |", "|---|---|",
+            "| 低成本、允许重试 | **Sol Low** 仍可用，但本轮回落至 6/10，重要任务应升级 |",
+            "| 日常开发与小项目 Bug 审查 | **Sol Medium** |",
+            "| 高价值困难任务 | 先用 **Sol Medium**；失败后升级 **Sol XHigh** |",
+            "| 最高能力兜底 | **Sol XHigh** 本轮 10/10；不要把 Max 当作自动升级 |", "",
+        ])
+    else:
+        lines.extend([
+            "## Current model recommendations", "",
+            "| Work type | Recommendation |", "|---|---|",
+            "| Low-cost and retryable | **Sol Low** remains usable, but fell to 6/10; escalate important work |",
+            "| Daily development and small-project bug review | **Sol Medium** |",
+            "| High-value difficult work | Start with **Sol Medium**, then escalate to **Sol XHigh** after failure |",
+            "| Maximum-capability fallback | **Sol XHigh** reached 10/10; Max is not an automatic upgrade |", "",
+        ])
 
 
 def append_weights(lines: list[str], weights: list[dict[str, object]], *, zh: bool) -> None:
     snapshot = str(weights[0]["weight_snapshot"])
-    if zh:
-        lines.extend(
-            [
-                "## 最新任务难度权重",
-                "",
-                f"**权重快照：** `{snapshot}`  ",
-                "**公式：** `weight_i ∝ 1 / sqrt(historical_pass_rate_i)`，归一化总分为 100。",
-                "",
-                "| 题号 | 任务摘要 | 历史通过率 | 权重 /100 |",
-                "|---:|---|---:|---:|",
-            ]
-        )
-    else:
-        lines.extend(
-            [
-                "## Latest task-difficulty weights",
-                "",
-                f"**Weight snapshot:** `{snapshot}`  ",
-                "**Formula:** `weight_i ∝ 1 / sqrt(historical_pass_rate_i)`, normalized to 100.",
-                "",
-                "| Task | Short description | Historical pass rate | Weight /100 |",
-                "|---:|---|---:|---:|",
-            ]
-        )
-
+    lines.extend([
+        "## 最新任务难度权重" if zh else "## Latest task-difficulty weights", "",
+        (f"**权重快照：** `{snapshot}`" if zh else f"**Weight snapshot:** `{snapshot}`"), "",
+        "| 题号 | 历史通过率 | 权重 /100 |" if zh else "| Task | Historical pass rate | Weight /100 |",
+        "|---:|---:|---:|",
+    ])
     for row in weights:
         lines.append(
-            f"| {row['task_id']} | {row['short_description']} | "
-            f"{100 * float(row['historical_pass_rate']):.0f}% | "
+            f"| {row['task_id']} | {100 * float(row['historical_pass_rate']):.2f}% | "
             f"{float(row['soft_inverse_weight']):.2f} |"
         )
-    lines.extend(["|  | **Total** |  | **100.00** |", ""])
+    lines.extend(["|  |  | **100.00** |", ""])
 
 
-def append_ranking(
-    lines: list[str],
-    batch_id: str,
-    batch_rows: list[dict[str, object]],
-    *,
-    title: str,
-    warning: str,
-    zh: bool,
-) -> None:
-    lines.extend([f"## {title}", "", f"**Batch:** `{batch_id}`", ""])
-    if warning:
-        lines.extend([f"> {warning}", ""])
-
-    if zh:
-        lines.extend(
-            [
-                "| 排名 | 模型档位 | 通过 | 加权分 /100 | 估算费用 | 加权分/$ |",
-                "|---:|---|---:|---:|---:|---:|",
-            ]
-        )
-    else:
-        lines.extend(
-            [
-                "| Rank | Model tier | Passed | Weighted /100 | Estimated cost | Weighted/$ |",
-                "|---:|---|---:|---:|---:|---:|",
-            ]
-        )
-
-    ranked = sorted(batch_rows, key=lambda row: (-quality(row), label(row)))
+def append_ranking(lines: list[str], batch_id: str, rows: list[dict[str, object]], *, zh: bool) -> None:
+    lines.extend([
+        "## 最新模型加权排名" if zh else "## Latest weighted ranking", "",
+        f"**{'批次' if zh else 'Batch'}:** `{batch_id}`", "",
+        "| 排名 | 模型档位 | 通过 | 加权分 /100 | 费用 | 加权分/$ |" if zh else "| Rank | Model tier | Passed | Weighted /100 | Cost | Weighted/$ |",
+        "|---:|---|---:|---:|---:|---:|",
+    ])
+    ranked = sorted(rows, key=lambda row: (-quality(row), float(row["cost_usd"] or 1e9), label(row)))
     for rank, row in enumerate(ranked, start=1):
         cost = "—" if row["cost_usd"] is None else f"${float(row['cost_usd']):.2f}"
         ratio = efficiency(row)
-        ratio_text = "—" if ratio is None else f"{ratio:.2f}"
         lines.append(
-            f"| {rank} | {label(row)} | {row['passed']}/{row['tasks']} | "
-            f"{quality(row):.2f} | {cost} | {ratio_text} |"
+            f"| {rank} | {label(row)} | {row['passed']}/{row['tasks']} | {quality(row):.2f} | "
+            f"{cost} | {'—' if ratio is None else f'{ratio:.2f}'} |"
         )
     lines.append("")
 
 
-def append_stability(
-    lines: list[str], rows: list[dict[str, object]], *, zh: bool
-) -> None:
+def append_stability(lines: list[str], rows: list[dict[str, object]], *, zh: bool) -> None:
     grouped: dict[tuple[str, str], list[dict[str, object]]] = defaultdict(list)
     for row in rows:
         grouped[(str(row["model"]), str(row["effort"]))].append(row)
-
-    if zh:
-        lines.extend(
-            [
-                "## 最近五轮稳定性",
-                "",
-                "| 模型档位 | 有效样本 | 通过数中位数 | 通过数均值 | 范围 |",
-                "|---|---:|---:|---:|---:|",
-            ]
-        )
-    else:
-        lines.extend(
-            [
-                "## Five-run stability",
-                "",
-                "| Model tier | Valid runs | Median passed | Mean passed | Range |",
-                "|---|---:|---:|---:|---:|",
-            ]
-        )
-
+    lines.extend([
+        "## 最近五轮稳定性" if zh else "## Five-run stability", "",
+        "| 模型档位 | 有效样本 | 通过数中位数 | 均值 | 范围 |" if zh else "| Model tier | Valid runs | Median passed | Mean | Range |",
+        "|---|---:|---:|---:|---:|",
+    ])
     for values in sorted(grouped.values(), key=lambda group: label(group[-1])):
+        values.sort(key=lambda row: str(row["batch_id"]))
         valid = [row for row in values if not bool(row["anomaly"])]
-        sample = valid[-5:] if valid else values[-5:]
-        pass_values = [int(row["passed"]) for row in sample]
-        lines.append(
-            f"| {label(sample[-1])} | {len(sample)} | {median(pass_values):.1f} | "
-            f"{mean(pass_values):.2f} | {min(pass_values)}–{max(pass_values)} |"
-        )
+        sample = (valid or values)[-5:]
+        p = [int(row["passed"]) for row in sample]
+        lines.append(f"| {label(sample[-1])} | {len(sample)} | {median(p):.1f} | {mean(p):.2f} | {min(p)}–{max(p)} |")
     lines.append("")
 
 
-def render_chinese(
-    rows: list[dict[str, object]], weights: list[dict[str, object]]
-) -> str:
-    ordered_batches = batches(rows)
-    latest_id, latest_rows = ordered_batches[-1]
-    valid_id, valid_rows = latest_complete_valid_batch(ordered_batches)
-
+def render(rows: list[dict[str, object]], weights: list[dict[str, object]], *, zh: bool) -> str:
+    batch_id, batch_rows = latest_batch(rows)
     lines = [
-        "# 模型雷达自动汇总报告 — 简体中文",
-        "",
-        "> 根据版本化 CSV 自动生成；正式解释和推荐仍以 `reports/latest.zh-CN.md` 为准。",
-        "",
-        "## 当前模型推荐",
-        "",
-        "| 场景 | 推荐 |",
-        "|---|---|",
-        "| 机械、低风险、允许重试 | Luna Medium 或 Terra Medium，先看近期稳定性 |",
-        "| 日常开发 | **Sol Medium** |",
-        "| 高难、额度敏感、允许长时间运行 | **Luna Max** |",
-        "| 最高能力兜底 | 较低档失败后使用 **Sol Max** |",
-        "",
+        "# 模型雷达自动汇总报告 — 简体中文" if zh else "# Generated Model Radar Report — English", "",
+        ("> 根据版本化 CSV 自动生成；正式解释以维护版最新报告为准。" if zh else "> Generated from versioned CSV files; see the maintained latest report for interpretation."), "",
     ]
-    append_weights(lines, weights, zh=True)
-    append_ranking(
-        lines,
-        latest_id,
-        latest_rows,
-        title="最新观测批次排名",
-        warning="异常批次继续展示，但不应直接替代长期模型排序。"
-        if any(bool(row["anomaly"]) for row in latest_rows)
-        else "",
-        zh=True,
-    )
-    append_ranking(
-        lines,
-        valid_id,
-        valid_rows,
-        title="最近正常完整批次排名",
-        warning="该表用于辅助长期推荐，不代表所有私人项目。",
-        zh=True,
-    )
-    append_stability(lines, rows, zh=True)
-    lines.extend(
-        [
-            "## 历史数据",
-            "",
-            "[查看全部历史批次及跳转索引](history/README.md)。",
-            "",
-            "数据来源：Codex Radar（`codexradar.com`）。",
-            "",
-        ]
-    )
-    return "\n".join(lines)
-
-
-def render_english(
-    rows: list[dict[str, object]], weights: list[dict[str, object]]
-) -> str:
-    ordered_batches = batches(rows)
-    latest_id, latest_rows = ordered_batches[-1]
-    valid_id, valid_rows = latest_complete_valid_batch(ordered_batches)
-
-    lines = [
-        "# Generated Model Radar Report — English",
-        "",
-        "> Generated from versioned CSV files; the maintained interpretation remains in `reports/latest.en.md`.",
-        "",
-        "## Current model recommendations",
-        "",
-        "| Work type | Recommendation |",
-        "|---|---|",
-        "| Mechanical, low-risk, retryable | Luna Medium or Terra Medium; check recent stability |",
-        "| General daily development | **Sol Medium** |",
-        "| Difficult, quota-sensitive, long-running | **Luna Max** |",
-        "| Maximum-capability fallback | **Sol Max** after cheaper tiers fail |",
-        "",
-    ]
-    append_weights(lines, weights, zh=False)
-    append_ranking(
-        lines,
-        latest_id,
-        latest_rows,
-        title="Latest observed weighted ranking",
-        warning="An anomalous batch remains visible but should not directly replace the long-term hierarchy."
-        if any(bool(row["anomaly"]) for row in latest_rows)
-        else "",
-        zh=False,
-    )
-    append_ranking(
-        lines,
-        valid_id,
-        valid_rows,
-        title="Latest complete non-anomalous ranking",
-        warning="This table supports the long-term recommendation but does not represent every private repository.",
-        zh=False,
-    )
-    append_stability(lines, rows, zh=False)
-    lines.extend(
-        [
-            "## Historical data",
-            "",
-            "[Browse every recorded batch through the history index](history/README.md).",
-            "",
-            "Data attribution: source benchmark data comes from Codex Radar (`codexradar.com`).",
-            "",
-        ]
-    )
+    append_recommendations(lines, zh=zh)
+    append_weights(lines, weights, zh=zh)
+    append_ranking(lines, batch_id, batch_rows, zh=zh)
+    append_stability(lines, rows, zh=zh)
+    lines.extend([
+        "## 历史数据" if zh else "## Historical data", "",
+        "[查看历史批次索引](history/README.md)。" if zh else "[Browse the historical batch index](history/README.md).", "",
+        "数据来源：Codex Radar（`codexradar.com`）。" if zh else "Data attribution: Codex Radar (`codexradar.com`).", "",
+    ])
     return "\n".join(lines)
 
 
 def main() -> None:
     rows = load_rows()
     weights = load_weights()
-    chinese = render_chinese(rows, weights)
-    english = render_english(rows, weights)
-    bilingual = "\n".join(
-        [
-            "# Generated Model Radar Report / 模型雷达自动汇总报告",
-            "",
-            "[简体中文](#简体中文) · [English](#english) · [历史数据 / History](history/README.md)",
-            "",
-            '<a id="简体中文"></a>',
-            chinese,
-            "",
-            "---",
-            "",
-            '<a id="english"></a>',
-            english,
-            "",
-        ]
-    )
-
+    chinese = render(rows, weights, zh=True)
+    english = render(rows, weights, zh=False)
+    bilingual = "\n".join([
+        "# Generated Model Radar Report / 模型雷达自动汇总报告", "",
+        "[简体中文](#简体中文) · [English](#english) · [历史数据 / History](history/README.md)", "",
+        '<a id="简体中文"></a>', chinese, "", "---", "", '<a id="english"></a>', english, "",
+    ])
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
     OUTPUT_ZH.write_text(chinese, encoding="utf-8")
     OUTPUT_EN.write_text(english, encoding="utf-8")
     OUTPUT_BILINGUAL.write_text(bilingual, encoding="utf-8")
-
     for output in (OUTPUT_ZH, OUTPUT_EN, OUTPUT_BILINGUAL):
         print(f"Wrote {output.relative_to(ROOT)}")
 
