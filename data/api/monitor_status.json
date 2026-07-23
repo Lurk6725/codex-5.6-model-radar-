@@ -1,9 +1,9 @@
 {
-  "last_successful_check_at": "2026-07-23T14:35:47+00:00",
+  "last_successful_check_at": "2026-07-23T16:15:27+00:00",
   "model_count": 11,
   "new_rows": 11,
-  "snapshot_id": "4508e73271f1c938",
+  "snapshot_id": "21308b6ea407c53e",
   "source_changed": true,
-  "source_date": "2026-07-23T20:31:31+08:00",
+  "source_date": "2026-07-23T22:31:27+08:00",
   "source_observed_at": "2026-07-22T06:57:20.626603+08:00"
 }
