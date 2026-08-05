@@ -2,8 +2,8 @@
 
 [简体中文](api-latest.zh-CN.md) · [Project home](../README.md) · [API history CSV](../data/api/model_iq_history.csv) · [Monitor status](../data/api/monitor_status.json)
 
-**Last successful check:** `2026-08-05T21:58:36+00:00`  
-**Current API snapshot:** `bbd1ae40b9e9ba49`  
+**Last successful check:** `2026-08-05T23:25:33+00:00`  
+**Current API snapshot:** `68164c1ef06c5197`  
 **Source observation:** `2026-07-22T06:57:20.626603+08:00`  
 **New snapshot detected:** yes  
 **Models returned:** 11
@@ -16,17 +16,17 @@
 
 | Rank | Model tier | Source score | Passed | Tasks | Cost | Total tokens | Wall time |
 |---:|---|---:|---:|---:|---:|---:|---:|
-| 1 | Sol Xhigh | 113 | 84/112 | 112 | $762.56 | 952,659,137 | 47.99h |
-| 2 | Gpt-5.5 Xhigh | 96.9 | 72/112 | 112 | $652.52 | 800,732,331 | 42.20h |
-| 3 | Luna Max | 94.2 | 70/112 | 112 | $58.81 | 1,707,250,673 | 59.87h |
-| 4 | Gpt-5.5 High | 92.8 | 69/112 | 112 | $406.43 | 496,273,801 | 31.71h |
-| 5 | Sol Medium | 92.8 | 69/112 | 112 | $409.77 | 520,906,145 | 31.80h |
-| 6 | Terra Max | 88.8 | 66/112 | 112 | $456.61 | 1,452,135,373 | 60.00h |
-| 7 | Sol High | 84.7 | 63/112 | 112 | $587.90 | 696,965,690 | 40.27h |
-| 8 | Terra Xhigh | 82.1 | 61/112 | 112 | $227.94 | 603,583,456 | 34.38h |
+| 1 | Sol Xhigh | 113 | 84/112 | 112 | $761.10 | 948,800,760 | 47.81h |
+| 2 | Gpt-5.5 Xhigh | 96.9 | 72/112 | 112 | $652.27 | 803,235,041 | 41.36h |
+| 3 | Gpt-5.5 High | 92.8 | 69/112 | 112 | $406.58 | 497,750,762 | 31.52h |
+| 4 | Luna Max | 92.8 | 69/112 | 112 | $58.74 | 1,708,363,691 | 59.97h |
+| 5 | Sol Medium | 92.8 | 69/112 | 112 | $409.75 | 520,589,698 | 31.82h |
+| 6 | Terra Max | 91.5 | 68/112 | 112 | $456.11 | 1,449,820,319 | 60.13h |
+| 7 | Sol High | 87.4 | 65/112 | 112 | $588.01 | 694,540,149 | 40.13h |
+| 8 | Terra Xhigh | 83.4 | 62/112 | 112 | $227.68 | 619,038,430 | 34.91h |
 | 9 | Luna High | 75.3 | 56/112 | 112 | $27.57 | 731,045,614 | 30.04h |
 | 10 | Terra High | 74 | 55/112 | 112 | $134.04 | 353,545,448 | 25.15h |
-| 11 | Sol Low | 72.6 | 54/112 | 112 | $231.68 | 255,586,680 | 21.83h |
+| 11 | Sol Low | 72.6 | 54/112 | 112 | $231.65 | 256,295,694 | 21.88h |
 
 ## Interpretation
 
@@ -36,4 +36,4 @@
 - When source data is unchanged, the automation still updates its heartbeat without presenting it as a new benchmark batch.
 - The raw API response is not stored in the public repository; only required model-summary fields are archived.
 
-Archived API snapshots: **180**.
+Archived API snapshots: **181**.
