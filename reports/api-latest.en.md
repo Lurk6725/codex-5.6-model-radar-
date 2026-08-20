@@ -2,7 +2,7 @@
 
 [简体中文](api-latest.zh-CN.md) · [Project home](../README.md) · [API history CSV](../data/api/model_iq_history.csv) · [Monitor status](../data/api/monitor_status.json)
 
-**Last successful check:** `2026-08-20T05:48:49+00:00`  
+**Last successful check:** `2026-08-20T07:08:57+00:00`  
 **Current API snapshot:** `91372997b7d37906`  
 **Source observation:** `2026-07-22T06:57:20.626603+08:00`  
 **New snapshot detected:** no; the source returned the same snapshot  
