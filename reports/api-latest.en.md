@@ -2,10 +2,10 @@
 
 [简体中文](api-latest.zh-CN.md) · [Project home](../README.md) · [API history CSV](../data/api/model_iq_history.csv) · [Monitor status](../data/api/monitor_status.json)
 
-**Last successful check:** `2026-08-22T17:02:55+00:00`  
-**Current API snapshot:** `f97d0d4a3bfaf2a1`  
+**Last successful check:** `2026-08-22T17:39:39+00:00`  
+**Current API snapshot:** `28a8a8e0136a999b`  
 **Source observation:** `2026-07-22T06:57:20.626603+08:00`  
-**New snapshot detected:** no; the source returned the same snapshot  
+**New snapshot detected:** yes  
 **Models returned:** 11
 
 > “Last successful check” confirms that the automation reached the API. “Source observation” is supplied by the upstream endpoint and may be older.
@@ -25,7 +25,7 @@
 | 7 | Terra Xhigh | 84.7 | 63/112 | 112 | $213.79 | 579,303,874 | 37.07h |
 | 8 | Sol Medium | 82.1 | 61/112 | 112 | $404.57 | 464,681,467 | 34.28h |
 | 9 | Luna High | 76.7 | 57/112 | 112 | $22.62 | 683,053,846 | 29.78h |
-| 10 | Sol Low | 74 | 55/112 | 112 | $223.70 | 261,345,788 | 24.14h |
+| 10 | Sol Low | 74 | 55/112 | 112 | $223.66 | 261,552,240 | 24.14h |
 | 11 | Terra High | 74 | 55/112 | 112 | $124.94 | 335,515,184 | 24.85h |
 
 ## Interpretation
@@ -36,4 +36,4 @@
 - When source data is unchanged, the automation still updates its heartbeat without presenting it as a new benchmark batch.
 - The raw API response is not stored in the public repository; only required model-summary fields are archived.
 
-Archived API snapshots: **326**.
+Archived API snapshots: **327**.
