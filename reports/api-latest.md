@@ -7,10 +7,10 @@
 
 [English](api-latest.en.md) · [项目首页](../README.md) · [API 历史 CSV](../data/api/model_iq_history.csv) · [监控状态](../data/api/monitor_status.json)
 
-**最近成功检查：** `2026-08-24T12:17:50+00:00`  
-**当前 API 快照：** `8c12714444efc612`  
+**最近成功检查：** `2026-08-24T13:38:08+00:00`  
+**当前 API 快照：** `bb9149be9bfeadbf`  
 **源站观测时间：** `2026-07-22T06:57:20.626603+08:00`  
-**本次发现新快照：** 否；源站仍返回同一快照  
+**本次发现新快照：** 是  
 **返回模型数：** 11
 
 > “最近成功检查”表示自动任务已正常访问 API；“源站观测时间”由上游接口提供，两者可能不同。
@@ -21,16 +21,16 @@
 
 | 排名 | 模型档位 | 源站分数 | 通过 | 任务数 | 费用 | 总 Token | 耗时 |
 |---:|---|---:|---:|---:|---:|---:|---:|
-| 1 | Sol Xhigh | 104.9 | 78/112 | 112 | $713.14 | 805,106,139 | 45.08h |
+| 1 | Sol Xhigh | 104.9 | 78/112 | 112 | $713.06 | 806,295,391 | 45.22h |
 | 2 | Gpt-5.5 Xhigh | 99.5 | 74/112 | 112 | $648.86 | 772,229,403 | 40.46h |
 | 3 | Terra Max | 95.5 | 71/112 | 112 | $425.52 | 1,161,065,574 | 54.82h |
-| 4 | Luna Max | 90.1 | 67/112 | 112 | $54.38 | 1,722,023,212 | 58.43h |
+| 4 | Luna Max | 92.8 | 69/112 | 112 | $54.37 | 1,725,387,150 | 58.67h |
 | 5 | Gpt-5.5 High | 88.8 | 66/112 | 112 | $400.49 | 496,314,317 | 31.82h |
 | 6 | Sol High | 86.1 | 64/112 | 112 | $530.43 | 572,020,545 | 34.65h |
 | 7 | Terra Xhigh | 86.1 | 64/112 | 112 | $213.04 | 586,602,184 | 35.89h |
-| 8 | Sol Medium | 80.7 | 60/112 | 112 | $403.10 | 445,252,928 | 31.33h |
-| 9 | Luna High | 78 | 58/112 | 112 | $22.61 | 696,144,080 | 30.17h |
-| 10 | Terra High | 76.7 | 57/112 | 112 | $124.39 | 328,427,130 | 24.51h |
+| 8 | Sol Medium | 82.1 | 61/112 | 112 | $403.20 | 447,862,199 | 31.42h |
+| 9 | Terra High | 76.7 | 57/112 | 112 | $124.39 | 328,427,130 | 24.51h |
+| 10 | Luna High | 75.3 | 56/112 | 112 | $22.67 | 683,348,893 | 33.16h |
 | 11 | Sol Low | 72.6 | 54/112 | 112 | $222.41 | 254,308,848 | 22.27h |
 
 ## 口径说明
@@ -41,7 +41,7 @@
 - 源站数据未变化时，自动任务仍会更新监控心跳，但不会把它描述成新的模型测试批次。
 - 原始 API 响应不写入公开仓库，只保存必要的模型摘要字段。
 
-当前已归档 API 快照数：**343**。
+当前已归档 API 快照数：**344**。
 
 
 ---
@@ -51,10 +51,10 @@
 
 [简体中文](api-latest.zh-CN.md) · [Project home](../README.md) · [API history CSV](../data/api/model_iq_history.csv) · [Monitor status](../data/api/monitor_status.json)
 
-**Last successful check:** `2026-08-24T12:17:50+00:00`  
-**Current API snapshot:** `8c12714444efc612`  
+**Last successful check:** `2026-08-24T13:38:08+00:00`  
+**Current API snapshot:** `bb9149be9bfeadbf`  
 **Source observation:** `2026-07-22T06:57:20.626603+08:00`  
-**New snapshot detected:** no; the source returned the same snapshot  
+**New snapshot detected:** yes  
 **Models returned:** 11
 
 > “Last successful check” confirms that the automation reached the API. “Source observation” is supplied by the upstream endpoint and may be older.
@@ -65,16 +65,16 @@
 
 | Rank | Model tier | Source score | Passed | Tasks | Cost | Total tokens | Wall time |
 |---:|---|---:|---:|---:|---:|---:|---:|
-| 1 | Sol Xhigh | 104.9 | 78/112 | 112 | $713.14 | 805,106,139 | 45.08h |
+| 1 | Sol Xhigh | 104.9 | 78/112 | 112 | $713.06 | 806,295,391 | 45.22h |
 | 2 | Gpt-5.5 Xhigh | 99.5 | 74/112 | 112 | $648.86 | 772,229,403 | 40.46h |
 | 3 | Terra Max | 95.5 | 71/112 | 112 | $425.52 | 1,161,065,574 | 54.82h |
-| 4 | Luna Max | 90.1 | 67/112 | 112 | $54.38 | 1,722,023,212 | 58.43h |
+| 4 | Luna Max | 92.8 | 69/112 | 112 | $54.37 | 1,725,387,150 | 58.67h |
 | 5 | Gpt-5.5 High | 88.8 | 66/112 | 112 | $400.49 | 496,314,317 | 31.82h |
 | 6 | Sol High | 86.1 | 64/112 | 112 | $530.43 | 572,020,545 | 34.65h |
 | 7 | Terra Xhigh | 86.1 | 64/112 | 112 | $213.04 | 586,602,184 | 35.89h |
-| 8 | Sol Medium | 80.7 | 60/112 | 112 | $403.10 | 445,252,928 | 31.33h |
-| 9 | Luna High | 78 | 58/112 | 112 | $22.61 | 696,144,080 | 30.17h |
-| 10 | Terra High | 76.7 | 57/112 | 112 | $124.39 | 328,427,130 | 24.51h |
+| 8 | Sol Medium | 82.1 | 61/112 | 112 | $403.20 | 447,862,199 | 31.42h |
+| 9 | Terra High | 76.7 | 57/112 | 112 | $124.39 | 328,427,130 | 24.51h |
+| 10 | Luna High | 75.3 | 56/112 | 112 | $22.67 | 683,348,893 | 33.16h |
 | 11 | Sol Low | 72.6 | 54/112 | 112 | $222.41 | 254,308,848 | 22.27h |
 
 ## Interpretation
@@ -85,5 +85,5 @@
 - When source data is unchanged, the automation still updates its heartbeat without presenting it as a new benchmark batch.
 - The raw API response is not stored in the public repository; only required model-summary fields are archived.
 
-Archived API snapshots: **343**.
+Archived API snapshots: **344**.
 
