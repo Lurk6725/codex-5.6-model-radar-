@@ -7,8 +7,8 @@
 
 [English](api-latest.en.md) · [项目首页](../README.md) · [API 历史 CSV](../data/api/model_iq_history.csv) · [监控状态](../data/api/monitor_status.json)
 
-**最近成功检查：** `2026-08-24T06:25:12+00:00`  
-**当前 API 快照：** `0b40b0cdcdc4ce16`  
+**最近成功检查：** `2026-08-24T07:45:00+00:00`  
+**当前 API 快照：** `d10f2137de4d74e3`  
 **源站观测时间：** `2026-07-22T06:57:20.626603+08:00`  
 **本次发现新快照：** 是  
 **返回模型数：** 11
@@ -30,7 +30,7 @@
 | 7 | Terra Xhigh | 86.1 | 64/112 | 112 | $213.04 | 586,602,184 | 35.89h |
 | 8 | Sol Medium | 80.7 | 60/112 | 112 | $403.10 | 445,252,928 | 31.33h |
 | 9 | Luna High | 78 | 58/112 | 112 | $22.61 | 696,144,080 | 30.17h |
-| 10 | Terra High | 76.7 | 57/112 | 112 | $124.44 | 329,837,886 | 24.53h |
+| 10 | Terra High | 76.7 | 57/112 | 112 | $124.43 | 329,816,982 | 24.53h |
 | 11 | Sol Low | 72.6 | 54/112 | 112 | $222.43 | 253,968,576 | 22.22h |
 
 ## 口径说明
@@ -41,7 +41,7 @@
 - 源站数据未变化时，自动任务仍会更新监控心跳，但不会把它描述成新的模型测试批次。
 - 原始 API 响应不写入公开仓库，只保存必要的模型摘要字段。
 
-当前已归档 API 快照数：**340**。
+当前已归档 API 快照数：**341**。
 
 
 ---
@@ -51,8 +51,8 @@
 
 [简体中文](api-latest.zh-CN.md) · [Project home](../README.md) · [API history CSV](../data/api/model_iq_history.csv) · [Monitor status](../data/api/monitor_status.json)
 
-**Last successful check:** `2026-08-24T06:25:12+00:00`  
-**Current API snapshot:** `0b40b0cdcdc4ce16`  
+**Last successful check:** `2026-08-24T07:45:00+00:00`  
+**Current API snapshot:** `d10f2137de4d74e3`  
 **Source observation:** `2026-07-22T06:57:20.626603+08:00`  
 **New snapshot detected:** yes  
 **Models returned:** 11
@@ -74,7 +74,7 @@
 | 7 | Terra Xhigh | 86.1 | 64/112 | 112 | $213.04 | 586,602,184 | 35.89h |
 | 8 | Sol Medium | 80.7 | 60/112 | 112 | $403.10 | 445,252,928 | 31.33h |
 | 9 | Luna High | 78 | 58/112 | 112 | $22.61 | 696,144,080 | 30.17h |
-| 10 | Terra High | 76.7 | 57/112 | 112 | $124.44 | 329,837,886 | 24.53h |
+| 10 | Terra High | 76.7 | 57/112 | 112 | $124.43 | 329,816,982 | 24.53h |
 | 11 | Sol Low | 72.6 | 54/112 | 112 | $222.43 | 253,968,576 | 22.22h |
 
 ## Interpretation
@@ -85,5 +85,5 @@
 - When source data is unchanged, the automation still updates its heartbeat without presenting it as a new benchmark batch.
 - The raw API response is not stored in the public repository; only required model-summary fields are archived.
 
-Archived API snapshots: **340**.
+Archived API snapshots: **341**.
 
