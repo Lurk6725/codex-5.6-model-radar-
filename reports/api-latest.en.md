@@ -2,10 +2,10 @@
 
 [简体中文](api-latest.zh-CN.md) · [Project home](../README.md) · [API history CSV](../data/api/model_iq_history.csv) · [Monitor status](../data/api/monitor_status.json)
 
-**Last successful check:** `2026-08-26T09:25:15+00:00`  
-**Current API snapshot:** `e473bd6d84dcae1b`  
+**Last successful check:** `2026-08-26T10:19:14+00:00`  
+**Current API snapshot:** `428a0f2c31ffe0b3`  
 **Source observation:** `2026-07-22T06:57:20.626603+08:00`  
-**New snapshot detected:** no; the source returned the same snapshot  
+**New snapshot detected:** yes  
 **Models returned:** 11
 
 > “Last successful check” confirms that the automation reached the API. “Source observation” is supplied by the upstream endpoint and may be older.
@@ -18,7 +18,7 @@
 |---:|---|---:|---:|---:|---:|---:|---:|
 | 1 | Sol Xhigh | 104.9 | 78/112 | 112 | $698.11 | 803,438,240 | 44.37h |
 | 2 | Gpt-5.5 Xhigh | 100.9 | 75/112 | 112 | $646.44 | 776,243,400 | 40.45h |
-| 3 | Luna Max | 100.9 | 75/112 | 112 | $54.07 | 1,696,983,751 | 61.98h |
+| 3 | Luna Max | 100.9 | 75/112 | 112 | $54.06 | 1,727,904,908 | 63.18h |
 | 4 | Sol Medium | 96.9 | 72/112 | 112 | $371.23 | 413,031,434 | 28.65h |
 | 5 | Terra Max | 96.9 | 72/112 | 112 | $426.63 | 1,176,995,104 | 55.10h |
 | 6 | Gpt-5.5 High | 90.1 | 67/112 | 112 | $400.76 | 494,049,092 | 31.71h |
@@ -26,7 +26,7 @@
 | 8 | Terra Xhigh | 83.4 | 62/112 | 112 | $211.54 | 586,446,390 | 36.23h |
 | 9 | Sol Low | 82.1 | 61/112 | 112 | $190.97 | 234,885,957 | 18.56h |
 | 10 | Terra High | 76.7 | 57/112 | 112 | $122.99 | 342,671,220 | 25.33h |
-| 11 | Luna High | 75.3 | 56/112 | 112 | $22.46 | 700,638,430 | 32.10h |
+| 11 | Luna High | 75.3 | 56/112 | 112 | $22.46 | 698,486,824 | 32.04h |
 
 ## Interpretation
 
@@ -36,4 +36,4 @@
 - When source data is unchanged, the automation still updates its heartbeat without presenting it as a new benchmark batch.
 - The raw API response is not stored in the public repository; only required model-summary fields are archived.
 
-Archived API snapshots: **362**.
+Archived API snapshots: **363**.
