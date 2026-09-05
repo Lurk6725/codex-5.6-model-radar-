@@ -2,8 +2,8 @@
 
 [简体中文](api-latest.zh-CN.md) · [Project home](../README.md) · [API history CSV](../data/api/model_iq_history.csv) · [Monitor status](../data/api/monitor_status.json)
 
-**Last successful check:** `2026-09-05T13:33:22+00:00`  
-**Current API snapshot:** `b2e6e47af480cdc3`  
+**Last successful check:** `2026-09-05T16:17:29+00:00`  
+**Current API snapshot:** `15e435d472320102`  
 **Source observation:** `2026-09-02T20:11:35.648389+08:00`  
 **New snapshot detected:** yes  
 **Models returned:** 11
@@ -25,7 +25,7 @@
 | 7 | Gpt-5.5 High | 86.1 | 64/112 | 112 | $397.70 | 535,403,747 | 27.73h |
 | 8 | Terra Xhigh | 86.1 | 64/112 | 112 | $210.68 | 587,416,643 | 36.41h |
 | 9 | Sol Low | 79.4 | 59/112 | 112 | $170.73 | 208,709,234 | 18.68h |
-| 10 | Terra High | 79.4 | 59/112 | 112 | $122.05 | 332,476,200 | 25.95h |
+| 10 | Terra High | 79.4 | 59/112 | 112 | $122.07 | 333,429,933 | 25.74h |
 | 11 | Luna High | 68.6 | 51/112 | 112 | $22.49 | 813,109,652 | 34.58h |
 
 ## Interpretation
@@ -36,4 +36,4 @@
 - When source data is unchanged, the automation still updates its heartbeat without presenting it as a new benchmark batch.
 - The raw API response is not stored in the public repository; only required model-summary fields are archived.
 
-Archived API snapshots: **406**.
+Archived API snapshots: **407**.
