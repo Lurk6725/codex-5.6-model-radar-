@@ -7,10 +7,10 @@
 
 [English](api-latest.en.md) · [项目首页](../README.md) · [API 历史 CSV](../data/api/model_iq_history.csv) · [监控状态](../data/api/monitor_status.json)
 
-**最近成功检查：** `2026-09-13T01:26:43+00:00`  
-**当前 API 快照：** `17654e2967d66266`  
-**源站观测时间：** `2026-09-13T07:13:34.320511+08:00`  
-**本次发现新快照：** 否；源站仍返回同一快照  
+**最近成功检查：** `2026-09-13T06:47:42+00:00`  
+**当前 API 快照：** `38b2688ef2431d2d`  
+**源站观测时间：** `2026-09-13T09:30:59.496530+08:00`  
+**本次发现新快照：** 是  
 **返回模型数：** 11
 
 > “最近成功检查”表示自动任务已正常访问 API；“源站观测时间”由上游接口提供，两者可能不同。
@@ -21,7 +21,7 @@
 
 | 排名 | 模型档位 | 源站分数 | 通过 | 任务数 | 费用 | 总 Token | 耗时 |
 |---:|---|---:|---:|---:|---:|---:|---:|
-| 1 | Luna Max | 107.6 | 80/112 | 112 | $54.35 | 2,115,093,717 | 74.57h |
+| 1 | Luna Max | 107.6 | 80/112 | 112 | $54.36 | 2,121,471,957 | 74.61h |
 | 2 | Terra Max | 107.6 | 80/112 | 112 | $420.22 | 1,241,920,179 | 58.63h |
 | 3 | Gpt-5.5 Xhigh | 104.9 | 78/112 | 112 | $639.12 | 899,261,482 | 42.82h |
 | 4 | Sol Xhigh | 99.5 | 74/112 | 112 | $574.53 | 829,082,668 | 47.02h |
@@ -41,7 +41,7 @@
 - 源站数据未变化时，自动任务仍会更新监控心跳，但不会把它描述成新的模型测试批次。
 - 原始 API 响应不写入公开仓库，只保存必要的模型摘要字段。
 
-当前已归档 API 快照数：**422**。
+当前已归档 API 快照数：**423**。
 
 
 ---
@@ -51,10 +51,10 @@
 
 [简体中文](api-latest.zh-CN.md) · [Project home](../README.md) · [API history CSV](../data/api/model_iq_history.csv) · [Monitor status](../data/api/monitor_status.json)
 
-**Last successful check:** `2026-09-13T01:26:43+00:00`  
-**Current API snapshot:** `17654e2967d66266`  
-**Source observation:** `2026-09-13T07:13:34.320511+08:00`  
-**New snapshot detected:** no; the source returned the same snapshot  
+**Last successful check:** `2026-09-13T06:47:42+00:00`  
+**Current API snapshot:** `38b2688ef2431d2d`  
+**Source observation:** `2026-09-13T09:30:59.496530+08:00`  
+**New snapshot detected:** yes  
 **Models returned:** 11
 
 > “Last successful check” confirms that the automation reached the API. “Source observation” is supplied by the upstream endpoint and may be older.
@@ -65,7 +65,7 @@
 
 | Rank | Model tier | Source score | Passed | Tasks | Cost | Total tokens | Wall time |
 |---:|---|---:|---:|---:|---:|---:|---:|
-| 1 | Luna Max | 107.6 | 80/112 | 112 | $54.35 | 2,115,093,717 | 74.57h |
+| 1 | Luna Max | 107.6 | 80/112 | 112 | $54.36 | 2,121,471,957 | 74.61h |
 | 2 | Terra Max | 107.6 | 80/112 | 112 | $420.22 | 1,241,920,179 | 58.63h |
 | 3 | Gpt-5.5 Xhigh | 104.9 | 78/112 | 112 | $639.12 | 899,261,482 | 42.82h |
 | 4 | Sol Xhigh | 99.5 | 74/112 | 112 | $574.53 | 829,082,668 | 47.02h |
@@ -85,5 +85,5 @@
 - When source data is unchanged, the automation still updates its heartbeat without presenting it as a new benchmark batch.
 - The raw API response is not stored in the public repository; only required model-summary fields are archived.
 
-Archived API snapshots: **422**.
+Archived API snapshots: **423**.
 
