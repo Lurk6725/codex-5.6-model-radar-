@@ -2,10 +2,10 @@
 
 [简体中文](api-latest.zh-CN.md) · [Project home](../README.md) · [API history CSV](../data/api/model_iq_history.csv) · [Monitor status](../data/api/monitor_status.json)
 
-**Last successful check:** `2026-09-23T05:15:02+00:00`  
-**Current API snapshot:** `38b2688ef2431d2d`  
+**Last successful check:** `2026-09-23T10:05:35+00:00`  
+**Current API snapshot:** `34752ee91cf4cbcb`  
 **Source observation:** `2026-09-14T13:05:52.704532+08:00`  
-**New snapshot detected:** no; the source returned the same snapshot  
+**New snapshot detected:** yes  
 **Models returned:** 11
 
 > “Last successful check” confirms that the automation reached the API. “Source observation” is supplied by the upstream endpoint and may be older.
@@ -36,4 +36,4 @@
 - When source data is unchanged, the automation still updates its heartbeat without presenting it as a new benchmark batch.
 - The raw API response is not stored in the public repository; only required model-summary fields are archived.
 
-Archived API snapshots: **423**.
+Archived API snapshots: **424**.
