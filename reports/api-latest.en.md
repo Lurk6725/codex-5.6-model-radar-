@@ -2,10 +2,10 @@
 
 [简体中文](api-latest.zh-CN.md) · [Project home](../README.md) · [API history CSV](../data/api/model_iq_history.csv) · [Monitor status](../data/api/monitor_status.json)
 
-**Last successful check:** `2026-10-29T23:58:12+00:00`  
+**Last successful check:** `2026-10-30T05:56:54+00:00`  
 **Current API snapshot:** `3766119b344a35aa`  
-**Source observation:** `2026-10-29T23:38:31.322502+00:00`  
-**New snapshot detected:** yes  
+**Source observation:** `2026-10-30T01:39:19.497856+00:00`  
+**New snapshot detected:** no; the source returned the same snapshot  
 **Models returned:** 11
 
 > “Last successful check” confirms that the automation reached the API. “Source observation” is supplied by the upstream endpoint and may be older.
