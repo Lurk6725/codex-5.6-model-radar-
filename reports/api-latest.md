@@ -7,9 +7,9 @@
 
 [English](api-latest.en.md) · [项目首页](../README.md) · [API 历史 CSV](../data/api/model_iq_history.csv) · [监控状态](../data/api/monitor_status.json)
 
-**最近成功检查：** `2026-10-31T01:52:19+00:00`  
+**最近成功检查：** `2026-10-31T08:29:18+00:00`  
 **当前 API 快照：** `3766119b344a35aa`  
-**源站观测时间：** `2026-10-31T00:12:27.159492+00:00`  
+**源站观测时间：** `2026-10-31T08:03:29.900750+00:00`  
 **本次发现新快照：** 否；源站仍返回同一快照  
 **返回模型数：** 11
 
@@ -51,9 +51,9 @@
 
 [简体中文](api-latest.zh-CN.md) · [Project home](../README.md) · [API history CSV](../data/api/model_iq_history.csv) · [Monitor status](../data/api/monitor_status.json)
 
-**Last successful check:** `2026-10-31T01:52:19+00:00`  
+**Last successful check:** `2026-10-31T08:29:18+00:00`  
 **Current API snapshot:** `3766119b344a35aa`  
-**Source observation:** `2026-10-31T00:12:27.159492+00:00`  
+**Source observation:** `2026-10-31T08:03:29.900750+00:00`  
 **New snapshot detected:** no; the source returned the same snapshot  
 **Models returned:** 11
 
